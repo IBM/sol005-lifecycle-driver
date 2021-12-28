@@ -1,0 +1,25 @@
+{
+  "id": "cc3d9824-8267-4b1c-8456-3f1cdd94d620",
+  "nsdId": "testNsdId",
+  "nsdName": "testNsdName",
+  "nsdVersion": "1.0.0",
+  "nsdDesigner": "testNsdDesigner",
+  "nsdInvariantId": "testNsdInvariantId",
+  "vnfPkgIds": "",
+  "pnfdInfoIds": "",
+  "nestedNsdInfoIds": "",
+  "archiveSecurityOption": "",
+  "signingCertificate": "",
+  "artifacts": "",
+  "nsdOnboardingState": "CREATED",
+  "nsdOperationalState": "DISABLED",
+  "nsdUsageState": "NOT_IN_USE",
+  "_links": {
+    "self": {
+      "href": "{apiRoot}/nsd/v1/ns_descriptors/{nsdInfoId}"
+    },
+    "changeExtConn": {
+      "href": ""
+    }
+  }
+}

@@ -1,0 +1,22 @@
+{
+  "newFlavourId": "vanilla",
+  "instantiationLevelId": "1",
+  "vimConnectionInfo": [
+    {
+      "id": "4408b119-eb54-11e7-bae0-fa163eb90b5c",
+      "vimId": "vim1",
+      "vimType": "OpenStack",
+      "interfaceInfo": {
+        "identityEndPoint": "https://openstack:5000/v2.0"
+      },
+      "accessInfo": {
+        "projectId": "cab32f669c18404d8bed0fae6bf088aa",
+        "credentials": {
+          "username": "eGFuaWxwcw==",
+          "password": "RXJpY3Nzb24uLjYyNA=="
+        }
+      }
+    }
+  ],
+  "additionalParams": {}
+}

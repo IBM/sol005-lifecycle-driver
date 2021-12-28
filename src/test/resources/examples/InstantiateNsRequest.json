@@ -1,0 +1,73 @@
+{
+  "flavourId": "chocolate",
+  "instantiationLevelId": "1",
+  "extVirtualLinks": [
+    {
+      "id": "45672c22-7c12-49ed-8a4f-e4532b3026fb",
+      "vimConnectionId": "f03a29d5-1fc6-11e9-83ea-fa163e045578",
+      "resourceId": "45672c22-5r54-49ed-8a4f-e4532b3026fb",
+      "extCps": [
+        {
+          "cpdId": "SERVICES_ExtCp",
+          "cpConfig": [
+            {
+              "cpInstanceId": "cpInstanceId111",
+              "linkPortId": "linkPortId222",
+              "cpProtocolData": [
+                {
+                  "layerProtocol": "IP_OVER_ETHERNET",
+                  "ipOverEthernet": {
+                    "macAddress": "fa:16:3e:23:fd:d7",
+                    "ipAddresses": [
+                      {
+                        "type": "IPV4",
+                        "fixedAddresses": [
+                          "131.160.162.32"
+                        ],
+                        "numDynamicAddresses": "1",
+                        "addressRange": {
+                          "minAddress": "131.160.162.32",
+                          "maxAddress": "131.160.162.36"
+                        },
+                        "subnetId": ""
+                      }
+                    ]
+                  }
+                }
+              ]
+            }
+          ]
+        }
+      ],
+      "extLinkPorts": [
+        {
+          "id": "id",
+          "resourceHandle": {
+            "vimConnectionId": "47772c22-7c12-49ed-8a4f-e7625b3026fb",
+            "resourceProviderId": "",
+            "resourceId": "45672c22-5r54-49ed-8a4f-e4532b3026fb",
+            "vimLevelResourceType": ""
+          }
+        }
+      ]
+    }
+  ],
+  "vimConnectionInfo": [
+    {
+      "id": "4408b119-eb54-11e7-bae0-fa163eb90b5c",
+      "vimId": "vim1",
+      "vimType": "OpenStack",
+      "interfaceInfo": {
+        "identityEndPoint": "https://openstack:5000/v2.0"
+      },
+      "accessInfo": {
+        "projectId": "cab32f669c18404d8bed0fae6bf088aa",
+        "credentials": {
+          "username": "eGFuaWxwcw==",
+          "password": "RXJpY3Nzb24uLjYyNA=="
+        }
+      }
+    }
+  ],
+  "additionalParams": {}
+}

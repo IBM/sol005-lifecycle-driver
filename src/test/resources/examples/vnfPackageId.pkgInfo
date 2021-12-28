@@ -1,0 +1,43 @@
+{
+  "id": "vnfPackageId",
+  "vnfdId": "vnfdId",
+  "vnfProvider": "Acme",
+  "vnfProductName": "vMRF",
+  "vnfSoftwareVersion": "2.1",
+  "vnfdVersion": "1.0",
+  "checksum": {
+    "algorithm": "SHA-256",
+    "hash": "2cc74baf2e90bba81180df1b31e703255dff7cf32f2c8d72577df31eca23b90d"
+  },
+  "softwareImages": [
+    {
+      "imagePath": "Files/Images/01-VPC-CF-IMAGE"
+    }
+  ],
+  "additionalArtifacts": [
+    {
+      "artifactPath": "MRF.mf"
+    },
+    {
+      "artifactPath": "Definitions/MRF.yaml"
+    },
+    {
+      "artifactPath": "Files/ChangeLog.txt"
+    },
+    {
+      "artifactPath": "Files/Licenses/README"
+    },
+    {
+      "artifactPath": "Files/Tests/README"
+    },
+    {
+      "artifactPath": "Scripts/install.sh"
+    },
+    {
+      "artifactPath": "TOSCA-Metadata/TOSCA.meta"
+    }
+  ],
+  "onboardingState": "ONBOARDED",
+  "operationalState": "ENABLED",
+  "usageState": "IN_USE"
+}

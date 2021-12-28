@@ -1,0 +1,36 @@
+tosca_definitions_version: tosca_simple_yaml_1_2
+
+topology_template:
+  description: Template of a VNFD example
+
+  node_templates:
+    Group_VDU_A:
+      type: tosca.nodes.nfv.groupVDU_A
+      requirements:
+        - virtual_link:VL_2
+
+    Group_VDU_B:
+      type: tosca.nodes.nfv.groupVDU_B
+      requirements:
+        - virtual_link: VL_2
+        - virtual_link1: VL_1
+
+    Group_VDU_C:
+      type: tosca.nodes.nfv.groupVDU_C # the description of this type is described
+                                        # in another service template.
+      requirements:
+        - virtual_link:VL_1
+
+    VL_1:
+      type: tosca.nodes.nfv.VnfVirtualLink
+      properties:
+     # omitted here for brevity
+      capabilities:
+         virtual_linkable:
+
+    VL_2:
+      type: tosca.nodes.nfv.VnfVirtualLink
+      properties:
+# omitted here for brevity
+      capabilities:
+         virtual_linkable:

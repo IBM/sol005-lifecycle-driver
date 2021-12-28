@@ -1,0 +1,3 @@
+{
+  "callbackUri": "http://localhost:8080/vnflcm/v1/notifications"
+}

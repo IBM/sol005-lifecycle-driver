@@ -1,0 +1,6 @@
+{
+  "vnfdId": "EXAMPLE_VNFD",
+  "vnfInstanceName": "NewTestVNF",
+  "vnfInstanceDescription": "A VNF used for testing",
+  "additionalParams": {}
+}

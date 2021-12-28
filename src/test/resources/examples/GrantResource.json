@@ -1,0 +1,18 @@
+{
+  "id": "73b0931d-5883-4c91-a788-11777c212007",
+  "nsInstanceId": "b0f6d5c2-6071-4b93-bc4f-ec752918caac",
+  "nsLcmOpOccId": "3af0facb-c681-464c-b812-8443dc3f6c2f",
+  "computeReservationId": "a89dd3ac-745d-406e-b89b-ae4b38f5541c",
+  "networkReservationId": "9967ba9f-54e9-4f93-b7c7-faf8861d142e",
+  "storageReservationId": "c1c052cc-461e-487e-91cc-77da8c01eb96",
+  "addResources": [
+    {
+      "resourceDefinitionId": "d4c47fd4-69d9-4dec-9ef6-9cba54f9425a",
+      "reservationId": "bcc3d61e-d70c-4d2e-984a-327105072a12",
+      "vimConnectionId": "9dda514a-496e-4219-af04-bc27d763c6e7",
+      "resourceProviderId": "85723cdf-83b4-4a3c-a3a3-b825073834f0",
+      "zoneId": "3519f209-276c-4084-88e8-891edc4939db",
+      "resourceGroupId": "7054d6d7-7310-4793-8949-f734c7b03477"
+    }
+  ]
+}

@@ -1,0 +1,8 @@
+{
+  "id": "cc3d9824-8267-4b1c-8456-3f1cdd94d620",
+  "nsInstanceName": "NewTestNS",
+  "nsInstanceDescription": "A ns used for testing",
+  "nsdId": "EXAMPLE_NSD",
+  "nsdInfoId": "nsdInfoId",
+  "nsState": "INSTANTIATED"
+}

@@ -1,0 +1,8 @@
+{
+  "id": "2fdffb76-5c74-44ab-a38f-40b302ba5ec9",
+  "callbackUri": "http://localhost:8080/nslcm/v1/notifications",
+  "verbosity": "FULL",
+  "links": {
+    "self": "http://localhost:8080/nslcm/v1/ns_instances/cc3d9824-8267-4b1c-8456-3f1cdd94d620"
+  }
+}

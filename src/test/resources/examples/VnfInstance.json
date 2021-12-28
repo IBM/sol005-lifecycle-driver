@@ -1,0 +1,49 @@
+{
+  "id": "cc3d9824-8267-4b1c-8456-3f1cdd94d620",
+  "vnfdId": "EXAMPLE_VNFD",
+  "vnfInstanceName": "NewTestVNF",
+  "vnfInstanceDescription": "A VNF used for testing",
+  "vnfProvider": "Accanto",
+  "vnfProductName": "TestVNF",
+  "vnfSoftwareVersion": "1.0",
+  "vnfdVersion": "1.0",
+  "vnfPkgId": "316aa140-c99a-4a08-b8f5-8e2cb73c83e8",
+  "vnfConfigurableProperties": "",
+  "vimConnectionInfo": {},
+  "instantiationState": "NOT_INSTANTIATED",
+  "instantiatedVnfInfo": {},
+  "metadata": {},
+  "extensions": {},
+  "_links": {
+    "self": {
+      "href": "{apiRoot}/vnflcm/v1/vnf_instances/{vnfInstanceId}"
+    },
+    "terminate": {
+      "href": "{apiRoot}/vnflcm/v1/vnf_instances/{vnfInstanceId}/terminate"
+    },
+    "indicators": {
+      "href": "{apiRoot}/vnfind/v1/indicators"
+    },
+    "instantiate": {
+      "href": "{apiRoot}/vnflcm/v1/vnf_instances/{vnfInstanceId}/instantiate"
+    },
+    "scale": {
+      "href": "{apiRoot}/vnflcm/v1/vnf_instances/{vnfInstanceId}/scale"
+    },
+    "scaleToLevel": {
+      "href": ""
+    },
+    "changeFlavour": {
+      "href": ""
+    },
+    "heal": {
+      "href": "{apiRoot}/vnflcm/v1/vnf_instances/{vnfInstanceId}/heal"
+    },
+    "operate": {
+      "href": "{apiRoot}/vnflcm/v1/vnf_instances/{vnfInstanceId}/operate"
+    },
+    "changeExtConn": {
+      "href": ""
+    }
+  }
+}

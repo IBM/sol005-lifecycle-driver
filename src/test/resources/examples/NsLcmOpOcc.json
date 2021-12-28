@@ -1,0 +1,9 @@
+{
+  "id": "0cfe789d-a680-4726-97bc-b42516ea744a",
+  "operationState": "COMPLETED",
+  "statusEnteredTime": "2019-09-10T14:29:23.218+01:00",
+  "nsInstanceId": "cc3d9824-8267-4b1c-8456-3f1cdd94d620",
+  "lcmOperationType":"INSTANTIATE",
+  "startTime": "2019-09-10T14:29:23.218+01:00",
+  "isAutomaticInvocation": "false"
+}

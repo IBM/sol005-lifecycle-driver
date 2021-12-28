@@ -1,0 +1,15 @@
+{
+  "nsInstanceId": "204bccc3-adc9-47c7-bf92-e284a0bccd78",
+  "nsLcmOpOccId": "f22cffd9-920f-4782-a85d-e3859e709e4c",
+  "nsdId": "4201fa44-0e71-4e18-8641-d2247a4ef024",
+  "operation": "INSTANTIATE",
+  "isAutomaticInvocation": true,
+  "_links": {
+    "nsLcmOpOcc": {
+      "href": "http://localhost:8080/nslcm/v1/ns_lcm_op_occs/d9576fa0-2f02-497b-8d6c-416743e6ec77"
+    },
+    "nsInstance": {
+      "href": "http://localhost:8080/nslcm/v1/ns_instances/ea7f016a-b020-40ee-8c1d-fd449013ffbf"
+    }
+  }
+}

@@ -1,0 +1,16 @@
+{
+  "items" : [ {
+    "downloadUrl" : "file:./src/test/resources/examples/nsPackage-vMRF.zip",
+    "path" : "group/NSdId/nsPackage-vMRF.zip",
+    "id" : "cmF3LXBhY2thZ2VzOmQ1M2UyZGRlM2VkYmViMWUwYWQwMTQ3OTFmODQwYWFi",
+    "repository" : "raw-packages",
+    "format" : "raw",
+    "checksum" : {
+      "sha1" : "c6df31e0880ef80a0fe765c3225a194cfa9851cd",
+      "sha256" : "1226d51f01c975a9b909d32eaf5dc2c880bc306228bb46e6d28d3a1a0ea68391",
+      "sha512" : "c46ed870f2edd685b5f01265a3e259cb7ee4e46c2c4bad111136b301e1044e610fe78b3387f89ad6944e9eb6f6383d2392f087f76d4111b4652f651239501fda",
+      "md5" : "d2acb153cf7536c1cdc19b0854b05532"
+    }
+  } ],
+  "continuationToken" : null
+}

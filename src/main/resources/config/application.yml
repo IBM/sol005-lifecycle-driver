@@ -1,0 +1,68 @@
+management:
+    endpoints:
+        web:
+            base-path: /management
+            exposure:
+                include: "*"
+    metrics:
+        export:
+            graphite:
+                enabled: false
+            prometheus:
+                enabled: true
+            simple:
+                enabled: false
+
+spring:
+  main:
+    banner-mode: "off"
+  jackson:
+    serialization:
+      write-dates-as-timestamps: false
+  kafka:
+    bootstrap-servers:
+      - localhost:9092
+    consumer:
+      auto-offset-reset: latest
+      group-id: ${spring.application.name}
+
+server:
+  port: 8296
+  
+nfvodriver:
+  topics:
+    lcmOpOccPollingTopic: lcm_op_occ_polling_requests
+    lifecycleResponsesTopic: lm_vnfc_lifecycle_execution_events
+  packageManagement:
+    enabled: true
+    imageArtifactFilter: Files/Images
+    # url should be in the form 'http://hostname/path/{vnfPackageId}'
+    packageRepositoryUrl:  
+  grant:
+    automatic: true
+    provider:
+      url:
+
+ribbon:
+  eureka:
+    enabled: true
+  # Set read timeout on Zuul proxy to 30 minutes
+  ReadTimeout: 1800000
+  # Set connect timeout on Zuul proxy to 20 seconds
+  ConnectTimeout: 20000
+
+package-management:
+  ribbon:
+    listOfServers: ishtar:8280
+    IsSecure: true
+
+zuul:
+  prefix:
+  # sensitiveHeaders deliberately empty to forward all headers
+  sensitive-headers:
+  routes:
+    package-management:
+      path: /vnfpkgm/v2/vnf_packages/**
+      url: /api/etsi/vnfpkgm/v2/vnf_packages
+      serviceId: package-management
+      stripPrefix: true

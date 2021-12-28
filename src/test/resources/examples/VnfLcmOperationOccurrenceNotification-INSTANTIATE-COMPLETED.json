@@ -1,0 +1,23 @@
+{
+  "id": "0cfe789d-a680-4726-97bc-b42516ea744a",
+  "notificationType": "VnfLcmOperationOccurrenceNotification",
+  "subscriptionId": "2fdffb76-5c74-44ab-a38f-40b302ba5ec9",
+  "timeStamp": "2019-09-10T14:29:23.218+01:00",
+  "notificationStatus": "RESULT",
+  "operationState": "COMPLETED",
+  "vnfInstanceId": "cc3d9824-8267-4b1c-8456-3f1cdd94d620",
+  "operation": "INSTANTIATE",
+  "isAutomaticInvocation": false,
+  "vnfLcmOpOccId": "8dbe6621-f6b9-49ba-878b-26803f107f27",
+  "_links": {
+    "vnfInstance": {
+      "href": "http://localhost:8080/vnflcm/v1/vnf_instances/cc3d9824-8267-4b1c-8456-3f1cdd94d620"
+    },
+    "subscription": {
+      "href": "http://localhost:8080/vnflcm/v1/subscriptions/2fdffb76-5c74-44ab-a38f-40b302ba5ec9"
+    },
+    "vnfLcmOpOcc": {
+      "href": "http://localhost:8080/vnflcm/v1/vnf_lcm_op_occs/8dbe6621-f6b9-49ba-878b-26803f107f27"
+    }
+  }
+}

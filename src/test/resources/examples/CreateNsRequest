@@ -1,0 +1,6 @@
+{
+  "nsdId": "EXAMPLE_NSD",
+  "nsName": "NewTestNS",
+  "nsDescription": "A NS used for testing",
+  "additionalParams": {}
+}

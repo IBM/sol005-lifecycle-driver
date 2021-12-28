@@ -1,0 +1,36 @@
+vnfdId: "epg97_ECM"
+vnfProvider: "Ericsson"
+vnfProductName: "EPG"
+vnfSoftwareVersion: "2.4 (CXS 201 0032 27r5b16)"
+vnfdVersion: "cxp9026845_27r5b16"
+deploymentFlavour:
+  - flavourId: "default"
+    vnfLcmOperationsConfiguration:
+      instantiateVnfOpConfig:
+        parameter:
+          vnfConfigUri: ""
+          vnfConfigContent: "... ..."
+          deltaVnfConfigFilesFolder: "scale"
+          vnfIpAddress: "10.93.193.17"
+          vnfGatewayAddress: "10.93.193.22"
+          vnfIpAddressPrefixLength: "27"
+          subNetworks: "SubNetwork=vEPG"
+          networkElementVersion: "1.6"
+          vnfUsername: "enm_admin"
+          vnfPassword: "ZXJpY3Nzb24="
+          snmpVersion: "SNMP_V3"
+          snmpSecurityLevel: "NO_AUTH_NO_PRIV"
+          snmpSecurityName: "admin"
+          updateOss: "true"
+          vsfo_cp_count: 2
+          vnf1_vnfc3_image: "epg_vsfo_cxp9026845_27r5b16"
+          vnf1_vnfc3_flavor": "CM-8vcpu_16384MBmem_40GBdisk"
+          sgi1_vlan_ids:
+          - 2523
+          - 2524
+          - 2525
+          - 2526
+      scaleVnfOpConfig:
+        scalingByMoreThanOneStepSupported: false
+      healVnfOpConfig:
+      terminateVnfOpConfig:

@@ -1,0 +1,6 @@
+{
+  "updateType": "OPERATE_VNF",
+  "operateVnfData": {
+    "changeStateTo": "STARTED"
+  }
+}

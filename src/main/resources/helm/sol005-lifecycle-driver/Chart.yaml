@@ -1,0 +1,19 @@
+name: sol005-lifecycle-driver
+version: #project.version#
+apiVersion: v1
+description: A Helm chart for the SOL005 NFVO Driver
+maintainers:
+- name: IBM
+  email: hari.krishna1@ibm.com, lokanadham.nalla1@ibm.com, prasad.settipalli@ibm.com, rkumar8j@in.ibm.com, prem.prakash8@ibm.com
+icon: # http://www.accantosystems.com/wp-content/uploads/2017/06/Accanto-w_white-systems200px.png
+keywords:
+- LM
+- ALM
+- SLM
+- Lifecycle
+- IBM
+- ETSI
+- SOL005
+- NFVO
+- Driver
+engine: gotpl

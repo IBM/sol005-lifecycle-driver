@@ -1,0 +1,44 @@
+{
+  "items" : [ {
+    "id" : "cmF3LXBhY2thZ2VzOjE4ZGRlY2NkZmI0OTFlY2I0MDZmOWZjZmY5Y2QxMDEy",
+    "repository" : "test-repository",
+    "format" : "raw",
+    "group" : "/group/nsdId",
+    "name" : "group/NSdId/nsPackageId.zip",
+    "version" : null,
+    "assets" : [ {
+      "downloadUrl" : "http://does-not-exist:8081/repository/test-repository/group/NSdId/NSPackageId.zip",
+      "path" : "group/NSdId/nsPackageId.zip",
+      "id" : "cmF3LXBhY2thZ2VzOmQ1M2UyZGRlM2VkYmViMWUwYWQwMTQ3OTFmODQwYWFi",
+      "repository" : "test-repository",
+      "format" : "raw",
+      "checksum" : {
+        "sha1" : "3e9b214beaef56bd6ad770b6ebeddb1ef09f7796",
+        "sha512" : "990e4cdf15926b11cfd170d6d8901d4131304eb3c4b46520b9deb8989a800b836bd8e9a7da20c8b76aa71efcf5a0a1ba759972ab2e8d2d84a15eb8d56b8144d6",
+        "sha256" : "8202864eb048bfdc8617a70439550198d883b8615a6450bc88a7fa203f158839",
+        "md5" : "5294ed3c94a3ccad635ebe949f0ae2a5"
+      }
+    } ]
+  }, {
+    "id" : "cmF3LXBhY2thZ2VzOjM2ZTNkZWM4ZGU1MjhjOWI2NWE1Y2FhM2U5Y2Y4OGY4",
+    "repository" : "test-repository",
+    "format" : "raw",
+    "group" : "/group/nsdId",
+    "name" : "group/NSdId/nsPackageId.pkgInfo",
+    "version" : null,
+    "assets" : [ {
+      "downloadUrl" : "http://does-not-exist:8081/repository/test-repository/group/NSdId/nsPackageId.pkgInfo",
+      "path" : "group/NSdId/nsPackageId.pkgInfo",
+      "id" : "cmF3LXBhY2thZ2VzOjYwNGVlNDJmOTU4NmE2Mzg4NDFkODZlOGI5ZTcyNjY1",
+      "repository" : "test-repository",
+      "format" : "raw",
+      "checksum" : {
+        "sha1" : "645cc6b40da4f8c930ac7fbdb4304000f18ce478",
+        "sha512" : "636318973f47ca0b34e4b5e780dffa7d52894191a3aa5965b7522b104d6c6cecfdb238003a9881cf4285b0f8ba3912f14c252324b0f08f354ab4073061e88bd0",
+        "sha256" : "2cc74baf2e90bba81180df1b31e703255dff7cf32f2c8d72577df31eca23b90d",
+        "md5" : "26d5d013c2df80cbfbdb4c772b103f06"
+      }
+    } ]
+  } ],
+  "continuationToken" : null
+}
