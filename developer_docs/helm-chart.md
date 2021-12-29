@@ -1,8 +1,6 @@
 # Helm Chart
 The Helm chart for this driver includes the following features:
 
-The Helm chart for this driver includes the following features:
-
 - A Deployment to create pods for your driver application
 - A Service to expose your application internally and externally (with a NodePort)
 - Ingress rule to expose your application externally with Ingress (Ingress controller required on Kubernetes cluster. By default, LM installs an Ingress controller for you)
