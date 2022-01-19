@@ -1,4 +1,4 @@
-package com.ibm.nfvodriver.web;
+package com.ibm.nfvodriver.web.alm;
 
 public class NotImplementedException extends Exception {
 

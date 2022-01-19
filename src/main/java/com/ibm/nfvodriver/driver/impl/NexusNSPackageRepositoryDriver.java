@@ -1,3 +1,6 @@
+/**
+ *  This file is not used currently and kept it for future requirements if any
+ */
 package com.ibm.nfvodriver.driver.impl;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
