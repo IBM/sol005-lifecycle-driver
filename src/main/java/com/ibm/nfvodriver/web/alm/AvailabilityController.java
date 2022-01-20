@@ -1,4 +1,4 @@
-package com.ibm.nfvodriver.web;
+package com.ibm.nfvodriver.web.alm;
 
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.GetMapping;
