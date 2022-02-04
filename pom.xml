@@ -11,7 +11,7 @@
     </parent>
 
     <!-- Must be duplicated for versions:set plugin to work in builds -->
-    <groupId>com.accantosystems.stratoss</groupId>
+    <groupId>com.ibm</groupId>
     <artifactId>sol005-lifecycle-driver</artifactId>
     <version>0.0.1-SNAPSHOT</version>
     <packaging>jar</packaging>
@@ -33,13 +33,14 @@
         <docker-maven-plugin.version>1.0.0</docker-maven-plugin.version>
         <docker.directory>docker-ready</docker.directory>
         <docker.registry>https://hub.docker.com</docker.registry>
+        <guava.version>30.0-jre</guava.version>
         <helm.chart.name>${project.artifactId}</helm.chart.name>
         <helm.download.url>https://storage.googleapis.com/kubernetes-helm/${helm-client-executable}</helm.download.url>
         <helm.repo.addr>https://repo.helm.com</helm.repo.addr>
         <helm.repo.api.url>${helm.repo.addr}/api/accanto</helm.repo.api.url>
         <helm.repo.snapshots.url>${helm.repo.addr}/accanto/snapshots</helm.repo.snapshots.url>
         <helm.repo.url>${helm.repo.addr}/accanto/stable</helm.repo.url>
-        <jackson.version>2.12.4</jackson.version>
+        <jackson.version>2.12.6</jackson.version>
         <jacoco-maven-plugin.version>0.8.4</jacoco-maven-plugin.version>
         <java.version>1.8</java.version>
         <kafka.version>3.0.0</kafka.version>
@@ -69,7 +70,7 @@
         <dependency>
             <groupId>com.google.guava</groupId>
             <artifactId>guava</artifactId>
-            <version>30.0-jre</version>
+            <version>${guava.version}</version>
         </dependency>
         <dependency>
             <groupId>commons-io</groupId>
@@ -189,7 +190,6 @@
             <version>2.3.6.RELEASE</version>
         </dependency>
     </dependencies>
-
     <build>
         <defaultGoal>spring-boot:run</defaultGoal>
         <pluginManagement>
