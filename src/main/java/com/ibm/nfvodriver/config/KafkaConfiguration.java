@@ -22,7 +22,7 @@ public class KafkaConfiguration {
     private static final Logger logger = LoggerFactory.getLogger(KafkaConfiguration.class);
 
     @Configuration("KafkaConfigurationEnabled")
-    @ConditionalOnProperty(value = "vnfmdriver.kafka.enabled", matchIfMissing = true)
+    @ConditionalOnProperty(value = "nfvodriver.kafka.enabled", matchIfMissing = true)
     @EnableKafka
     public static class KafkaConfigurationEnabled {
 
