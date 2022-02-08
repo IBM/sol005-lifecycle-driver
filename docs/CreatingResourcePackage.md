@@ -18,8 +18,7 @@ helloworld.zip
                +--- CreateNsRequest.js
                +--- NsInstance.js
                +--- InstantiateNsRequest.js
-               +--- UpdateNsRequest-Start.js
-               +--- UpdateNsRequest-Stop.js
+               +--- UpdateNsRequest.js               
                +--- TerminateNsRequest.js
                +--- HealNsRequest.js
                +--- ScaleNsRequest.js

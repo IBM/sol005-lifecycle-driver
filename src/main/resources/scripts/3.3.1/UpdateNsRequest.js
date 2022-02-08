@@ -10,7 +10,8 @@ var message = {additionalParams: {}};
 // Set the standard message properties
 message.updateType = 'OPERATE_VNF';
 message.operateVnfData = {
-    "changeStateTo": "STARTED",
+     "vnfInstanceId" : "123456",
+     "changeStateTo": "STARTED",
 }
 
 for (var key in executionRequest.getProperties()) {

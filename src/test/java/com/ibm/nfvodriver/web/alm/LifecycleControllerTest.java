@@ -43,7 +43,7 @@ public class LifecycleControllerTest {
     @Test
     public void testExecuteLifecycle() throws Exception {
         final ExecutionRequest executionRequest = new ExecutionRequest();
-        executionRequest.setLifecycleName("Install");
+        executionRequest.setLifecycleName("Create");
         executionRequest.setDeploymentLocation(TEST_DL_NO_AUTH);
         executionRequest.getResourceProperties().put("nsdId", new GenericExecutionRequestPropertyValue("fa2343af-2a81-4e84-a667-e40662e5ed93"));
         executionRequest.getResourceProperties().put("nsInstanceName", new GenericExecutionRequestPropertyValue("CSCF-1"));
