@@ -120,16 +120,17 @@ public class NSLifecycleManagementDriver {
      * @param nsInstanceId       Identifier of the {@link NsInstance} record to delete
      * @throws SOL005ResponseException if there are any errors deleting the NS instance
      */
-    public void deleteNsInstance(final ResourceManagerDeploymentLocation deploymentLocation, final String nsInstanceId) throws SOL005ResponseException {
+    public String deleteNsInstance(final ResourceManagerDeploymentLocation deploymentLocation, final String nsInstanceId) throws SOL005ResponseException {
         final String url = deploymentLocation.getProperties().get(NFVO_SERVER_URL) + API_CONTEXT_ROOT + API_PREFIX_NS_INSTANCES + "/{nsInstanceId}";
         final HttpHeaders headers = getHttpHeaders(deploymentLocation);
         final HttpEntity<Void> requestEntity = new HttpEntity<>(headers);
         final Map<String, String> uriVariables = new HashMap<>();
         uriVariables.put("nsInstanceId", nsInstanceId);
 
-        final ResponseEntity<Void> responseEntity = authenticatedRestTemplateService.getRestTemplate(deploymentLocation).exchange(url, HttpMethod.DELETE, requestEntity, Void.class, uriVariables);
+        final ResponseEntity<String> responseEntity = authenticatedRestTemplateService.getRestTemplate(deploymentLocation).exchange(url, HttpMethod.DELETE, requestEntity, String.class, uriVariables);
 
         checkResponseEntityMatches(responseEntity, HttpStatus.NO_CONTENT, false);
+        return responseEntity.getBody();
     }
 
     /**
