@@ -66,8 +66,8 @@ public class LifecycleManagementService {
             } else if ("Delete".equalsIgnoreCase(executionRequest.getLifecycleName())) {
                 // Delete
                 final String nsInstanceId = executionRequest.getStringResourceProperty("nsInstanceId");
-                nsLifecycleManagementDriver.deleteNsInstance(executionRequest.getDeploymentLocation(), nsInstanceId);
-                return new ExecutionAcceptedResponse();
+                final String requestId=nsLifecycleManagementDriver.deleteNsInstance(executionRequest.getDeploymentLocation(), nsInstanceId);
+                return new ExecutionAcceptedResponse(requestId);
             } else if ("Uninstall".equalsIgnoreCase(executionRequest.getLifecycleName())) {
                 // Terminate
                 final String nsInstanceId = executionRequest.getStringResourceProperty("nsInstanceId");
