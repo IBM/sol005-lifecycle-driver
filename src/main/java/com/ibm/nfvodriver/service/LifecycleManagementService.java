@@ -38,44 +38,39 @@ public class LifecycleManagementService {
         logger.info("Processing execution request");
 
         try {
-            if ("Install".equalsIgnoreCase(executionRequest.getLifecycleName())) {
-                // Generate CreateNsRequest message
+            if ("Create".equalsIgnoreCase(executionRequest.getLifecycleName())) {
+                // Generate CreateNSRequest message
                 final String createNsRequest = messageConversionService.generateMessageFromRequest("CreateNsRequest", executionRequest);
-
-
-
                 // Send message to NFVO
                 final String nsInstanceResponse = nsLifecycleManagementDriver.createNsInstance(executionRequest.getDeploymentLocation(), createNsRequest);
-
                 // Convert response into properties to be returned to ALM
                 final Map<String, Object> outputs = messageConversionService.extractPropertiesFromMessage("NsInstance", executionRequest, nsInstanceResponse);
-
                 final String requestId = UUID.randomUUID().toString();
                 // Delay sending the asynchronous response (from a different thread) as this method needs to complete first (to send the response back to Brent)
                 externalMessagingService.sendDelayedExecutionAsyncResponse(new ExecutionAsyncResponse(requestId, ExecutionStatus.COMPLETE, null, outputs, Collections.emptyMap()), properties.getExecutionResponseDelay());
 
-                // Send response back to ALM
                 return new ExecutionAcceptedResponse(requestId);
-            } else if ("Configure".equalsIgnoreCase(executionRequest.getLifecycleName())) {
+            } else if ("Install".equalsIgnoreCase(executionRequest.getLifecycleName())) {
                 // Instantiate
                 final String nsInstanceId = executionRequest.getStringResourceProperty("nsInstanceId");
                 final String instantiateNsRequest = messageConversionService.generateMessageFromRequest("InstantiateNsRequest", executionRequest);
                 final String requestId = nsLifecycleManagementDriver.instantiateNs(executionRequest.getDeploymentLocation(), nsInstanceId, instantiateNsRequest);
                 return new ExecutionAcceptedResponse(requestId);
 
-            } else if ("Start".equalsIgnoreCase(executionRequest.getLifecycleName())) {
-                // Operate (Start)
+            } else if ("Update".equalsIgnoreCase(executionRequest.getLifecycleName())) {
+                // Update
                 final String nsInstanceId = executionRequest.getStringResourceProperty("nsInstanceId");
-                final String updateNsRequest = messageConversionService.generateMessageFromRequest("UpdateNsRequest-Start", executionRequest);
+                final String updateNsRequest = messageConversionService.generateMessageFromRequest("UpdateNsRequest", executionRequest);
                 final String requestId = nsLifecycleManagementDriver.updateNs(executionRequest.getDeploymentLocation(), nsInstanceId, updateNsRequest);
                 return new ExecutionAcceptedResponse(requestId);
-            }  else if ("Stop".equalsIgnoreCase(executionRequest.getLifecycleName())) {
-                // Operate (Stop)
+            } else if ("Delete".equalsIgnoreCase(executionRequest.getLifecycleName())) {
+                // Delete
                 final String nsInstanceId = executionRequest.getStringResourceProperty("nsInstanceId");
-                final String updateNsRequest = messageConversionService.generateMessageFromRequest("UpdateNsRequest-Stop", executionRequest);
-                final String requestId = nsLifecycleManagementDriver.updateNs(executionRequest.getDeploymentLocation(), nsInstanceId, updateNsRequest);
+                nsLifecycleManagementDriver.deleteNsInstance(executionRequest.getDeploymentLocation(), nsInstanceId);
+                final String requestId = UUID.randomUUID().toString();
+                externalMessagingService.sendDelayedExecutionAsyncResponse(new ExecutionAsyncResponse(requestId, ExecutionStatus.COMPLETE, null, Collections.emptyMap(), Collections.emptyMap()), properties.getExecutionResponseDelay());
                 return new ExecutionAcceptedResponse(requestId);
-            }else if ("Uninstall".equalsIgnoreCase(executionRequest.getLifecycleName())) {
+            } else if ("Uninstall".equalsIgnoreCase(executionRequest.getLifecycleName())) {
                 // Terminate
                 final String nsInstanceId = executionRequest.getStringResourceProperty("nsInstanceId");
                 final String terminateNsRequest = messageConversionService.generateMessageFromRequest("TerminateNsRequest", executionRequest);
@@ -87,25 +82,13 @@ public class LifecycleManagementService {
                 final String scaleNsRequest = messageConversionService.generateMessageFromRequest("ScaleNsRequest", executionRequest);
                 final String requestId = nsLifecycleManagementDriver.scaleNs(executionRequest.getDeploymentLocation(), nsInstanceId, scaleNsRequest);
                 return new ExecutionAcceptedResponse(requestId);
-            } /*else if ("Integrity".equalsIgnoreCase(executionRequest.getLifecycleName())) {
-                // Scale Out
-                final String vnfInstanceId = executionRequest.getStringResourceProperty("vnfInstanceId");
-                final String scaleVnfRequest = messageConversionService.generateMessageFromRequest("ScaleVnfRequest", executionRequest);
-                final String requestId = vnfLifecycleManagementDriver.scaleVnf(executionRequest.getDeploymentLocation(), vnfInstanceId, scaleVnfRequest);
-                return new ExecutionAcceptedResponse(requestId);
-            } else if ("ScaleIn".equalsIgnoreCase(executionRequest.getLifecycleName())) {
-                // Scale In
-                final String vnfInstanceId = executionRequest.getStringResourceProperty("vnfInstanceId");
-                final String scaleVnfRequest = messageConversionService.generateMessageFromRequest("ScaleVnfRequest", executionRequest);
-                final String requestId = vnfLifecycleManagementDriver.scaleVnf(executionRequest.getDeploymentLocation(), nsInstanceId, scaleNsRequest);
-                return new ExecutionAcceptedResponse(requestId);
-            } */else if ("Heal".equalsIgnoreCase(executionRequest.getLifecycleName())) {
+            } else if ("Heal".equalsIgnoreCase(executionRequest.getLifecycleName())) {
                 // Heal
                 final String nsInstanceId = executionRequest.getStringResourceProperty("nsInstanceId");
                 final String healNsRequest = messageConversionService.generateMessageFromRequest("HealNsRequest", executionRequest);
                 final String requestId = nsLifecycleManagementDriver.healNs(executionRequest.getDeploymentLocation(), nsInstanceId, healNsRequest);
                 return new ExecutionAcceptedResponse(requestId);
-            }else {
+            } else {
                 throw new IllegalArgumentException(String.format("Requested transition [%s] is not supported by this lifecycle driver", executionRequest.getLifecycleName()));
             }
         } catch (MessageConversionException e) {

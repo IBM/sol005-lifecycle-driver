@@ -1,9 +1,14 @@
 package com.ibm.nfvodriver.web.alm;
 
+import com.ibm.nfvodriver.driver.SOL005ResponseException;
 import com.ibm.nfvodriver.model.alm.ExecutionAcceptedResponse;
 import com.ibm.nfvodriver.model.alm.ExecutionRequest;
+import com.ibm.nfvodriver.model.alm.FindReferenceResponse;
 import com.ibm.nfvodriver.model.alm.GenericExecutionRequestPropertyValue;
+import com.ibm.nfvodriver.model.web.ErrorInfo;
 import com.ibm.nfvodriver.service.LifecycleManagementService;
+import org.etsi.sol005.common.ProblemDetails;
+import org.etsi.sol005.model.FindReferenceRequest;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -14,15 +19,12 @@ import org.springframework.boot.test.web.client.TestRestTemplate;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
-import org.springframework.test.context.ActiveProfiles;
-import org.springframework.test.context.ContextConfiguration;
-import org.springframework.test.context.junit4.SpringJUnit4ClassRunner;
 import org.springframework.test.context.junit4.SpringRunner;
-import org.springframework.test.context.support.AnnotationConfigContextLoader;
 
 import java.util.UUID;
 
 import static com.ibm.nfvodriver.test.TestConstants.TEST_DL_NO_AUTH;
+import static com.ibm.nfvodriver.test.TestConstants.TEST_EXCEPTION_MESSAGE;
 import static org.assertj.core.api.Assertions.assertThat;
 import static org.mockito.ArgumentMatchers.any;
 import static org.mockito.Mockito.when;
@@ -41,7 +43,7 @@ public class LifecycleControllerTest {
     @Test
     public void testExecuteLifecycle() throws Exception {
         final ExecutionRequest executionRequest = new ExecutionRequest();
-        executionRequest.setLifecycleName("Install");
+        executionRequest.setLifecycleName("Create");
         executionRequest.setDeploymentLocation(TEST_DL_NO_AUTH);
         executionRequest.getResourceProperties().put("nsdId", new GenericExecutionRequestPropertyValue("fa2343af-2a81-4e84-a667-e40662e5ed93"));
         executionRequest.getResourceProperties().put("nsInstanceName", new GenericExecutionRequestPropertyValue("CSCF-1"));
@@ -58,7 +60,7 @@ public class LifecycleControllerTest {
         assertThat(responseEntity.getBody().getRequestId()).isNotEmpty();
     }
 
-    /*@Test
+    @Test
     public void testExecuteLifecycleReturnsErrorInfo() throws Exception {
         final ExecutionRequest executionRequest = new ExecutionRequest();
         executionRequest.setLifecycleName("Install");
@@ -76,9 +78,9 @@ public class LifecycleControllerTest {
         assertThat(responseEntity.getBody().getLocalizedMessage()).isEqualTo("Received SOL005-compliant error when communicating with NFVO: TestExceptionMessage");
         assertThat(responseEntity.getBody().getDetails().get("nfvoStatus")).isEqualTo(404);
         assertThat(responseEntity.getBody().getDetails().get("nfvoDetail")).isEqualTo(TEST_EXCEPTION_MESSAGE);
-    }*/
+    }
 
-    /*@Test
+    @Test
     public void testFindReferences() throws Exception {
         final FindReferenceRequest findReferenceRequest = new FindReferenceRequest();
         findReferenceRequest.setInstanceName("Instance1");
@@ -86,6 +88,6 @@ public class LifecycleControllerTest {
         final ResponseEntity<FindReferenceResponse> responseEntity = testRestTemplate.postForEntity("/api/driver/references/find", findReferenceRequest, FindReferenceResponse.class);
         assertThat(responseEntity).isNotNull();
         assertThat(responseEntity.getStatusCode()).isEqualTo(HttpStatus.NOT_IMPLEMENTED);
-    }*/
+    }
 
 }

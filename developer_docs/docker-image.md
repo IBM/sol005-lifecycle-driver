@@ -15,7 +15,7 @@ Navigate to the Docker directory and build the image. Tag with the release versi
 ```
 
 ```
-3. docker build -t sol005-lifecycle-driver:&lt;release version number&gt; .
+3. docker build -t sol005-lifecycle-driver: <release version number> .
 ```
 
 Make sure the sol005 lifecycle driver image created successfully.
