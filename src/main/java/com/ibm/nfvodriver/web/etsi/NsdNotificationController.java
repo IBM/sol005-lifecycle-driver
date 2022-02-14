@@ -16,7 +16,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
 @RestController("NsdNotificationController")
-@RequestMapping("/nsd/v1/notifications")
+@RequestMapping("/nsd/v2/notifications")
 public class NsdNotificationController {
 
     private final static Logger logger = LoggerFactory.getLogger(NsdNotificationController.class);
