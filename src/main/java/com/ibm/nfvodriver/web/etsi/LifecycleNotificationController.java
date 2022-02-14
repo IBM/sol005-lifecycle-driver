@@ -22,7 +22,7 @@ import org.springframework.web.bind.annotation.RestController;
 import java.util.Collections;
 
 @RestController("LifecycleNotificationController")
-@RequestMapping("/nslcm/v1/notifications")
+@RequestMapping("/nslcm/v2/notifications")
 public class LifecycleNotificationController {
 
     private final static Logger logger = LoggerFactory.getLogger(LifecycleNotificationController.class);
