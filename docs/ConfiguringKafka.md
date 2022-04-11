@@ -4,14 +4,14 @@ The NFVO driver expects to find a Kafka endpoint with a pre-existing topic confi
 
 **Configuring Kafka host**
 
-The Kafka host by default is set to `cp4na-o-events-kafka-bootstrap:9092`. This value can be configured via the Helm values file by setting the following property during the Helm install. 
+The Kafka host by default is set to `iaf-system-kafka-bootstrap:9092`. This value can be configured via the Helm values file by setting the following property during the Helm install. 
 
 ###### Example of values passed to Helm chart during install
 ```yaml
 app:
   config:
     env:
-      spring_kafka_bootstrap_servers: cp4na-o-events-kafka-bootstrap:9092
+      spring_kafka_bootstrap_servers: iaf-system-kafka-bootstrap:9092
 ```
 
 **Creating Kafka topic**
