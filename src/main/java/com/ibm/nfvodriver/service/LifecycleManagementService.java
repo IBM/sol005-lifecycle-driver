@@ -57,8 +57,8 @@ public class LifecycleManagementService {
                 final String requestId = nsLifecycleManagementDriver.instantiateNs(executionRequest.getDeploymentLocation(), nsInstanceId, instantiateNsRequest);
                 return new ExecutionAcceptedResponse(requestId);
 
-            } else if ("Update".equalsIgnoreCase(executionRequest.getLifecycleName())) {
-                // Update
+            } else if ("Upgrade".equalsIgnoreCase(executionRequest.getLifecycleName())) {
+                // Upgrade
                 final String nsInstanceId = executionRequest.getStringResourceProperty("nsInstanceId");
                 final String updateNsRequest = messageConversionService.generateMessageFromRequest("UpdateNsRequest", executionRequest);
                 final String requestId = nsLifecycleManagementDriver.updateNs(executionRequest.getDeploymentLocation(), nsInstanceId, updateNsRequest);
