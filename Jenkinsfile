@@ -6,5 +6,4 @@ library "tarquin@$tarquinBranch"
 
 pipelineJavaDriver {
   attachHelmToRelease = true
-  icrPublish = true
 }
