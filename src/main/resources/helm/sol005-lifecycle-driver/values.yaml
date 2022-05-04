@@ -28,7 +28,7 @@ global:
 ## Docker
 docker:
   ## Name of the Docker Image
-  image: icr.io/ibm/cp4na-drivers/sol005-lifecycle-driver
+  image: icr.io/cp4na-drivers/sol005-lifecycle-driver
   ## Tagged version of the Docker Image
   version: #project.version#
   ## Pull policy on the Docker Image (when global.docker.registryEnabled is false)
