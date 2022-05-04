@@ -52,7 +52,7 @@ Verify the CI/CD job has created a [release on Github](https://github.com/IBM/so
 
 Ensure the tag, title and changelog are all correct. Also ensure the helm chart `tgz` file has been attached.
 
-Verify the release has been published to [icr](icr.io/ibm/cp4na-drivers).
+Verify the release has been published to [icr](icr.io/cp4na-drivers).
 
 ## 7. Cleanup
 
@@ -96,8 +96,8 @@ ls target/helm/repo
 
 The Docker image not been pushed by the previous build step so must be done manually, e.g.
 ```
-echo <IAMAPIKEY> | docker login --username iamapikey --password-stdin icr.io/ibm/cp4na-drivers/
-docker push icr.io/ibm/cp4na-drivers/sol005-lifecycle-driver:0.2.0
+echo <IAMAPIKEY> | docker login --username iamapikey --password-stdin icr.io/cp4na-drivers/
+docker push icr.io/cp4na-drivers/sol005-lifecycle-driver:0.2.0
 ```
 
 Complete the following:
