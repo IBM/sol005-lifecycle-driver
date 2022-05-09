@@ -76,8 +76,8 @@ public class LifecycleManagementService {
                 final String terminateNsRequest = messageConversionService.generateMessageFromRequest("TerminateNsRequest", executionRequest);
                 final String requestId = nsLifecycleManagementDriver.terminateNs(executionRequest.getDeploymentLocation(), nsInstanceId, terminateNsRequest);
                 return new ExecutionAcceptedResponse(requestId);
-            } else if ("Scale".equalsIgnoreCase(executionRequest.getLifecycleName())) {
-                // Scale
+            } else if ("ScaleToLevel".equalsIgnoreCase(executionRequest.getLifecycleName())) {
+                // ScaleToLevel
                 final String nsInstanceId = executionRequest.getStringResourceProperty("nsInstanceId");
                 final String scaleNsRequest = messageConversionService.generateMessageFromRequest("ScaleNsRequest", executionRequest);
                 final String requestId = nsLifecycleManagementDriver.scaleNs(executionRequest.getDeploymentLocation(), nsInstanceId, scaleNsRequest);
