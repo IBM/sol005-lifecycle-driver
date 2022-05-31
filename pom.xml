@@ -13,7 +13,7 @@
     <!-- Must be duplicated for versions:set plugin to work in builds -->
     <groupId>com.ibm</groupId>
     <artifactId>sol005-lifecycle-driver</artifactId>
-    <version>0.0.3</version>
+    <version>0.0.4-SNAPSHOT</version>
     <packaging>jar</packaging>
 
     <name>SOL005 NFVO Driver</name>
@@ -32,7 +32,7 @@
         <commons-io.version>2.7</commons-io.version>
         <docker-maven-plugin.version>1.2.2</docker-maven-plugin.version>
         <docker.directory>docker-ready</docker.directory>
-        <docker.registry>ibmcom</docker.registry>
+        <docker.registry>icr.io/cp4na-drivers</docker.registry>
         <guava.version>30.0-jre</guava.version>
         <helm.chart.name>${project.artifactId}</helm.chart.name>
         <helm.download.url>https://get.helm.sh/${helm-client-executable}</helm.download.url>
@@ -40,7 +40,7 @@
         <helm.repo.api.url>${helm.repo.addr}/api/accanto</helm.repo.api.url>
         <helm.repo.snapshots.url>${helm.repo.addr}/accanto/snapshots</helm.repo.snapshots.url>
         <helm.repo.url>${helm.repo.addr}/accanto/stable</helm.repo.url>
-        <jackson.version>2.12.6</jackson.version>
+        <jackson.version>2.13.3</jackson.version>
         <jacoco-maven-plugin.version>0.8.4</jacoco-maven-plugin.version>
         <java.version>1.8</java.version>
         <kafka.version>3.0.0</kafka.version>
@@ -56,16 +56,38 @@
         <scala.version>2.12</scala.version>
         <snakeyaml.version>1.26</snakeyaml.version>
         <sortpom-maven-plugin.version>2.8.0</sortpom-maven-plugin.version>
+        <spring-beans.version>5.3.18</spring-beans.version>
+        <spring-core.version>5.3.18</spring-core.version>
         <spring-security.version>5.3.8.RELEASE</spring-security.version>
         <springfox.version>3.0.0</springfox.version>
-        <tomcat.version>9.0.58</tomcat.version>
+        <tomcat.version>9.0.63</tomcat.version>
         <wiremock.version>2.1.3.RELEASE</wiremock.version>
     </properties>
 
     <dependencies>
         <dependency>
+            <groupId>com.fasterxml.jackson.core</groupId>
+            <artifactId>jackson-annotations</artifactId>
+            <version>${jackson.version}</version>
+        </dependency>
+        <dependency>
+            <groupId>com.fasterxml.jackson.core</groupId>
+            <artifactId>jackson-core</artifactId>
+            <version>${jackson.version}</version>
+        </dependency>
+        <dependency>
+            <groupId>com.fasterxml.jackson.core</groupId>
+            <artifactId>jackson-databind</artifactId>
+            <version>${jackson.version}</version>
+        </dependency>
+        <dependency>
             <groupId>com.fasterxml.jackson.dataformat</groupId>
             <artifactId>jackson-dataformat-yaml</artifactId>
+        </dependency>
+        <dependency>
+            <groupId>com.fasterxml.jackson.module</groupId>
+            <artifactId>jackson-module-scala_2.13</artifactId>
+            <version>${jackson.version}</version>
         </dependency>
         <dependency>
             <groupId>com.google.guava</groupId>
@@ -127,6 +149,16 @@
             <groupId>org.projectlombok</groupId>
             <artifactId>lombok</artifactId>
             <optional>true</optional>
+        </dependency>
+        <dependency>
+            <groupId>org.springframework</groupId>
+            <artifactId>spring-beans</artifactId>
+            <version>${spring-beans.version}</version>
+        </dependency>
+        <dependency>
+            <groupId>org.springframework</groupId>
+            <artifactId>spring-core</artifactId>
+            <version>${spring-core.version}</version>
         </dependency>
         <dependency>
             <groupId>org.springframework.boot</groupId>
