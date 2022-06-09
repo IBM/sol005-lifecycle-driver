@@ -42,8 +42,6 @@ public class LifecycleManagementService {
                 // Generate CreateNsRequest message
                 final String createNsRequest = messageConversionService.generateMessageFromRequest("CreateNsRequest", executionRequest);
 
-
-
                 // Send message to NFVO
                 final String nsInstanceResponse = nsLifecycleManagementDriver.createNsInstance(executionRequest.getDeploymentLocation(), createNsRequest);
 
@@ -87,19 +85,7 @@ public class LifecycleManagementService {
                 final String scaleNsRequest = messageConversionService.generateMessageFromRequest("ScaleNsRequest", executionRequest);
                 final String requestId = nsLifecycleManagementDriver.scaleNs(executionRequest.getDeploymentLocation(), nsInstanceId, scaleNsRequest);
                 return new ExecutionAcceptedResponse(requestId);
-            } /*else if ("Integrity".equalsIgnoreCase(executionRequest.getLifecycleName())) {
-                // Scale Out
-                final String vnfInstanceId = executionRequest.getStringResourceProperty("vnfInstanceId");
-                final String scaleVnfRequest = messageConversionService.generateMessageFromRequest("ScaleVnfRequest", executionRequest);
-                final String requestId = vnfLifecycleManagementDriver.scaleVnf(executionRequest.getDeploymentLocation(), vnfInstanceId, scaleVnfRequest);
-                return new ExecutionAcceptedResponse(requestId);
-            } else if ("ScaleIn".equalsIgnoreCase(executionRequest.getLifecycleName())) {
-                // Scale In
-                final String vnfInstanceId = executionRequest.getStringResourceProperty("vnfInstanceId");
-                final String scaleVnfRequest = messageConversionService.generateMessageFromRequest("ScaleVnfRequest", executionRequest);
-                final String requestId = vnfLifecycleManagementDriver.scaleVnf(executionRequest.getDeploymentLocation(), nsInstanceId, scaleNsRequest);
-                return new ExecutionAcceptedResponse(requestId);
-            } */else if ("Heal".equalsIgnoreCase(executionRequest.getLifecycleName())) {
+            } else if ("Heal".equalsIgnoreCase(executionRequest.getLifecycleName())) {
                 // Heal
                 final String nsInstanceId = executionRequest.getStringResourceProperty("nsInstanceId");
                 final String healNsRequest = messageConversionService.generateMessageFromRequest("HealNsRequest", executionRequest);
