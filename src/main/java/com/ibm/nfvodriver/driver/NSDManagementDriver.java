@@ -94,9 +94,8 @@ public class NSDManagementDriver {
      */
     public String createNsDescriptor(final ResourceManagerDeploymentLocation deploymentLocation, final String CreateNsdInfoRequest) throws SOL005ResponseException {
         final String url = deploymentLocation.getProperties().get(NFVO_SERVER_URL) + API_CONTEXT_ROOT + API_PREFIX_NS_DESCRIPTORS;
-        final HttpHeaders headers = getHttpHeaders(deploymentLocation);
-        headers.setContentType(MediaType.APPLICATION_JSON);
-        final HttpEntity<String> requestEntity = new HttpEntity<>(CreateNsdInfoRequest, headers);
+
+        final HttpEntity<String> requestEntity = getHttpEntity(CreateNsdInfoRequest);
 
         final ResponseEntity<String> responseEntity = authenticatedRestTemplateService.getRestTemplate(deploymentLocation).exchange(url, HttpMethod.POST, requestEntity, String.class);
 
@@ -119,10 +118,8 @@ public class NSDManagementDriver {
      */
     public String getNsDescriptor(final ResourceManagerDeploymentLocation deploymentLocation) throws SOL005ResponseException {
         final String url = deploymentLocation.getProperties().get(NFVO_SERVER_URL) + API_CONTEXT_ROOT + API_PREFIX_NS_DESCRIPTORS;
-        final HttpHeaders headers = getHttpHeaders(deploymentLocation);
-        headers.setContentType(MediaType.APPLICATION_JSON);
-        final HttpEntity<String> requestEntity = new HttpEntity<>(null, headers);
 
+        final HttpEntity<String> requestEntity = getHttpEntity(null);
         final ResponseEntity<String> responseEntity = authenticatedRestTemplateService.getRestTemplate(deploymentLocation).exchange(url, HttpMethod.GET, requestEntity, String.class);
 
         checkResponseEntityMatches(responseEntity, HttpStatus.OK, true);
@@ -144,10 +141,8 @@ public class NSDManagementDriver {
      */
     public String getIndividualNsDescriptor(final ResourceManagerDeploymentLocation deploymentLocation, String nsdInfoId) throws SOL005ResponseException {
         final String url = deploymentLocation.getProperties().get(NFVO_SERVER_URL) + API_CONTEXT_ROOT + API_PREFIX_NS_DESCRIPTORS + "/" + nsdInfoId;
-        final HttpHeaders headers = getHttpHeaders(deploymentLocation);
-        headers.setContentType(MediaType.APPLICATION_JSON);
-        final HttpEntity<String> requestEntity = new HttpEntity<>(null, headers);
 
+        final HttpEntity<String> requestEntity = getHttpEntity(null);
         final ResponseEntity<String> responseEntity = authenticatedRestTemplateService.getRestTemplate(deploymentLocation).exchange(url, HttpMethod.GET, requestEntity, String.class);
 
         checkResponseEntityMatches(responseEntity, HttpStatus.OK, true);
@@ -168,8 +163,8 @@ public class NSDManagementDriver {
      */
     public String patchIndividualNsDescriptor(final ResourceManagerDeploymentLocation deploymentLocation, String nsdInfoId, String nsdInfoModifications) throws SOL005ResponseException {
         final String url = deploymentLocation.getProperties().get(NFVO_SERVER_URL) + API_CONTEXT_ROOT + API_PREFIX_NS_DESCRIPTORS + "/" + nsdInfoId;
-        final HttpHeaders headers = getHttpHeaders(deploymentLocation);
 
+        final HttpHeaders headers = getHttpHeaders(deploymentLocation);
         MediaType patchContentType = MediaType.valueOf("application/merge-patch+json");
         headers.setContentType(patchContentType);
 
@@ -195,10 +190,8 @@ public class NSDManagementDriver {
      */
     public String deleteIndividualNsDescriptor(final ResourceManagerDeploymentLocation deploymentLocation, String nsdInfoId) throws SOL005ResponseException {
         final String url = deploymentLocation.getProperties().get(NFVO_SERVER_URL) + API_CONTEXT_ROOT + API_PREFIX_NS_DESCRIPTORS + "/" + nsdInfoId;
-        final HttpHeaders headers = getHttpHeaders(deploymentLocation);
-        headers.setContentType(MediaType.APPLICATION_JSON);
-        final HttpEntity<String> requestEntity = new HttpEntity<>(null, headers);
 
+        final HttpEntity<String> requestEntity = getHttpEntity(null);
         final ResponseEntity<String> responseEntity = authenticatedRestTemplateService.getRestTemplate(deploymentLocation).exchange(url, HttpMethod.DELETE, requestEntity, String.class);
 
         checkResponseEntityMatches(responseEntity, HttpStatus.NO_CONTENT, false);
@@ -219,10 +212,8 @@ public class NSDManagementDriver {
      */
     public byte[] getNsdArchiveContentDescriptor(final ResourceManagerDeploymentLocation deploymentLocation, String nsdInfoId) throws SOL005ResponseException {
         final String url = deploymentLocation.getProperties().get(NFVO_SERVER_URL) + API_CONTEXT_ROOT + API_PREFIX_NS_DESCRIPTORS + "/" + nsdInfoId + API_NSD_CONTENT;
-        final HttpHeaders headers = getHttpHeaders(deploymentLocation);
-        headers.setContentType(MediaType.APPLICATION_JSON);
-        final HttpEntity<String> requestEntity = new HttpEntity<>(null, headers);
 
+        final HttpEntity<String> requestEntity = getHttpEntity(null);
         final ResponseEntity<byte[]> responseEntity = authenticatedRestTemplateService.getRestTemplate(deploymentLocation).exchange(url, HttpMethod.GET, requestEntity, byte[].class);
 
         checkResponseEntityMatches(responseEntity, HttpStatus.OK, true);
@@ -243,10 +234,10 @@ public class NSDManagementDriver {
      */
     public String putNsdArchiveContentDescriptor(final ResourceManagerDeploymentLocation deploymentLocation, String nsdInfoId, byte[] nsdArchiveContent) throws SOL005ResponseException {
         final String url = deploymentLocation.getProperties().get(NFVO_SERVER_URL) + API_CONTEXT_ROOT + API_PREFIX_NS_DESCRIPTORS + "/" + nsdInfoId + API_NSD_CONTENT;
-        final HttpHeaders headers = getHttpHeaders(deploymentLocation);
-        headers.setContentType(MediaType.APPLICATION_JSON);
-        final HttpEntity<byte[]> requestEntity = new HttpEntity<>(nsdArchiveContent, headers);
 
+        final HttpHeaders headers = getHttpHeaders(deploymentLocation);
+
+        final HttpEntity<byte[]> requestEntity = new HttpEntity<>(nsdArchiveContent, headers);
         final ResponseEntity<String> responseEntity = authenticatedRestTemplateService.getRestTemplate(deploymentLocation).exchange(url, HttpMethod.PUT, requestEntity, String.class);
 
         checkResponseEntityMatches(responseEntity, HttpStatus.NO_CONTENT, false);
@@ -268,10 +259,8 @@ public class NSDManagementDriver {
      */
     public byte[] getNsdContent(final ResourceManagerDeploymentLocation deploymentLocation, String nsdInfoId) throws SOL005ResponseException {
         final String url = deploymentLocation.getProperties().get(NFVO_SERVER_URL) + API_CONTEXT_ROOT + API_PREFIX_NS_DESCRIPTORS + "/" + nsdInfoId + API_NSD;
-        final HttpHeaders headers = getHttpHeaders(deploymentLocation);
-        headers.setContentType(MediaType.APPLICATION_JSON);
-        final HttpEntity<String> requestEntity = new HttpEntity<>(null, headers);
 
+        final HttpEntity<String> requestEntity = getHttpEntity(null);
         final ResponseEntity<byte[]> responseEntity = authenticatedRestTemplateService.getRestTemplate(deploymentLocation).exchange(url, HttpMethod.GET, requestEntity, byte[].class);
 
         checkResponseEntityMatches(responseEntity, HttpStatus.OK, true);
@@ -295,10 +284,8 @@ public class NSDManagementDriver {
      */
     public byte[] getNsdManifest(final ResourceManagerDeploymentLocation deploymentLocation, String nsdInfoId) throws SOL005ResponseException {
         final String url = deploymentLocation.getProperties().get(NFVO_SERVER_URL) + API_CONTEXT_ROOT + API_PREFIX_NS_DESCRIPTORS + "/" + nsdInfoId + API_MANIFEST;
-        final HttpHeaders headers = getHttpHeaders(deploymentLocation);
-        headers.setContentType(MediaType.APPLICATION_JSON);
-        final HttpEntity<String> requestEntity = new HttpEntity<>(null, headers);
 
+        final HttpEntity<String> requestEntity = getHttpEntity(null);
         final ResponseEntity<byte[]> responseEntity = authenticatedRestTemplateService.getRestTemplate(deploymentLocation).exchange(url, HttpMethod.GET, requestEntity, byte[].class);
 
         checkResponseEntityMatches(responseEntity, HttpStatus.OK, true);
@@ -321,10 +308,8 @@ public class NSDManagementDriver {
      */
     public byte[] getNsdArtifacts(final ResourceManagerDeploymentLocation deploymentLocation, String nsdInfoId, String artifactPath) throws SOL005ResponseException {
         final String url = deploymentLocation.getProperties().get(NFVO_SERVER_URL) + API_CONTEXT_ROOT + API_PREFIX_NS_DESCRIPTORS + "/" + nsdInfoId + API_ARTIFACTS+ "/" + artifactPath;
-        final HttpHeaders headers = getHttpHeaders(deploymentLocation);
-        headers.setContentType(MediaType.APPLICATION_JSON);
-        final HttpEntity<String> requestEntity = new HttpEntity<>(null, headers);
 
+        final HttpEntity<String> requestEntity = getHttpEntity(null);
         final ResponseEntity<byte[]> responseEntity = authenticatedRestTemplateService.getRestTemplate(deploymentLocation).exchange(url, HttpMethod.GET, requestEntity, byte[].class);
 
         checkResponseEntityMatches(responseEntity, HttpStatus.OK, true);
@@ -347,10 +332,8 @@ public class NSDManagementDriver {
      */
     public String createPnfDescriptor(final ResourceManagerDeploymentLocation deploymentLocation, final String CreatePnfdInfoRequest) throws SOL005ResponseException {
         final String url = deploymentLocation.getProperties().get(NFVO_SERVER_URL) + API_CONTEXT_ROOT + API_PREFIX_PNF_DESCRIPTORS;
-        final HttpHeaders headers = getHttpHeaders(deploymentLocation);
-        headers.setContentType(MediaType.APPLICATION_JSON);
-        final HttpEntity<String> requestEntity = new HttpEntity<>(CreatePnfdInfoRequest, headers);
 
+        final HttpEntity<String> requestEntity = getHttpEntity(CreatePnfdInfoRequest);
         final ResponseEntity<String> responseEntity = authenticatedRestTemplateService.getRestTemplate(deploymentLocation).exchange(url, HttpMethod.POST, requestEntity, String.class);
 
         checkResponseEntityMatches(responseEntity, HttpStatus.CREATED, true);
@@ -372,10 +355,8 @@ public class NSDManagementDriver {
      */
     public String getPnfDescriptor(final ResourceManagerDeploymentLocation deploymentLocation) throws SOL005ResponseException {
         final String url = deploymentLocation.getProperties().get(NFVO_SERVER_URL) + API_CONTEXT_ROOT + API_PREFIX_PNF_DESCRIPTORS;
-        final HttpHeaders headers = getHttpHeaders(deploymentLocation);
-        headers.setContentType(MediaType.APPLICATION_JSON);
-        final HttpEntity<String> requestEntity = new HttpEntity<>(null, headers);
 
+        final HttpEntity<String> requestEntity = getHttpEntity(null);
         final ResponseEntity<String> responseEntity = authenticatedRestTemplateService.getRestTemplate(deploymentLocation).exchange(url, HttpMethod.GET, requestEntity, String.class);
 
         checkResponseEntityMatches(responseEntity, HttpStatus.OK, true);
@@ -396,10 +377,8 @@ public class NSDManagementDriver {
      */
     public String getIndividualPnfDescriptor(final ResourceManagerDeploymentLocation deploymentLocation, String pnfdInfoId) throws SOL005ResponseException {
         final String url = deploymentLocation.getProperties().get(NFVO_SERVER_URL) + API_CONTEXT_ROOT + API_PREFIX_PNF_DESCRIPTORS + "/" + pnfdInfoId;
-        final HttpHeaders headers = getHttpHeaders(deploymentLocation);
-        headers.setContentType(MediaType.APPLICATION_JSON);
-        final HttpEntity<String> requestEntity = new HttpEntity<>(null, headers);
 
+        final HttpEntity<String> requestEntity = getHttpEntity(null);
         final ResponseEntity<String> responseEntity = authenticatedRestTemplateService.getRestTemplate(deploymentLocation).exchange(url, HttpMethod.GET, requestEntity, String.class);
 
         checkResponseEntityMatches(responseEntity, HttpStatus.OK, true);
@@ -447,10 +426,8 @@ public class NSDManagementDriver {
      */
     public String deleteIndividualPnfDescriptor(final ResourceManagerDeploymentLocation deploymentLocation, String pnfdInfoId) throws SOL005ResponseException {
         final String url = deploymentLocation.getProperties().get(NFVO_SERVER_URL) + API_CONTEXT_ROOT + API_PREFIX_PNF_DESCRIPTORS + "/" + pnfdInfoId;
-        final HttpHeaders headers = getHttpHeaders(deploymentLocation);
-        headers.setContentType(MediaType.APPLICATION_JSON);
-        final HttpEntity<String> requestEntity = new HttpEntity<>(null, headers);
 
+        final HttpEntity<String> requestEntity = getHttpEntity(null);
         final ResponseEntity<String> responseEntity = authenticatedRestTemplateService.getRestTemplate(deploymentLocation).exchange(url, HttpMethod.DELETE, requestEntity, String.class);
 
         checkResponseEntityMatches(responseEntity, HttpStatus.NO_CONTENT, false);
@@ -471,10 +448,8 @@ public class NSDManagementDriver {
      */
     public byte[] getPnfdArchiveContentDescriptor(final ResourceManagerDeploymentLocation deploymentLocation, String pnfdInfoId) throws SOL005ResponseException {
         final String url = deploymentLocation.getProperties().get(NFVO_SERVER_URL) + API_CONTEXT_ROOT + API_PREFIX_PNF_DESCRIPTORS + "/" + pnfdInfoId + API_PNFD_CONTENT;
-        final HttpHeaders headers = getHttpHeaders(deploymentLocation);
-        headers.setContentType(MediaType.APPLICATION_JSON);
-        final HttpEntity<String> requestEntity = new HttpEntity<>(null, headers);
 
+        final HttpEntity<String> requestEntity = getHttpEntity(null);
         final ResponseEntity<byte[]> responseEntity = authenticatedRestTemplateService.getRestTemplate(deploymentLocation).exchange(url, HttpMethod.GET, requestEntity, byte[].class);
 
         checkResponseEntityMatches(responseEntity, HttpStatus.OK, true);
@@ -520,10 +495,8 @@ public class NSDManagementDriver {
      */
     public byte[] getPnfdContent(final ResourceManagerDeploymentLocation deploymentLocation, String pnfdInfoId) throws SOL005ResponseException {
         final String url = deploymentLocation.getProperties().get(NFVO_SERVER_URL) + API_CONTEXT_ROOT + API_PREFIX_PNF_DESCRIPTORS + "/" + pnfdInfoId + API_PNFD;
-        final HttpHeaders headers = getHttpHeaders(deploymentLocation);
-        headers.setContentType(MediaType.APPLICATION_JSON);
-        final HttpEntity<String> requestEntity = new HttpEntity<>(null, headers);
 
+        final HttpEntity<String> requestEntity = getHttpEntity(null);
         final ResponseEntity<byte[]> responseEntity = authenticatedRestTemplateService.getRestTemplate(deploymentLocation).exchange(url, HttpMethod.GET, requestEntity, byte[].class);
 
         checkResponseEntityMatches(responseEntity, HttpStatus.OK, true);
@@ -547,10 +520,8 @@ public class NSDManagementDriver {
      */
     public byte[] getPnfdManifest(final ResourceManagerDeploymentLocation deploymentLocation, String pnfdInfoId) throws SOL005ResponseException {
         final String url = deploymentLocation.getProperties().get(NFVO_SERVER_URL) + API_CONTEXT_ROOT + API_PREFIX_PNF_DESCRIPTORS + "/" + pnfdInfoId + API_MANIFEST;
-        final HttpHeaders headers = getHttpHeaders(deploymentLocation);
-        headers.setContentType(MediaType.APPLICATION_JSON);
-        final HttpEntity<String> requestEntity = new HttpEntity<>(null, headers);
 
+        final HttpEntity<String> requestEntity = getHttpEntity(null);
         final ResponseEntity<byte[]> responseEntity = authenticatedRestTemplateService.getRestTemplate(deploymentLocation).exchange(url, HttpMethod.GET, requestEntity, byte[].class);
 
         checkResponseEntityMatches(responseEntity, HttpStatus.OK, true);
@@ -573,10 +544,8 @@ public class NSDManagementDriver {
      */
     public byte[] getPnfdArtifacts(final ResourceManagerDeploymentLocation deploymentLocation, String pnfdInfoId, String artifactPath) throws SOL005ResponseException {
         final String url = deploymentLocation.getProperties().get(NFVO_SERVER_URL) + API_CONTEXT_ROOT + API_PREFIX_PNF_DESCRIPTORS + "/" + pnfdInfoId + API_ARTIFACTS+ "/" + artifactPath;
-        final HttpHeaders headers = getHttpHeaders(deploymentLocation);
-        headers.setContentType(MediaType.APPLICATION_JSON);
-        final HttpEntity<String> requestEntity = new HttpEntity<>(null, headers);
 
+        final HttpEntity<String> requestEntity = getHttpEntity(null);
         final ResponseEntity<byte[]> responseEntity = authenticatedRestTemplateService.getRestTemplate(deploymentLocation).exchange(url, HttpMethod.GET, requestEntity, byte[].class);
 
         checkResponseEntityMatches(responseEntity, HttpStatus.OK, true);
@@ -598,10 +567,8 @@ public class NSDManagementDriver {
      */
     public String subscriptions(final ResourceManagerDeploymentLocation deploymentLocation, String nsdmSubscriptionRequest) throws SOL005ResponseException {
         final String url = deploymentLocation.getProperties().get(NFVO_SERVER_URL) + API_CONTEXT_ROOT + API_PREFIX_SUBSCRIPTIONS;
-        final HttpHeaders headers = getHttpHeaders(deploymentLocation);
-        headers.setContentType(MediaType.APPLICATION_JSON);
-        final HttpEntity<String> requestEntity = new HttpEntity<>(nsdmSubscriptionRequest, headers);
 
+        final HttpEntity<String> requestEntity = getHttpEntity(nsdmSubscriptionRequest);
         final ResponseEntity<String> responseEntity = authenticatedRestTemplateService.getRestTemplate(deploymentLocation).exchange(url, HttpMethod.POST, requestEntity, String.class);
 
         checkResponseEntityMatches(responseEntity, HttpStatus.CREATED, true);
@@ -622,10 +589,8 @@ public class NSDManagementDriver {
      */
     public String querySubscriptions(final ResourceManagerDeploymentLocation deploymentLocation) throws SOL005ResponseException {
         final String url = deploymentLocation.getProperties().get(NFVO_SERVER_URL) + API_CONTEXT_ROOT + API_PREFIX_SUBSCRIPTIONS;
-        final HttpHeaders headers = getHttpHeaders(deploymentLocation);
-        headers.setContentType(MediaType.APPLICATION_JSON);
-        final HttpEntity<String> requestEntity = new HttpEntity<>(null, headers);
 
+        final HttpEntity<String> requestEntity = getHttpEntity(null);
         final ResponseEntity<String> responseEntity = authenticatedRestTemplateService.getRestTemplate(deploymentLocation).exchange(url, HttpMethod.GET, requestEntity, String.class);
 
         checkResponseEntityMatches(responseEntity, HttpStatus.OK, true);
@@ -646,10 +611,8 @@ public class NSDManagementDriver {
      */
     public String queryIndividualSubscription(final ResourceManagerDeploymentLocation deploymentLocation, String subscriptionId) throws SOL005ResponseException {
         final String url = deploymentLocation.getProperties().get(NFVO_SERVER_URL) + API_CONTEXT_ROOT + API_PREFIX_SUBSCRIPTIONS+ "/"+ subscriptionId;
-        final HttpHeaders headers = getHttpHeaders(deploymentLocation);
-        headers.setContentType(MediaType.APPLICATION_JSON);
-        final HttpEntity<String> requestEntity = new HttpEntity<>(null, headers);
 
+        final HttpEntity<String> requestEntity = getHttpEntity(null);
         final ResponseEntity<String> responseEntity = authenticatedRestTemplateService.getRestTemplate(deploymentLocation).exchange(url, HttpMethod.GET, requestEntity, String.class);
 
         checkResponseEntityMatches(responseEntity, HttpStatus.OK, true);
@@ -670,10 +633,8 @@ public class NSDManagementDriver {
      */
     public String deleteIndividualSubscription(final ResourceManagerDeploymentLocation deploymentLocation, String subscriptionId) throws SOL005ResponseException {
         final String url = deploymentLocation.getProperties().get(NFVO_SERVER_URL) + API_CONTEXT_ROOT + API_PREFIX_SUBSCRIPTIONS+ "/"+ subscriptionId;
-        final HttpHeaders headers = getHttpHeaders(deploymentLocation);
-        headers.setContentType(MediaType.APPLICATION_JSON);
-        final HttpEntity<String> requestEntity = new HttpEntity<>(null, headers);
 
+        final HttpEntity<String> requestEntity = getHttpEntity(null);
         final ResponseEntity<String> responseEntity = authenticatedRestTemplateService.getRestTemplate(deploymentLocation).exchange(url, HttpMethod.DELETE, requestEntity, String.class);
 
         checkResponseEntityMatches(responseEntity, HttpStatus.NO_CONTENT, false);
@@ -691,6 +652,28 @@ public class NSDManagementDriver {
         final HttpHeaders headers = new HttpHeaders();
         headers.setContentType(MediaType.APPLICATION_JSON);
         return headers;
+    }
+
+
+    /**
+     * Creates HTTP Entity, populating the content type (as HttpEntity)
+     *
+     *  * @param request class
+     * @return org.apache.http.protocol.HttpEntity.
+     */
+    private HttpEntity<String> getHttpEntity(String request) {
+
+        final HttpHeaders headers = new HttpHeaders();
+        headers.setContentType(MediaType.APPLICATION_JSON);
+        final HttpEntity<String> requestEntity;
+
+        if(request!=null ) {
+            requestEntity = new HttpEntity<>(request, headers);
+        }else {
+
+            requestEntity = new HttpEntity<>(null, headers);
+        }
+        return requestEntity;
     }
 
     /**

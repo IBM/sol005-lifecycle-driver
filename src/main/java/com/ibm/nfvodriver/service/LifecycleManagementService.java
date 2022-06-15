@@ -41,6 +41,7 @@ public class LifecycleManagementService {
             if ("Create".equalsIgnoreCase(executionRequest.getLifecycleName())) {
                 // Generate CreateNSRequest message
                 final String createNsRequest = messageConversionService.generateMessageFromRequest("CreateNsRequest", executionRequest);
+
                 // Send message to NFVO
                 final String nsInstanceResponse = nsLifecycleManagementDriver.createNsInstance(executionRequest.getDeploymentLocation(), createNsRequest);
                 // Convert response into properties to be returned to ALM
@@ -82,6 +83,7 @@ public class LifecycleManagementService {
                 final String scaleNsRequest = messageConversionService.generateMessageFromRequest("ScaleNsRequest", executionRequest);
                 final String requestId = nsLifecycleManagementDriver.scaleNs(executionRequest.getDeploymentLocation(), nsInstanceId, scaleNsRequest);
                 return new ExecutionAcceptedResponse(requestId);
+              
             }  else if ("ScaleOut".equalsIgnoreCase(executionRequest.getLifecycleName())) {
                 // Scale Out
                 final String nsInstanceId = executionRequest.getStringResourceProperty("nsInstanceId");
@@ -94,6 +96,7 @@ public class LifecycleManagementService {
                 final String scaleNsRequest = messageConversionService.generateMessageFromRequest("ScaleNsRequest", executionRequest);
                 final String requestId = nsLifecycleManagementDriver.scaleNs(executionRequest.getDeploymentLocation(), nsInstanceId, scaleNsRequest);
                 return new ExecutionAcceptedResponse(requestId);
+
             } else if ("Heal".equalsIgnoreCase(executionRequest.getLifecycleName())) {
                 // Heal
                 final String nsInstanceId = executionRequest.getStringResourceProperty("nsInstanceId");
