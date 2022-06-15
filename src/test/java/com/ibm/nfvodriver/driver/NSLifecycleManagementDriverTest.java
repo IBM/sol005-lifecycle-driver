@@ -5,6 +5,7 @@ import com.ibm.nfvodriver.service.AuthenticatedRestTemplateService;
 import com.ibm.nfvodriver.test.TestConstants;
 import org.etsi.sol005.lifecyclemanagement.LccnSubscription;
 import org.etsi.sol005.lifecyclemanagement.LccnSubscriptionRequest;
+import org.etsi.sol005.lifecyclemanagement.VnfLcmOpOcc;
 import org.junit.Rule;
 import org.junit.Test;
 import org.junit.rules.TestName;
@@ -32,7 +33,7 @@ import static org.springframework.test.web.client.response.MockRestResponseCreat
 @AutoConfigureWireMock(port = 0)
 public class NSLifecycleManagementDriverTest {
 
-    private static final String BASE_API_ROOT = "/nslcm/v1";
+    private static final String BASE_API_ROOT = "/nslcm/v2";
     private static final String NS_INSTANCE_ENDPOINT = BASE_API_ROOT + "/ns_instances";
     private static final String LCM_OP_OCC_ENDPOINT = BASE_API_ROOT + "/ns_lcm_op_occs";
     private static final String SUBSCRIPTIONS_ENDPOINT = BASE_API_ROOT + "/subscriptions";
@@ -541,7 +542,7 @@ public class NSLifecycleManagementDriverTest {
                 .andExpect(header(HttpHeaders.CONTENT_TYPE, MediaType.APPLICATION_JSON_VALUE))
                 .andRespond(withSuccess().body(TestConstants.loadFileIntoString(
                         "examples/LccnSubscription.json")).contentType(MediaType.APPLICATION_JSON));
-        final String response = driver.queryLifecycleOperationOccurrence(TestConstants.TEST_DL_NO_AUTH, "nsLcmOpOccId");
+        final VnfLcmOpOcc response = driver.queryLifecycleOperationOccurrence(TestConstants.TEST_DL_NO_AUTH, "nsLcmOpOccId");
         assertThat(response);
         server.verify();
     }

@@ -4,6 +4,7 @@ import com.ibm.nfvodriver.model.alm.ResourceManagerDeploymentLocation;
 import com.ibm.nfvodriver.service.AuthenticatedRestTemplateService;
 import org.etsi.sol005.lifecyclemanagement.LccnSubscription;
 import org.etsi.sol005.lifecyclemanagement.LccnSubscriptionRequest;
+import org.etsi.sol005.lifecyclemanagement.VnfLcmOpOcc;
 import org.etsi.sol005.model.*;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -24,7 +25,7 @@ import static com.ibm.nfvodriver.config.NFVODriverConstants.NFVO_SERVER_URL;
  * Endpoints expected to be found under the following structure
  *
  * <ul>
- *     <li>{apiRoot}/nslcm/v1
+ *     <li>{apiRoot}/nslcm/v2
  *     <li><ul>
  *         <li>/ns_instances</li>
  *         <li><ul>
@@ -64,7 +65,7 @@ public class NSLifecycleManagementDriver {
 
     private final static Logger logger = LoggerFactory.getLogger(NSLifecycleManagementDriver.class);
 
-    private final static String API_CONTEXT_ROOT = "/nslcm/v1";
+    private final static String API_CONTEXT_ROOT = "/nslcm/v2";
     private final static String API_PREFIX_OP_OCCURRENCES = "/ns_lcm_op_occs";
     private final static String API_PREFIX_NS_INSTANCES = "/ns_instances";
     private final static String API_PREFIX_SUBSCRIPTIONS = "/subscriptions";
@@ -123,9 +124,7 @@ public class NSLifecycleManagementDriver {
         final HttpEntity<Void> requestEntity = getHttpEntity(null);
         final Map<String, String> uriVariables = new HashMap<>();
         uriVariables.put("nsInstanceId", nsInstanceId);
-
         final ResponseEntity<Void> responseEntity = authenticatedRestTemplateService.getRestTemplate(deploymentLocation).exchange(url, HttpMethod.DELETE, requestEntity, Void.class, uriVariables);
-
         checkResponseEntityMatches(responseEntity, HttpStatus.NO_CONTENT, false);
     }
 
@@ -308,14 +307,14 @@ public class NSLifecycleManagementDriver {
      * @throws SOL005ResponseException if there are any errors performing the query
      */
 
-    public String queryLifecycleOperationOccurrence(final ResourceManagerDeploymentLocation deploymentLocation, final String nsLcmOpOccId) throws SOL005ResponseException {
+    public VnfLcmOpOcc queryLifecycleOperationOccurrence(final ResourceManagerDeploymentLocation deploymentLocation, final String nsLcmOpOccId) throws SOL005ResponseException {
         final String url = deploymentLocation.getProperties().get(NFVO_SERVER_URL) + API_CONTEXT_ROOT + API_PREFIX_OP_OCCURRENCES + "/{nsLcmOpOccId}";
 
         final HttpEntity<Void> requestEntity = getHttpEntity(null);
         final Map<String, String> uriVariables = new HashMap<>();
         uriVariables.put("nsLcmOpOccId", nsLcmOpOccId);
 
-        final ResponseEntity<String> responseEntity = authenticatedRestTemplateService.getRestTemplate(deploymentLocation).exchange(url, HttpMethod.GET, requestEntity, String.class, uriVariables);
+        final ResponseEntity<VnfLcmOpOcc> responseEntity = authenticatedRestTemplateService.getRestTemplate(deploymentLocation).exchange(url, HttpMethod.GET, requestEntity, VnfLcmOpOcc.class, uriVariables);
 
         checkResponseEntityMatches(responseEntity, HttpStatus.OK, true);
         return responseEntity.getBody();

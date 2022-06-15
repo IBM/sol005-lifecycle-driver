@@ -11,7 +11,7 @@ The Kafka host by default is set to `iaf-system-kafka-bootstrap:9092`. This valu
 app:
   config:
     env:
-      spring_kafka_bootstrap_servers: iaf-system-kafka-bootstrap:9092
+      spring_kafka_bootstrap_servers: cp4na-o-events-kafka-bootstrap:9092
 ```
 Note :-
 

@@ -8,6 +8,7 @@ import com.ibm.nfvodriver.model.alm.GenericExecutionRequestPropertyValue;
 import com.ibm.nfvodriver.service.impl.JavascriptMessageConversionServiceImpl;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import org.junit.Test;
+import org.mockito.Mockito;
 
 import static com.ibm.nfvodriver.test.TestConstants.TEST_DL_NO_AUTH;
 import static com.ibm.nfvodriver.test.TestConstants.loadFileIntoString;
@@ -29,10 +30,10 @@ public class LifecycleManagementServiceTest {
         when(mockDriver.createNsInstance(any(), any())).thenReturn(loadFileIntoString("examples/NsInstance.json"));
 
         final ExecutionRequest executionRequest = new ExecutionRequest();
-        executionRequest.setLifecycleName("Install");
+        executionRequest.setLifecycleName("Create");
         executionRequest.setDeploymentLocation(TEST_DL_NO_AUTH);
         executionRequest.getResourceProperties().put("nsdId", new GenericExecutionRequestPropertyValue("fa2343af-2a81-4e84-a667-e40662e5ed93"));
-        executionRequest.getResourceProperties().put("nsInstanceName", new GenericExecutionRequestPropertyValue("CSCF-1"));
+        executionRequest.getResourceProperties().put("nsInstanceName", new GenericExecutionRequestPropertyValue("CSC-1"));
         executionRequest.getResourceProperties().put("additionalParams.nsPkgId", new GenericExecutionRequestPropertyValue("316aa140-c99a-4a08-b8f5-8e2cb73c83e8"));
         executionRequest.getResourceProperties().put("additionalParams.testProperty", new GenericExecutionRequestPropertyValue("TestValue"));
         // These properties should be ignored
@@ -44,7 +45,7 @@ public class LifecycleManagementServiceTest {
 
         assertThat(executionAcceptedResponse).isNotNull();
 
-        verify(mockExternalMessagingService).sendDelayedExecutionAsyncResponse(any(), any());
+        verify(mockExternalMessagingService).sendDelayedExecutionAsyncResponse(any(),any());
     }
 
     @Test

@@ -11,23 +11,25 @@ Prior to installing the driver, it may be necessary to:
 Download the Helm chart for the required version of the NFVO Driver. Run the following command to install the Helm chart with the default values:
 
 ```bash
-helm install sol005-lifecycle-driver-<version>.tgz --name sol005-lifecycle-driver
+helm install sol005-lifecycle-driver sol005-lifecycle-driver-<version>.tgz
 ```
+**NOTES**:
+ Before installing the driver, add a secret for icr.io by editing secrets through the following OpenShift console:
+
+```bash
+https://console-openshift-console.apps.DEV-CLUSTER.cp.fyre.ibm.com/k8s/ns/openshift-config/secrets/pull-secret/edit
+```
+username: iamapikey
+password: < API key generated through IBM cloud account https://cloud.ibm.com/iam/apikeys >
 
 ## Onboarding Driver into LM
 
 Use lmctl for onboard the driver into LM. For full details on how to install or use lmctl, refer to its documentation.
 
-The following command will onboard the NFVO Driver into a CP4NA (< 1.3) environment called 'dev01':
+The following command will onboard the NFVO Driver into CP4NA environment called 'dev01':
 
 ```bash
 lmctl lifecycledriver add --type sol005 --url http://sol005-lifecycle-driver:8296 dev01
-```
-
-For CP4NA 1.3 or greater, use the folowing command:
-
-```bash
-lmctl resourcedriver add --type sol005 --url http://sol005-lifecycle-driver:8296 dev01
 ```
 
 **NOTES**:

@@ -1,5 +1,5 @@
 ARG JDK_IMAGE=openjdk
-ARG JDK_VERSION=8u302-jre
+ARG JDK_VERSION=8u322-jre
 FROM ${JDK_IMAGE}:${JDK_VERSION}
 ENV JVM_OPTIONS=-Xmx256m
 COPY *.sh /data/
@@ -11,6 +11,9 @@ RUN groupadd -g 1000 -r sld \
  && chown -R sld:0 /home/sld /var/lm /data \
  && chmod -R 775 /home/sld \
  && chmod -R 775 /var/lm
+RUN apt update -y \
+ && apt upgrade -y \
+ && rm -rf /var/lib/apt/lists/*
 USER sld
 COPY sol005-lifecycle-driver-@project.version@.jar /data/sol005-lifecycle-driver-@project.version@.jar
 # Set HOME variable (for OCP arbitrary user)
