@@ -1,3 +1,10 @@
+## [0.0.5](https://github.com/IBM/sol005-lifecycle-driver/tree/0.0.5) (2022-07-19)
+[Full Changelog](https://github.com/IBM/sol005-lifecycle-driver/compare/0.0.4...0.0.5)
+
+**Implemented enhancements:**
+
+- Vulnerabilities fixes
+
 ## [0.0.4](https://github.com/IBM/sol005-lifecycle-driver/tree/0.0.4) (2022-05-31)
 [Full Changelog](https://github.com/IBM/sol005-lifecycle-driver/compare/0.0.3...0.0.4)
 
