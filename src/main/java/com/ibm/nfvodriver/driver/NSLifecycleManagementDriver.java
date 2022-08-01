@@ -262,7 +262,7 @@ public class NSLifecycleManagementDriver {
         UUID uuid = UUID.randomUUID();
         LoggingUtils.logEnabledMDC(updateNsRequest, MessageType.REQUEST,MessageDirection.SENT, uuid.toString(),MediaType.APPLICATION_JSON.toString(), "http",null,uuid.toString());
         final ResponseEntity<String> responseEntity = authenticatedRestTemplateService.getRestTemplate(deploymentLocation).exchange(url, HttpMethod.POST, requestEntity, String.class);
-
+        LoggingUtils.logEnabledMDC(responseEntity.getBody(),MessageType.RESPONSE,MessageDirection.RECEIVED,uuid.toString(),MediaType.APPLICATION_JSON.toString(), "http",getProtocolMetaData(url,responseEntity),uuid.toString());
         checkResponseEntityMatches(responseEntity, HttpStatus.ACCEPTED, false);
         // "Location" header contains URI of the created NsLcmOpOcc record
         final URI location = responseEntity.getHeaders().getLocation();
@@ -480,10 +480,11 @@ public class NSLifecycleManagementDriver {
         final String url = deploymentLocation.getProperties().get(NFVO_SERVER_URL) + API_CONTEXT_ROOT + API_PREFIX_SUBSCRIPTIONS;
         final HttpHeaders headers = getHttpHeaders(deploymentLocation);
         final HttpEntity<LccnSubscriptionRequest> requestEntity = new HttpEntity<>(lccnSubscriptionRequest, headers);
-
+        UUID uuid = UUID.randomUUID();
+        LoggingUtils.logEnabledMDC(lccnSubscriptionRequest.toString(),MessageType.REQUEST, MessageDirection.SENT, uuid.toString(),MediaType.APPLICATION_JSON.toString(), "http",null,uuid.toString());
         final ResponseEntity<LccnSubscription> responseEntity = authenticatedRestTemplateService.getRestTemplate(deploymentLocation)
                 .exchange(url, HttpMethod.POST, requestEntity, LccnSubscription.class);
-
+        LoggingUtils.logEnabledMDC(responseEntity.getBody().toString(),MessageType.RESPONSE, MessageDirection.RECEIVED,uuid.toString(),MediaType.APPLICATION_JSON.toString(), "http",getProtocolMetaData(url,responseEntity),uuid.toString());
         // "Location" header also includes URI of the created instance
         checkResponseEntityMatches(responseEntity, HttpStatus.CREATED, true);
         return responseEntity.getBody();
@@ -559,9 +560,10 @@ public class NSLifecycleManagementDriver {
         final HttpEntity<Void> requestEntity = new HttpEntity<>(headers);
         final Map<String, String> uriVariables = new HashMap<>();
         uriVariables.put("subscriptionId", subscriptionId);
-
+        UUID uuid = UUID.randomUUID();
+        LoggingUtils.logEnabledMDC(null, MessageType.REQUEST,MessageDirection.SENT, uuid.toString(),MediaType.APPLICATION_JSON.toString(), "http",null,uuid.toString());
         final ResponseEntity<Void> responseEntity = authenticatedRestTemplateService.getRestTemplate(deploymentLocation).exchange(url, HttpMethod.DELETE, requestEntity, Void.class, uriVariables);
-
+        LoggingUtils.logEnabledMDC(null, MessageType.RESPONSE,MessageDirection.RECEIVED,uuid.toString(),MediaType.APPLICATION_JSON.toString(), "http",getProtocolMetaData(url,responseEntity),uuid.toString());
         checkResponseEntityMatches(responseEntity, HttpStatus.NO_CONTENT, false);
     }
 
