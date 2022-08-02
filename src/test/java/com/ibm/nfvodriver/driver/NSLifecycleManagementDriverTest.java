@@ -63,7 +63,7 @@ public class NSLifecycleManagementDriverTest {
 
         final String createNsRequest = TestConstants.loadFileIntoString("examples/CreateNsRequest.json");
 
-        final String nsInstanceResponse = driver.createNsInstance(TestConstants.TEST_DL_NO_AUTH, createNsRequest);
+        final String nsInstanceResponse = driver.createNsInstance(TestConstants.TEST_DL_NO_AUTH, createNsRequest, TestConstants.TEST_NS_DRIVER_INSTANCE_ID);
 
         assertThat(nsInstanceResponse).isNotNull();
     }
@@ -127,7 +127,7 @@ public class NSLifecycleManagementDriverTest {
                 TestConstants.loadFileIntoString("examples/CreateNsRequest.json");
 
         final String nsInstanceResponse = driver.createNsInstance(TestConstants.TEST_DL_BASIC_AUTH,
-                createNsRequest);
+                createNsRequest, TestConstants.TEST_NS_DRIVER_INSTANCE_ID);
 
         assertThat(nsInstanceResponse).isNotNull();
     }
@@ -149,7 +149,7 @@ public class NSLifecycleManagementDriverTest {
                 TestConstants.loadFileIntoString("examples/CreateNsRequest.json");
 
         SOL005ResponseException exception = catchThrowableOfType(() ->
-                        driver.createNsInstance(TestConstants.TEST_DL_NO_AUTH, createNsRequest),
+                        driver.createNsInstance(TestConstants.TEST_DL_NO_AUTH, createNsRequest, TestConstants.TEST_NS_DRIVER_INSTANCE_ID),
                 SOL005ResponseException.class);
 
         assertThat(exception.getProblemDetails()).isNotNull();
@@ -174,7 +174,7 @@ public class NSLifecycleManagementDriverTest {
                 TestConstants.loadFileIntoString("examples/CreateNsRequest.json");
 
         SOL005ResponseException exception = catchThrowableOfType(() ->
-                        driver.createNsInstance(TestConstants.TEST_DL_NO_AUTH, createNsRequest),
+                        driver.createNsInstance(TestConstants.TEST_DL_NO_AUTH, createNsRequest, TestConstants.TEST_NS_DRIVER_INSTANCE_ID),
                 SOL005ResponseException.class);
 
         assertThat(exception.getProblemDetails()).isNotNull();
@@ -201,7 +201,7 @@ public class NSLifecycleManagementDriverTest {
                 TestConstants.loadFileIntoString("examples/CreateNsRequest.json");
 
         SOL005ResponseException exception = catchThrowableOfType(() ->
-                        driver.createNsInstance(TestConstants.TEST_DL_NO_AUTH, createNsRequest),
+                        driver.createNsInstance(TestConstants.TEST_DL_NO_AUTH, createNsRequest, TestConstants.TEST_NS_DRIVER_INSTANCE_ID),
                 SOL005ResponseException.class);
 
         assertThat(exception.getProblemDetails()).isNotNull();
@@ -230,7 +230,7 @@ public class NSLifecycleManagementDriverTest {
                 TestConstants.loadFileIntoString("examples/CreateNsRequest.json");
 
         final String nsInstanceResponse = driver.createNsInstance(TestConstants.TEST_DL_NO_AUTH,
-                createNsRequest);
+                createNsRequest, TestConstants.TEST_NS_DRIVER_INSTANCE_ID);
 
         assertThat(nsInstanceResponse).isNotNull();
     }
@@ -252,7 +252,7 @@ public class NSLifecycleManagementDriverTest {
                 TestConstants.loadFileIntoString("examples/CreateNsRequest.json");
 
         assertThatThrownBy(() -> driver.createNsInstance(TestConstants.TEST_DL_NO_AUTH,
-                createNsRequest)).isInstanceOf(SOL005ResponseException.class)
+                createNsRequest, TestConstants.TEST_NS_DRIVER_INSTANCE_ID)).isInstanceOf(SOL005ResponseException.class)
                 .hasMessage("Invalid status code [301 MOVED_PERMANENTLY] received");
     }
 
@@ -272,7 +272,7 @@ public class NSLifecycleManagementDriverTest {
                 TestConstants.loadFileIntoString("examples/CreateNsRequest.json");
 
         assertThatThrownBy(() -> driver.createNsInstance(TestConstants.TEST_DL_NO_AUTH,
-                createNsRequest)).isInstanceOf(SOL005ResponseException.class)
+                createNsRequest, TestConstants.TEST_NS_DRIVER_INSTANCE_ID)).isInstanceOf(SOL005ResponseException.class)
                 .hasMessage("No response body");
     }
 
@@ -287,7 +287,7 @@ public class NSLifecycleManagementDriverTest {
                         TestConstants.TEST_NS_INSTANCE_ID)).andExpect(method(HttpMethod.DELETE))
                 .andRespond(withNoContent());
 
-        driver.deleteNsInstance(TestConstants.TEST_DL_NO_AUTH, TestConstants.TEST_NS_INSTANCE_ID);
+        driver.deleteNsInstance(TestConstants.TEST_DL_NO_AUTH, TestConstants.TEST_NS_INSTANCE_ID, TestConstants.TEST_NS_DRIVER_INSTANCE_ID);
     }
 
     @Test
@@ -301,7 +301,7 @@ public class NSLifecycleManagementDriverTest {
                 .andRespond(withStatus(HttpStatus.NOT_FOUND));
 
         SOL005ResponseException exception = catchThrowableOfType(() ->
-                        driver.deleteNsInstance(TestConstants.TEST_DL_NO_AUTH, TestConstants.TEST_NS_INSTANCE_ID),
+                        driver.deleteNsInstance(TestConstants.TEST_DL_NO_AUTH, TestConstants.TEST_NS_INSTANCE_ID, TestConstants.TEST_NS_DRIVER_INSTANCE_ID),
                 SOL005ResponseException.class);
 
         assertThat(exception.getProblemDetails()).isNotNull();
@@ -323,7 +323,7 @@ public class NSLifecycleManagementDriverTest {
                         "examples/ProblemDetails.json")).contentType(MediaType.APPLICATION_JSON));
 
         SOL005ResponseException exception = catchThrowableOfType(() ->
-                        driver.deleteNsInstance(TestConstants.TEST_DL_NO_AUTH, TestConstants.TEST_NS_INSTANCE_ID),
+                        driver.deleteNsInstance(TestConstants.TEST_DL_NO_AUTH, TestConstants.TEST_NS_INSTANCE_ID, TestConstants.TEST_NS_DRIVER_INSTANCE_ID),
                 SOL005ResponseException.class);
 
         assertThat(exception.getProblemDetails()).isNotNull();
