@@ -13,6 +13,14 @@ app:
     env:
       spring_kafka_bootstrap_servers: cp4na-o-events-kafka-bootstrap:9092
 ```
+Note :-
+
+kafka host value must be set as follows, in values.yaml file of the helm package, depending on the CP4NA versions:
+
+
+    For CP4NA v2.3+, it must be cp4na-o-events-kafka-bootstrap can be
+
+    For CP4NA v2.3/v2.3+, it must be cp4na-o-events-kafka-bootstrap
 
 **Creating Kafka topic**
 
