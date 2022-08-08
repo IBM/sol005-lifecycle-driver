@@ -102,10 +102,10 @@ public class NSLifecycleManagementDriver {
         headers.setContentType(MediaType.APPLICATION_JSON);
         final HttpEntity<String> requestEntity = new HttpEntity<>(createNsRequest, headers);
         UUID uuid = UUID.randomUUID();
-        LoggingUtils.logEnabledMDC(createNsRequest, MessageType.REQUEST, MessageDirection.SENT, uuid.toString(),MediaType.APPLICATION_JSON.toString(), "http",null,driverrequestid);
+        LoggingUtils.logEnabledMDC(createNsRequest, MessageType.request, MessageDirection.sent, uuid.toString(),MediaType.APPLICATION_JSON.toString(), "http",getRequestProtocolMetaData(url) ,driverrequestid);
 
         final ResponseEntity<String> responseEntity = authenticatedRestTemplateService.getRestTemplate(deploymentLocation).exchange(url, HttpMethod.POST, requestEntity, String.class);
-        LoggingUtils.logEnabledMDC(responseEntity.getBody(), MessageType.RESPONSE,MessageDirection.RECEIVED,uuid.toString(),MediaType.APPLICATION_JSON.toString(), "http",getProtocolMetaData(url,responseEntity),driverrequestid);
+        LoggingUtils.logEnabledMDC(responseEntity.getBody(), MessageType.response,MessageDirection.received,uuid.toString(),MediaType.APPLICATION_JSON.toString(), "http",getProtocolMetaData(url,responseEntity),driverrequestid);
         // "Location" header also includes URI of the created instance
         checkResponseEntityMatches(responseEntity, HttpStatus.CREATED, true);
         return responseEntity.getBody();
@@ -133,9 +133,9 @@ public class NSLifecycleManagementDriver {
         final Map<String, String> uriVariables = new HashMap<>();
         uriVariables.put("nsInstanceId", nsInstanceId);
         UUID uuid = UUID.randomUUID();
-        LoggingUtils.logEnabledMDC(null, MessageType.REQUEST,MessageDirection.SENT, uuid.toString(),MediaType.APPLICATION_JSON.toString(), "http",null,driverrequestid);
+        LoggingUtils.logEnabledMDC(null, MessageType.request,MessageDirection.sent, uuid.toString(),MediaType.APPLICATION_JSON.toString(), "http",getRequestProtocolMetaData(url) ,driverrequestid);
         final ResponseEntity<Void> responseEntity = authenticatedRestTemplateService.getRestTemplate(deploymentLocation).exchange(url, HttpMethod.DELETE, requestEntity, Void.class, uriVariables);
-        LoggingUtils.logEnabledMDC(null, MessageType.RESPONSE,MessageDirection.RECEIVED,uuid.toString(),MediaType.APPLICATION_JSON.toString(), "http",getProtocolMetaData(url,responseEntity),driverrequestid);
+        LoggingUtils.logEnabledMDC(null, MessageType.response,MessageDirection.received,uuid.toString(),MediaType.APPLICATION_JSON.toString(), "http",getProtocolMetaData(url,responseEntity),driverrequestid);
         checkResponseEntityMatches(responseEntity, HttpStatus.NO_CONTENT, false);
     }
 
@@ -260,7 +260,7 @@ public class NSLifecycleManagementDriver {
         final HttpHeaders headers = getHttpHeaders(deploymentLocation);
         final HttpEntity<String> requestEntity = new HttpEntity<>(updateNsRequest, headers);
         UUID uuid = UUID.randomUUID();
-        LoggingUtils.logEnabledMDC(updateNsRequest, MessageType.REQUEST,MessageDirection.SENT, uuid.toString(),MediaType.APPLICATION_JSON.toString(), "http",null,null);
+        LoggingUtils.logEnabledMDC(updateNsRequest, MessageType.request,MessageDirection.sent, uuid.toString(),MediaType.APPLICATION_JSON.toString(), "http",getRequestProtocolMetaData(url) ,null);
         final ResponseEntity<String> responseEntity = authenticatedRestTemplateService.getRestTemplate(deploymentLocation).exchange(url, HttpMethod.POST, requestEntity, String.class);
 
         checkResponseEntityMatches(responseEntity, HttpStatus.ACCEPTED, false);
@@ -271,7 +271,7 @@ public class NSLifecycleManagementDriver {
         }
         // Return the NsLcmOpOccId, which is the last part of the path
         final String requestId = location.getPath().substring(location.getPath().lastIndexOf("/") + 1);
-        LoggingUtils.logEnabledMDC(responseEntity.getBody(),MessageType.RESPONSE,MessageDirection.RECEIVED,uuid.toString(),MediaType.APPLICATION_JSON.toString(), "http",getProtocolMetaData(url,responseEntity),requestId);
+        LoggingUtils.logEnabledMDC(responseEntity.getBody(),MessageType.response,MessageDirection.received,uuid.toString(),MediaType.APPLICATION_JSON.toString(), "http",getProtocolMetaData(url,responseEntity),requestId);
         return requestId;
     }
 
@@ -483,10 +483,10 @@ public class NSLifecycleManagementDriver {
         final HttpHeaders headers = getHttpHeaders(deploymentLocation);
         final HttpEntity<LccnSubscriptionRequest> requestEntity = new HttpEntity<>(lccnSubscriptionRequest, headers);
         UUID uuid = UUID.randomUUID();
-        LoggingUtils.logEnabledMDC(lccnSubscriptionRequest.toString(),MessageType.REQUEST, MessageDirection.SENT, uuid.toString(),MediaType.APPLICATION_JSON.toString(), "http",null,uuid.toString());
+        LoggingUtils.logEnabledMDC(lccnSubscriptionRequest.toString(),MessageType.request, MessageDirection.sent, uuid.toString(),MediaType.APPLICATION_JSON.toString(), "http",null,uuid.toString());
         final ResponseEntity<LccnSubscription> responseEntity = authenticatedRestTemplateService.getRestTemplate(deploymentLocation)
                 .exchange(url, HttpMethod.POST, requestEntity, LccnSubscription.class);
-        LoggingUtils.logEnabledMDC(responseEntity.getBody().toString(),MessageType.RESPONSE, MessageDirection.RECEIVED,uuid.toString(),MediaType.APPLICATION_JSON.toString(), "http",getProtocolMetaData(url,responseEntity),uuid.toString());
+        LoggingUtils.logEnabledMDC(responseEntity.getBody().toString(),MessageType.response, MessageDirection.received,uuid.toString(),MediaType.APPLICATION_JSON.toString(), "http",getProtocolMetaData(url,responseEntity),uuid.toString());
         // "Location" header also includes URI of the created instance
         checkResponseEntityMatches(responseEntity, HttpStatus.CREATED, true);
         return responseEntity.getBody();
@@ -563,9 +563,9 @@ public class NSLifecycleManagementDriver {
         final Map<String, String> uriVariables = new HashMap<>();
         uriVariables.put("subscriptionId", subscriptionId);
         UUID uuid = UUID.randomUUID();
-        LoggingUtils.logEnabledMDC(null, MessageType.REQUEST,MessageDirection.SENT, uuid.toString(),MediaType.APPLICATION_JSON.toString(), "http",null,uuid.toString());
+        LoggingUtils.logEnabledMDC(null, MessageType.request,MessageDirection.sent, uuid.toString(),MediaType.APPLICATION_JSON.toString(), "http",null,uuid.toString());
         final ResponseEntity<Void> responseEntity = authenticatedRestTemplateService.getRestTemplate(deploymentLocation).exchange(url, HttpMethod.DELETE, requestEntity, Void.class, uriVariables);
-        LoggingUtils.logEnabledMDC(null, MessageType.RESPONSE,MessageDirection.RECEIVED,uuid.toString(),MediaType.APPLICATION_JSON.toString(), "http",getProtocolMetaData(url,responseEntity),uuid.toString());
+        LoggingUtils.logEnabledMDC(null, MessageType.response,MessageDirection.received,uuid.toString(),MediaType.APPLICATION_JSON.toString(), "http",getProtocolMetaData(url,responseEntity),uuid.toString());
         checkResponseEntityMatches(responseEntity, HttpStatus.NO_CONTENT, false);
     }
 
@@ -671,6 +671,13 @@ public class NSLifecycleManagementDriver {
 
         return protocolMetadata;
 
+    }
+
+    Map<String,Object> getRequestProtocolMetaData(String url){
+
+        Map<String,Object> protocolMetadata=new HashMap<>();
+        protocolMetadata.put("url",url);
+        return protocolMetadata;
     }
 
 }
