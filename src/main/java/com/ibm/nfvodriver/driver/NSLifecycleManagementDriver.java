@@ -483,7 +483,7 @@ public class NSLifecycleManagementDriver {
         final HttpHeaders headers = getHttpHeaders(deploymentLocation);
         final HttpEntity<LccnSubscriptionRequest> requestEntity = new HttpEntity<>(lccnSubscriptionRequest, headers);
         UUID uuid = UUID.randomUUID();
-        LoggingUtils.logEnabledMDC(lccnSubscriptionRequest.toString(),MessageType.request, MessageDirection.sent, uuid.toString(),MediaType.APPLICATION_JSON.toString(), "http",null,uuid.toString());
+        LoggingUtils.logEnabledMDC(lccnSubscriptionRequest.toString(),MessageType.request, MessageDirection.sent, uuid.toString(),MediaType.APPLICATION_JSON.toString(), "http",getRequestProtocolMetaData(url) ,uuid.toString());
         final ResponseEntity<LccnSubscription> responseEntity = authenticatedRestTemplateService.getRestTemplate(deploymentLocation)
                 .exchange(url, HttpMethod.POST, requestEntity, LccnSubscription.class);
         LoggingUtils.logEnabledMDC(responseEntity.getBody().toString(),MessageType.response, MessageDirection.received,uuid.toString(),MediaType.APPLICATION_JSON.toString(), "http",getProtocolMetaData(url,responseEntity),uuid.toString());
@@ -563,7 +563,7 @@ public class NSLifecycleManagementDriver {
         final Map<String, String> uriVariables = new HashMap<>();
         uriVariables.put("subscriptionId", subscriptionId);
         UUID uuid = UUID.randomUUID();
-        LoggingUtils.logEnabledMDC(null, MessageType.request,MessageDirection.sent, uuid.toString(),MediaType.APPLICATION_JSON.toString(), "http",null,uuid.toString());
+        LoggingUtils.logEnabledMDC(null, MessageType.request,MessageDirection.sent, uuid.toString(),MediaType.APPLICATION_JSON.toString(), "http",getRequestProtocolMetaData(url) ,uuid.toString());
         final ResponseEntity<Void> responseEntity = authenticatedRestTemplateService.getRestTemplate(deploymentLocation).exchange(url, HttpMethod.DELETE, requestEntity, Void.class, uriVariables);
         LoggingUtils.logEnabledMDC(null, MessageType.response,MessageDirection.received,uuid.toString(),MediaType.APPLICATION_JSON.toString(), "http",getProtocolMetaData(url,responseEntity),uuid.toString());
         checkResponseEntityMatches(responseEntity, HttpStatus.NO_CONTENT, false);
