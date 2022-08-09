@@ -2,7 +2,9 @@
 Generate SSL certificate
 */}}
 {{- define "gen-cert" -}}
-{{- $cert := genSelfSignedCert "sol005-lifecycle-driver" nil nil 3650 -}}
+{{- $ca := genCA "Sol003 CA" 3650 -}}
+{{- $cert := genSignedCert "sol005-lifecycle-driver" nil nil 3650 $ca -}}
 tls.crt: {{ $cert.Cert | b64enc }}
 tls.key: {{ $cert.Key | b64enc }}
+ca.crt: {{$ca.Cert | b64enc }}
 {{- end -}}
