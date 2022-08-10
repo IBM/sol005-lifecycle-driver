@@ -29,7 +29,7 @@ Use lmctl for onboard the driver into LM. For full details on how to install or 
 The following command will onboard the NFVO Driver into CP4NA environment called 'dev01':
 
 ```bash
-lmctl lifecycledriver add --type sol005 --url http://sol005-lifecycle-driver:8296 dev01
+lmctl resourcedriver add --type sol005 --url http://sol005-lifecycle-driver:8296 dev01
 ```
 
 **NOTES**:
