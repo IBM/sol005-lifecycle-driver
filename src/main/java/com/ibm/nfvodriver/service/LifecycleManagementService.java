@@ -1,7 +1,10 @@
 package com.ibm.nfvodriver.service;
 
+import com.ibm.common.utils.LoggingUtils;
 import com.ibm.nfvodriver.config.NFVODriverProperties;
 import com.ibm.nfvodriver.driver.NSLifecycleManagementDriver;
+import com.ibm.nfvodriver.model.MessageDirection;
+import com.ibm.nfvodriver.model.MessageType;
 import com.ibm.nfvodriver.model.alm.ExecutionAcceptedResponse;
 import com.ibm.nfvodriver.model.alm.ExecutionAsyncResponse;
 import com.ibm.nfvodriver.model.alm.ExecutionRequest;
@@ -9,6 +12,7 @@ import com.ibm.nfvodriver.model.alm.ExecutionStatus;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.MediaType;
 import org.springframework.stereotype.Service;
 
 import java.util.Collections;
@@ -39,13 +43,13 @@ public class LifecycleManagementService {
 
         try {
             if ("Create".equalsIgnoreCase(executionRequest.getLifecycleName())) {
+                final String requestId = UUID.randomUUID().toString();
                 // Generate CreateNSRequest message
                 final String createNsRequest = messageConversionService.generateMessageFromRequest("CreateNsRequest", executionRequest);
                 // Send message to NFVO
-                final String nsInstanceResponse = nsLifecycleManagementDriver.createNsInstance(executionRequest.getDeploymentLocation(), createNsRequest);
+                final String nsInstanceResponse = nsLifecycleManagementDriver.createNsInstance(executionRequest.getDeploymentLocation(), createNsRequest, requestId);
                 // Convert response into properties to be returned to ALM
                 final Map<String, Object> outputs = messageConversionService.extractPropertiesFromMessage("NsInstance", executionRequest, nsInstanceResponse);
-                final String requestId = UUID.randomUUID().toString();
                 // Delay sending the asynchronous response (from a different thread) as this method needs to complete first (to send the response back to Brent)
                 externalMessagingService.sendDelayedExecutionAsyncResponse(new ExecutionAsyncResponse(requestId, ExecutionStatus.COMPLETE, null, outputs, Collections.emptyMap()), properties.getExecutionResponseDelay());
 
@@ -65,9 +69,9 @@ public class LifecycleManagementService {
                 return new ExecutionAcceptedResponse(requestId);
             } else if ("Delete".equalsIgnoreCase(executionRequest.getLifecycleName())) {
                 // Delete
-                final String nsInstanceId = executionRequest.getStringResourceProperty("nsInstanceId");
-                nsLifecycleManagementDriver.deleteNsInstance(executionRequest.getDeploymentLocation(), nsInstanceId);
                 final String requestId = UUID.randomUUID().toString();
+                final String nsInstanceId = executionRequest.getStringResourceProperty("nsInstanceId");
+                nsLifecycleManagementDriver.deleteNsInstance(executionRequest.getDeploymentLocation(), nsInstanceId, requestId);
                 externalMessagingService.sendDelayedExecutionAsyncResponse(new ExecutionAsyncResponse(requestId, ExecutionStatus.COMPLETE, null, Collections.emptyMap(), Collections.emptyMap()), properties.getExecutionResponseDelay());
                 return new ExecutionAcceptedResponse(requestId);
             } else if ("Uninstall".equalsIgnoreCase(executionRequest.getLifecycleName())) {
