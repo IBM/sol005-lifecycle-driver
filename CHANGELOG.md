@@ -1,3 +1,11 @@
+## [0.0.6](https://github.com/IBM/sol005-lifecycle-driver/tree/0.0.6) (2022-08-10)
+
+[Full Changelog](https://github.com/IBM/sol005-lifecycle-driver/compare/0.0.5...0.0.6)
+
+**Implemented enhancements:**
+
+- Enabled Request Response Logging with CorrelationId, ContentType and Payload
+
 ## [0.0.5](https://github.com/IBM/sol005-lifecycle-driver/tree/0.0.5) (2022-07-19)
 [Full Changelog](https://github.com/IBM/sol005-lifecycle-driver/compare/0.0.4...0.0.5)
 
