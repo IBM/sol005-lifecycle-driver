@@ -27,7 +27,7 @@ public class LifecycleManagementServiceTest {
         final MessageConversionService messageConversionService = new JavascriptMessageConversionServiceImpl(objectMapper);
         final LifecycleManagementService lifecycleManagementService = new LifecycleManagementService(mockDriver, messageConversionService, mockExternalMessagingService, new NFVODriverProperties());
 
-        when(mockDriver.createNsInstance(any(), any())).thenReturn(loadFileIntoString("examples/NsInstance.json"));
+        when(mockDriver.createNsInstance(any(),any(),any())).thenReturn(loadFileIntoString("examples/NsInstance.json"));
 
         final ExecutionRequest executionRequest = new ExecutionRequest();
         executionRequest.setLifecycleName("Create");
