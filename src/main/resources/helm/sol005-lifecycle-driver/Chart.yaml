@@ -1,5 +1,5 @@
 name: sol005-lifecycle-driver
-version: 0.1.2
+version: #project.version#
 apiVersion: v1
 description: A Helm chart for the SOL005 NFVO Driver
 maintainers:
