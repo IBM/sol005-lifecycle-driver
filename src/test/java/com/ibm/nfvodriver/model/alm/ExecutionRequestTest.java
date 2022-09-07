@@ -1,7 +1,7 @@
 package com.ibm.nfvodriver.model.alm;
 
 import com.ibm.nfvodriver.service.MessageConversionException;
-import org.junit.Test;
+import org.junit.jupiter.api.Test;
 
 import static org.assertj.core.api.Assertions.assertThat;
 import static org.assertj.core.api.Assertions.assertThatThrownBy;

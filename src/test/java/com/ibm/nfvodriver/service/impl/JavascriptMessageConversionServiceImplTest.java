@@ -8,8 +8,8 @@ import com.ibm.nfvodriver.test.TestConstants;
 import com.fasterxml.jackson.core.type.TypeReference;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.fasterxml.jackson.databind.SerializationFeature;
-import org.junit.BeforeClass;
-import org.junit.Test;
+import org.junit.jupiter.api.BeforeAll;
+import org.junit.jupiter.api.Test;
 import org.springframework.boot.test.json.JsonContent;
 
 import java.io.ByteArrayOutputStream;
@@ -30,7 +30,7 @@ public class JavascriptMessageConversionServiceImplTest {
 
     private final static ObjectMapper objectMapper = new ObjectMapper();
 
-    @BeforeClass
+    @BeforeAll
     public static void setUpClass() {
 
         objectMapper.findAndRegisterModules();
