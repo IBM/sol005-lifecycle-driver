@@ -2,10 +2,7 @@ package com.ibm.nfvodriver.driver;
 
 import com.ibm.nfvodriver.service.AuthenticatedRestTemplateService;
 import com.ibm.nfvodriver.test.TestConstants;
-import org.junit.Rule;
-import org.junit.Test;
-import org.junit.rules.TestName;
-import org.junit.runner.RunWith;
+import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.boot.test.autoconfigure.web.client.RestClientTest;
@@ -22,7 +19,6 @@ import static org.assertj.core.api.Assertions.assertThat;
 import static org.springframework.test.web.client.match.MockRestRequestMatchers.*;
 import static org.springframework.test.web.client.response.MockRestResponseCreators.*;
 
-@RunWith(SpringRunner.class)
 @RestClientTest({NSDManagementDriver.class, SOL005ResponseErrorHandler.class, AuthenticatedRestTemplateService.class})
 @AutoConfigureWireMock(port = 0)
 public class NSDManagementDriverTest {
@@ -46,9 +42,6 @@ public class NSDManagementDriverTest {
 
     @Value("${wiremock.server.port}")
     private int wiremockServerPort;
-
-    @Rule
-    public TestName testName = new TestName();
 
     @Test
     public void testCreateNsDescriptor() throws Exception {

@@ -6,10 +6,7 @@ import com.ibm.nfvodriver.test.TestConstants;
 import org.etsi.sol005.lifecyclemanagement.LccnSubscription;
 import org.etsi.sol005.lifecyclemanagement.LccnSubscriptionRequest;
 import org.etsi.sol005.lifecyclemanagement.VnfLcmOpOcc;
-import org.junit.Rule;
-import org.junit.Test;
-import org.junit.rules.TestName;
-import org.junit.runner.RunWith;
+import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.boot.test.autoconfigure.web.client.RestClientTest;
@@ -28,7 +25,6 @@ import static org.assertj.core.api.Assertions.*;
 import static org.springframework.test.web.client.match.MockRestRequestMatchers.*;
 import static org.springframework.test.web.client.response.MockRestResponseCreators.*;
 
-@RunWith(SpringRunner.class)
 @RestClientTest({NSLifecycleManagementDriver.class, SOL005ResponseErrorHandler.class, AuthenticatedRestTemplateService.class})
 @AutoConfigureWireMock(port = 0)
 public class NSLifecycleManagementDriverTest {
@@ -46,9 +42,6 @@ public class NSLifecycleManagementDriverTest {
 
     @Value("${wiremock.server.port}")
     private int wiremockServerPort;
-
-    @Rule
-    public TestName testName = new TestName();
 
     @Test
     public void testCreateNsInstance() throws Exception {
