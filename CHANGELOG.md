@@ -4,7 +4,7 @@
 
 **Implemented enhancements:**
 
-- Enable SSL on sol003 driver
+- Enable SSL on sol005 driver
 - Add documentation for SSL feature
 - Use Keystore password from the secret cp4na-o-keystore
 - API major version change as per spec 3.5.1
