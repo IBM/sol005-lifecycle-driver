@@ -24,6 +24,9 @@ global:
   ## Enable the use of LM security features
   security:
     enabled: false
+    certificates:
+      keystore:
+        secretName: cp4na-o-keystore
 
 ## Docker
 docker:
@@ -55,7 +58,14 @@ app:
     
     ## Environment Options
     ## Add environment variables to the pods
-    # env: 
+    # env:
+    security:
+      ssl:
+        enabled: True
+        secret:
+          generate: True
+          name: sol005-lifecycle-driver-tls
+          commonName: sol005-lifecycle-driver
 
   ## secret containing client certificates that are to be trusted
   certificateSecret:

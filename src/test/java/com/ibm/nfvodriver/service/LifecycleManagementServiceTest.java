@@ -7,8 +7,7 @@ import com.ibm.nfvodriver.model.alm.ExecutionRequest;
 import com.ibm.nfvodriver.model.alm.GenericExecutionRequestPropertyValue;
 import com.ibm.nfvodriver.service.impl.JavascriptMessageConversionServiceImpl;
 import com.fasterxml.jackson.databind.ObjectMapper;
-import org.junit.Test;
-import org.mockito.Mockito;
+import org.junit.jupiter.api.Test;
 
 import static com.ibm.nfvodriver.test.TestConstants.TEST_DL_NO_AUTH;
 import static com.ibm.nfvodriver.test.TestConstants.loadFileIntoString;
