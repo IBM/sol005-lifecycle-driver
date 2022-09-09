@@ -7,7 +7,6 @@
 - Enable SSL on sol005 driver
 - Add documentation for SSL feature
 - Use Keystore password from the secret cp4na-o-keystore
-- API major version change as per spec 3.5.1
 - Security vulnerabilities fixes
 
 ## [0.1.1](https://github.com/IBM/sol005-lifecycle-driver/tree/0.1.1) (2022-08-22)
