@@ -19,6 +19,8 @@ import java.util.Collections;
 import java.util.Map;
 import java.util.UUID;
 
+import static com.ibm.nfvodriver.utils.Constants.*;
+
 @Service("LifecycleManagementService")
 public class LifecycleManagementService {
 
@@ -40,9 +42,73 @@ public class LifecycleManagementService {
 
     public ExecutionAcceptedResponse executeLifecycle(ExecutionRequest executionRequest) throws MessageConversionException {
         logger.info("Processing execution request");
-
+        String lifecycleName = executionRequest.getLifecycleName();
+        final String requestId = UUID.randomUUID().toString();
         try {
-            if ("Create".equalsIgnoreCase(executionRequest.getLifecycleName())) {
+            switch (lifecycleName) {
+                case LIFECYCLE_CREATE:
+                    // Generate CreateNSRequest message
+                    final String createNsRequest = messageConversionService.generateMessageFromRequest("CreateNsRequest", executionRequest);
+                    // Send message to NFVO
+                    final String nsInstanceResponse = nsLifecycleManagementDriver.createNsInstance(executionRequest.getDeploymentLocation(), createNsRequest, requestId);
+                    // Convert response into properties to be returned to ALM
+                    final Map<String, Object> outputs = messageConversionService.extractPropertiesFromMessage("NsInstance", executionRequest, nsInstanceResponse);
+                    // Delay sending the asynchronous response (from a different thread) as this method needs to complete first (to send the response back to Brent)
+                    externalMessagingService.sendDelayedExecutionAsyncResponse(new ExecutionAsyncResponse(requestId, ExecutionStatus.COMPLETE, null, outputs, Collections.emptyMap()), properties.getExecutionResponseDelay());
+                    return new ExecutionAcceptedResponse(requestId);
+                case LIFECYCLE_INSTALL:
+                    // Instantiate
+                    final String nsInstallInstanceId = executionRequest.getStringResourceProperty("nsInstanceId");
+                    final String instantiateNsRequest = messageConversionService.generateMessageFromRequest("InstantiateNsRequest", executionRequest);
+                    final String responseGetInstantiateNsUUID = nsLifecycleManagementDriver.instantiateNs(executionRequest.getDeploymentLocation(), nsInstallInstanceId, instantiateNsRequest);
+                    return new ExecutionAcceptedResponse(responseGetInstantiateNsUUID);
+                case LIFECYCLE_UPGRADE:
+                    // Upgrade
+                    final String nsUpgradeInstanceId = executionRequest.getStringResourceProperty("nsInstanceId");
+                    final String updateNsRequest = messageConversionService.generateMessageFromRequest("UpdateNsRequest", executionRequest);
+                    final String responseGetUpdateNsUUID = nsLifecycleManagementDriver.updateNs(executionRequest.getDeploymentLocation(), nsUpgradeInstanceId, updateNsRequest);
+                    return new ExecutionAcceptedResponse(responseGetUpdateNsUUID);
+                case LIFECYCLE_DELETE:
+                    // Delete
+                    final String nsInstanceId = executionRequest.getStringResourceProperty("nsInstanceId");
+                    nsLifecycleManagementDriver.deleteNsInstance(executionRequest.getDeploymentLocation(), nsInstanceId, requestId);
+                    externalMessagingService.sendDelayedExecutionAsyncResponse(new ExecutionAsyncResponse(requestId, ExecutionStatus.COMPLETE, null, Collections.emptyMap(), Collections.emptyMap()), properties.getExecutionResponseDelay());
+                    return new ExecutionAcceptedResponse(requestId);
+                case LIFECYCLE_UNINSTALL:
+                    // Terminate
+                    final String nsUninstallInstanceId = executionRequest.getStringResourceProperty("nsInstanceId");
+                    final String terminateNsRequest = messageConversionService.generateMessageFromRequest("TerminateNsRequest", executionRequest);
+                    final String responseGetTerminateNsUUID = nsLifecycleManagementDriver.terminateNs(executionRequest.getDeploymentLocation(), nsUninstallInstanceId, terminateNsRequest);
+                    return new ExecutionAcceptedResponse(responseGetTerminateNsUUID);
+                case LIFECYCLE_SCALETOLEVEL:
+                    // ScaleToLevel
+                    final String nsScaleToLevelInstanceId = executionRequest.getStringResourceProperty("nsInstanceId");
+                    final String scaleToLevelNsRequest = messageConversionService.generateMessageFromRequest("ScaleNsRequest", executionRequest);
+                    final String responseGetScaleToLevelNsUUID = nsLifecycleManagementDriver.scaleNs(executionRequest.getDeploymentLocation(), nsScaleToLevelInstanceId, scaleToLevelNsRequest);
+                    return new ExecutionAcceptedResponse(responseGetScaleToLevelNsUUID);
+                case LIFECYCLE_SCALEOUT:
+                    // Scale Out
+                    /*final String nsScaleOutInstanceId = executionRequest.getStringResourceProperty("nsInstanceId");
+                    final String scaleOutNsRequest = messageConversionService.generateMessageFromRequest("ScaleNsRequest", executionRequest);
+                    final String responseGetScaleOutNsUUID = nsLifecycleManagementDriver.scaleNs(executionRequest.getDeploymentLocation(), nsScaleOutInstanceId, scaleOutNsRequest);
+                    return new ExecutionAcceptedResponse(responseGetScaleOutNsUUID);*/
+                case LIFECYCLE_SCALEIN:
+                    // Scale In
+                    final String nsScaleInInstanceId = executionRequest.getStringResourceProperty("nsInstanceId");
+                    final String scaleInNsRequest = messageConversionService.generateMessageFromRequest("ScaleNsRequest", executionRequest);
+                    final String responseGetScaleInNsUUID = nsLifecycleManagementDriver.scaleNs(executionRequest.getDeploymentLocation(), nsScaleInInstanceId, scaleInNsRequest);
+                    return new ExecutionAcceptedResponse(responseGetScaleInNsUUID);
+                case LIFECYCLE_HEAL:
+                    // Heal
+                    final String nsHealInstanceId = executionRequest.getStringResourceProperty("nsInstanceId");
+                    final String healNsRequest = messageConversionService.generateMessageFromRequest("HealNsRequest", executionRequest);
+                    final String responseGetHealNsUUID = nsLifecycleManagementDriver.healNs(executionRequest.getDeploymentLocation(), nsHealInstanceId, healNsRequest);
+                    return new ExecutionAcceptedResponse(responseGetHealNsUUID);
+                default:
+                    throw new IllegalArgumentException(String.format("Requested transition [%s] is not supported by this lifecycle driver", executionRequest.getLifecycleName()));
+            }
+
+            /*if ("Create".equalsIgnoreCase(executionRequest.getLifecycleName())) {
                 final String requestId = UUID.randomUUID().toString();
                 // Generate CreateNSRequest message
                 final String createNsRequest = messageConversionService.generateMessageFromRequest("CreateNsRequest", executionRequest);
@@ -106,7 +172,7 @@ public class LifecycleManagementService {
                 return new ExecutionAcceptedResponse(requestId);
             } else {
                 throw new IllegalArgumentException(String.format("Requested transition [%s] is not supported by this lifecycle driver", executionRequest.getLifecycleName()));
-            }
+            }*/
         } catch (MessageConversionException e) {
             logger.error("Error converting message", e);
             throw e;
