@@ -27,6 +27,7 @@ public class LifecycleManagementService {
     private final MessageConversionService messageConversionService;
     private final ExternalMessagingService externalMessagingService;
     private final NFVODriverProperties properties;
+    //Not all lifecycles will be part of this Map. For example delete lifecycle doesn't need payload
     private final Map requestTypeMap = Map.of(LIFECYCLE_CREATE,"CreateNsRequest",
             LIFECYCLE_INSTALL, "InstantiateNsRequest",
             LIFECYCLE_UPGRADE, "UpdateNsRequest",
