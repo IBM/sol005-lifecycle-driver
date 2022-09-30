@@ -1,13 +1,21 @@
+## [0.2.1](https://github.com/IBM/sol005-lifecycle-driver/tree/0.2.1) (2022-09-30)
+
+[Full Changelog](https://github.com/IBM/sol005-lifecycle-driver/compare/0.2.0...0.2.1)
+
+**Implemented enhancements:**
+
+- Code Optimization- Removed unused files also added switch cases and reusable functions
+- Security vulnerabilities fixes
+
 ## [0.2.0](https://github.com/IBM/sol005-lifecycle-driver/tree/0.2.0) (2022-09-09)
 
 [Full Changelog](https://github.com/IBM/sol005-lifecycle-driver/compare/0.1.1...0.2.0)
 
 **Implemented enhancements:**
 
-- Enable SSL on sol003 driver
+- Enable SSL on sol005 driver
 - Add documentation for SSL feature
 - Use Keystore password from the secret cp4na-o-keystore
-- API major version change as per spec 3.5.1
 - Security vulnerabilities fixes
 
 ## [0.1.1](https://github.com/IBM/sol005-lifecycle-driver/tree/0.1.1) (2022-08-22)
