@@ -98,9 +98,7 @@ public class NSLifecycleManagementDriver {
      */
     public String createNsInstance(final ResourceManagerDeploymentLocation deploymentLocation, final String createNsRequest, final String driverrequestid) throws SOL005ResponseException {
         final String url = deploymentLocation.getProperties().get(NFVO_SERVER_URL) + API_CONTEXT_ROOT + API_PREFIX_NS_INSTANCES;
-        final HttpHeaders headers = getHttpHeaders(deploymentLocation);
-        headers.setContentType(MediaType.APPLICATION_JSON);
-        final HttpEntity<String> requestEntity = new HttpEntity<>(createNsRequest, headers);
+        final HttpEntity<String> requestEntity = createRequestEntity(deploymentLocation, MediaType.APPLICATION_JSON, createNsRequest);
         UUID uuid = UUID.randomUUID();
         LoggingUtils.logEnabledMDC(createNsRequest, MessageType.REQUEST, MessageDirection.SENT, uuid.toString(),MediaType.APPLICATION_JSON.toString(), "http",getRequestProtocolMetaData(url) ,driverrequestid);
 
@@ -128,8 +126,7 @@ public class NSLifecycleManagementDriver {
      */
     public void deleteNsInstance(final ResourceManagerDeploymentLocation deploymentLocation, final String nsInstanceId, final String driverrequestid) throws SOL005ResponseException {
         final String url = deploymentLocation.getProperties().get(NFVO_SERVER_URL) + API_CONTEXT_ROOT + API_PREFIX_NS_INSTANCES + "/{nsInstanceId}";
-        final HttpHeaders headers = getHttpHeaders(deploymentLocation);
-        final HttpEntity<Void> requestEntity = new HttpEntity<>(headers);
+        final HttpEntity<String> requestEntity = createRequestEntity(deploymentLocation);
         final Map<String, String> uriVariables = new HashMap<>();
         uriVariables.put("nsInstanceId", nsInstanceId);
         UUID uuid = UUID.randomUUID();
@@ -257,8 +254,7 @@ public class NSLifecycleManagementDriver {
     private String callNsLcmOperation(final ResourceManagerDeploymentLocation deploymentLocation, final String nsInstanceId, final String operationName, final String updateNsRequest)
             throws SOL005ResponseException {
         final String url = deploymentLocation.getProperties().get(NFVO_SERVER_URL) + API_CONTEXT_ROOT + API_PREFIX_NS_INSTANCES + "/" + nsInstanceId + "/" + operationName;
-        final HttpHeaders headers = getHttpHeaders(deploymentLocation);
-        final HttpEntity<String> requestEntity = new HttpEntity<>(updateNsRequest, headers);
+        final HttpEntity<String> requestEntity = createRequestEntity(deploymentLocation, updateNsRequest);
         UUID uuid = UUID.randomUUID();
         LoggingUtils.logEnabledMDC(updateNsRequest, MessageType.REQUEST,MessageDirection.SENT, uuid.toString(),MediaType.APPLICATION_JSON.toString(), "http",getRequestProtocolMetaData(url) ,null);
         final ResponseEntity<String> responseEntity = authenticatedRestTemplateService.getRestTemplate(deploymentLocation).exchange(url, HttpMethod.POST, requestEntity, String.class);
@@ -299,10 +295,7 @@ public class NSLifecycleManagementDriver {
      */
     public String queryAllLifecycleOperationOccurrences(final ResourceManagerDeploymentLocation deploymentLocation) throws SOL005ResponseException {
         final String url = deploymentLocation.getProperties().get(NFVO_SERVER_URL) + API_CONTEXT_ROOT + API_PREFIX_OP_OCCURRENCES;
-        final HttpHeaders headers = getHttpHeaders(deploymentLocation);
-        headers.setContentType(MediaType.APPLICATION_JSON);
-        final HttpEntity<String> requestEntity = new HttpEntity<>(headers);
-
+        final HttpEntity<String> requestEntity = createRequestEntity(deploymentLocation, MediaType.APPLICATION_JSON);
         final ResponseEntity<String> responseEntity = authenticatedRestTemplateService.getRestTemplate(deploymentLocation).exchange(url, HttpMethod.GET, requestEntity, String.class);
 
         // "Location" header also includes URI of the created instance
@@ -326,8 +319,7 @@ public class NSLifecycleManagementDriver {
 
     public VnfLcmOpOcc queryLifecycleOperationOccurrence(final ResourceManagerDeploymentLocation deploymentLocation, final String nsLcmOpOccId) throws SOL005ResponseException {
         final String url = deploymentLocation.getProperties().get(NFVO_SERVER_URL) + API_CONTEXT_ROOT + API_PREFIX_OP_OCCURRENCES + "/{nsLcmOpOccId}";
-        final HttpHeaders headers = getHttpHeaders(deploymentLocation);
-        final HttpEntity<Void> requestEntity = new HttpEntity<>(headers);
+        final HttpEntity<String> requestEntity = createRequestEntity(deploymentLocation);
         final Map<String, String> uriVariables = new HashMap<>();
         uriVariables.put("nsLcmOpOccId", nsLcmOpOccId);
 
@@ -352,8 +344,7 @@ public class NSLifecycleManagementDriver {
      */
     public void nsLcmOperationsOccurrencesRetry(final ResourceManagerDeploymentLocation deploymentLocation, final String nsLcmOpOccId) throws SOL005ResponseException {
         final String url = deploymentLocation.getProperties().get(NFVO_SERVER_URL) + API_CONTEXT_ROOT + API_PREFIX_OP_OCCURRENCES + "/{nsLcmOpOccId}/retry";
-        final HttpHeaders headers = getHttpHeaders(deploymentLocation);
-        final HttpEntity<Void> requestEntity = new HttpEntity<>(headers);
+        final HttpEntity<String> requestEntity = createRequestEntity(deploymentLocation);
         final Map<String, String> uriVariables = new HashMap<>();
         uriVariables.put("nsLcmOpOccId", nsLcmOpOccId);
 
@@ -377,8 +368,7 @@ public class NSLifecycleManagementDriver {
      */
     public void nsLcmOperationsOccurrencesRollback(final ResourceManagerDeploymentLocation deploymentLocation, final String nsLcmOpOccId) throws SOL005ResponseException {
         final String url = deploymentLocation.getProperties().get(NFVO_SERVER_URL) + API_CONTEXT_ROOT + API_PREFIX_OP_OCCURRENCES + "/{nsLcmOpOccId}/rollback";
-        final HttpHeaders headers = getHttpHeaders(deploymentLocation);
-        final HttpEntity<Void> requestEntity = new HttpEntity<>(headers);
+        final HttpEntity<String> requestEntity = createRequestEntity(deploymentLocation);
         final Map<String, String> uriVariables = new HashMap<>();
         uriVariables.put("nsLcmOpOccId", nsLcmOpOccId);
 
@@ -402,8 +392,7 @@ public class NSLifecycleManagementDriver {
      */
     public void nsLcmOperationsOccurrencesContinue(final ResourceManagerDeploymentLocation deploymentLocation, final String nsLcmOpOccId) throws SOL005ResponseException {
         final String url = deploymentLocation.getProperties().get(NFVO_SERVER_URL) + API_CONTEXT_ROOT + API_PREFIX_OP_OCCURRENCES + "/{nsLcmOpOccId}/continue";
-        final HttpHeaders headers = getHttpHeaders(deploymentLocation);
-        final HttpEntity<Void> requestEntity = new HttpEntity<>(headers);
+        final HttpEntity<String> requestEntity = createRequestEntity(deploymentLocation);
         final Map<String, String> uriVariables = new HashMap<>();
         uriVariables.put("nsLcmOpOccId", nsLcmOpOccId);
 
@@ -427,8 +416,7 @@ public class NSLifecycleManagementDriver {
      */
     public String nsLcmOperationsOccurrencesFail(final ResourceManagerDeploymentLocation deploymentLocation, final String nsLcmOpOccId) throws SOL005ResponseException {
         final String url = deploymentLocation.getProperties().get(NFVO_SERVER_URL) + API_CONTEXT_ROOT + API_PREFIX_OP_OCCURRENCES + "/{nsLcmOpOccId}/fail";
-        final HttpHeaders headers = getHttpHeaders(deploymentLocation);
-        final HttpEntity<Void> requestEntity = new HttpEntity<>(headers);
+        final HttpEntity<String> requestEntity = createRequestEntity(deploymentLocation);
         final Map<String, String> uriVariables = new HashMap<>();
         uriVariables.put("nsLcmOpOccId", nsLcmOpOccId);
 
@@ -453,8 +441,7 @@ public class NSLifecycleManagementDriver {
      */
     public void nsLcmOperationsOccurrencesCancel(final ResourceManagerDeploymentLocation deploymentLocation, final String nsLcmOpOccId, final String cancelMode) throws SOL005ResponseException {
         final String url = deploymentLocation.getProperties().get(NFVO_SERVER_URL) + API_CONTEXT_ROOT + API_PREFIX_OP_OCCURRENCES + "/{nsLcmOpOccId}/cancel";
-        final HttpHeaders headers = getHttpHeaders(deploymentLocation);
-        final HttpEntity<String> requestEntity = new HttpEntity<>(cancelMode, headers);
+        final HttpEntity<String> requestEntity = createRequestEntity(deploymentLocation, cancelMode);
         final Map<String, String> uriVariables = new HashMap<>();
         uriVariables.put("nsLcmOpOccId", nsLcmOpOccId);
 
@@ -506,9 +493,7 @@ public class NSLifecycleManagementDriver {
      */
     public String queryAllLifecycleSubscriptions(final ResourceManagerDeploymentLocation deploymentLocation, final String lccnSubscriptionRequest) throws SOL005ResponseException {
         final String url = deploymentLocation.getProperties().get(NFVO_SERVER_URL) + API_CONTEXT_ROOT + API_PREFIX_SUBSCRIPTIONS;
-        final HttpHeaders headers = getHttpHeaders(deploymentLocation);
-        final HttpEntity<String> requestEntity = new HttpEntity<>(lccnSubscriptionRequest, headers);
-
+        final HttpEntity<String> requestEntity = createRequestEntity(deploymentLocation, lccnSubscriptionRequest);
         final ResponseEntity<String> responseEntity = authenticatedRestTemplateService.getRestTemplate(deploymentLocation)
                 .exchange(url, HttpMethod.GET, requestEntity, String.class);
 
@@ -532,8 +517,7 @@ public class NSLifecycleManagementDriver {
      */
     public String queryLifecycleSubscription(final ResourceManagerDeploymentLocation deploymentLocation, final String subscriptionId) throws SOL005ResponseException {
         final String url = deploymentLocation.getProperties().get(NFVO_SERVER_URL) + API_CONTEXT_ROOT + API_PREFIX_SUBSCRIPTIONS + "/{subscriptionId}";
-        final HttpHeaders headers = getHttpHeaders(deploymentLocation);
-        final HttpEntity<Void> requestEntity = new HttpEntity<>(headers);
+        final HttpEntity<String> requestEntity = createRequestEntity(deploymentLocation);
         final Map<String, String> uriVariables = new HashMap<>();
         uriVariables.put("subscriptionId", subscriptionId);
 
@@ -558,8 +542,7 @@ public class NSLifecycleManagementDriver {
      */
     public void deleteLifecycleSubscription(final ResourceManagerDeploymentLocation deploymentLocation, final String subscriptionId) throws SOL005ResponseException {
         final String url = deploymentLocation.getProperties().get(NFVO_SERVER_URL) + API_CONTEXT_ROOT + API_PREFIX_SUBSCRIPTIONS + "/{subscriptionId}";
-        final HttpHeaders headers = getHttpHeaders(deploymentLocation);
-        final HttpEntity<Void> requestEntity = new HttpEntity<>(headers);
+        final HttpEntity<String> requestEntity = createRequestEntity(deploymentLocation);
         final Map<String, String> uriVariables = new HashMap<>();
         uriVariables.put("subscriptionId", subscriptionId);
         UUID uuid = UUID.randomUUID();
@@ -585,10 +568,8 @@ public class NSLifecycleManagementDriver {
      */
     public String getNsInstance(final ResourceManagerDeploymentLocation deploymentLocation) throws SOL005ResponseException {
         final String url = deploymentLocation.getProperties().get(NFVO_SERVER_URL) + API_CONTEXT_ROOT + API_PREFIX_NS_INSTANCES;
-        final HttpHeaders headers = getHttpHeaders(deploymentLocation);
-        headers.setContentType(MediaType.APPLICATION_JSON);
-        final HttpEntity<String> requestEntity = new HttpEntity<>(headers);
 
+        final HttpEntity<String> requestEntity = createRequestEntity(deploymentLocation, MediaType.APPLICATION_JSON);
         final ResponseEntity<String> responseEntity = authenticatedRestTemplateService.getRestTemplate(deploymentLocation).exchange(url, HttpMethod.GET, requestEntity, String.class);
 
         // "Shall be returned when information about zero or more NS instances has been queried successfully."
@@ -614,9 +595,9 @@ public class NSLifecycleManagementDriver {
 
     public String getNsInstanceForIndividual(final ResourceManagerDeploymentLocation deploymentLocation, final String nsInstanceId) throws SOL005ResponseException {
         final String url = deploymentLocation.getProperties().get(NFVO_SERVER_URL) + API_CONTEXT_ROOT + API_PREFIX_NS_INSTANCES + "/{nsInstanceId}";
-        final HttpHeaders headers = getHttpHeaders(deploymentLocation);
-        final HttpEntity<Void> requestEntity = new HttpEntity<>(headers);
         final Map<String, String> uriVariables = new HashMap<>();
+
+        final HttpEntity<String> requestEntity = createRequestEntity(deploymentLocation);
         uriVariables.put("nsInstanceId", nsInstanceId);
 
         final ResponseEntity<String> responseEntity = authenticatedRestTemplateService.getRestTemplate(deploymentLocation).exchange(url, HttpMethod.GET, requestEntity, String.class, uriVariables);
@@ -680,4 +661,53 @@ public class NSLifecycleManagementDriver {
         return protocolMetadata;
     }
 
+    /**
+     * Construct HTTP headers, populating the content type
+     *
+     * @param deploymentLocation deployment location
+     * @param mediaType Media Type
+     * @param nsdRequest NSD Request Type
+     * @return HttpEntity containing appropriate http entity
+     */
+    public HttpEntity<String> createRequestEntity(ResourceManagerDeploymentLocation deploymentLocation, MediaType mediaType, String nsdRequest) {
+        final HttpHeaders headers = getHttpHeaders(deploymentLocation);
+        headers.setContentType(mediaType);
+        return new HttpEntity<>(nsdRequest, headers);
+    }
+
+    /**
+     * Construct HTTP headers, populating the content type
+     *
+     * @param deploymentLocation deployment location
+     * @param nsdRequest NSD Request Type
+     * @return HttpEntity containing appropriate http entity
+     */
+    public HttpEntity<String> createRequestEntity(ResourceManagerDeploymentLocation deploymentLocation, String nsdRequest) {
+        final HttpHeaders headers = getHttpHeaders(deploymentLocation);
+        return new HttpEntity<>(nsdRequest, headers);
+    }
+
+    /**
+     * Construct HTTP headers, populating the content type
+     *
+     * @param deploymentLocation deployment location
+     * @param mediaType Media Type
+     * @return HttpEntity containing appropriate http entity
+     */
+    public HttpEntity<String> createRequestEntity(ResourceManagerDeploymentLocation deploymentLocation, MediaType mediaType) {
+        final HttpHeaders headers = getHttpHeaders(deploymentLocation);
+        headers.setContentType(mediaType);
+        return new HttpEntity<>(headers);
+    }
+
+    /**
+     * Construct HTTP headers, populating the content type
+     *
+     * @param deploymentLocation deployment location
+     * @return HttpEntity containing appropriate http entity
+     */
+    public HttpEntity<String> createRequestEntity(ResourceManagerDeploymentLocation deploymentLocation) {
+        final HttpHeaders headers = getHttpHeaders(deploymentLocation);
+        return new HttpEntity<>(headers);
+    }
 }
