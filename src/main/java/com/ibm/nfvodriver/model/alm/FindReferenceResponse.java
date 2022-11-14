@@ -5,22 +5,21 @@ import java.util.Map;
 
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import com.fasterxml.jackson.annotation.JsonInclude;
+import io.swagger.v3.oas.annotations.media.Schema;
 
-import io.swagger.annotations.ApiModel;
-import io.swagger.annotations.ApiModelProperty;
 
 @JsonInclude(value = JsonInclude.Include.NON_EMPTY, content = JsonInclude.Include.NON_NULL)
 @JsonIgnoreProperties(ignoreUnknown = true)
-@ApiModel(description = "Find reference response")
+@Schema(description = "Find reference response")
 public class FindReferenceResponse {
 
-    @ApiModelProperty(value = "Associated Topology")
+    @Schema(description = "Associated Topology")
     private Map<String, InternalResourceInstance> associatedTopology = new HashMap<>();
 
-    @ApiModelProperty(value = "LM resource id")
+    @Schema(description = "LM resource id")
     private String resourceId;
 
-    @ApiModelProperty(value = "Outputs")
+    @Schema(description = "Outputs")
     private Map<String, String> outputs = new HashMap<>();
 
     public FindReferenceResponse() {}

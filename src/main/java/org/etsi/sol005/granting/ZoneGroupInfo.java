@@ -5,8 +5,8 @@ import java.util.List;
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import com.fasterxml.jackson.annotation.JsonInclude;
 
-import io.swagger.annotations.ApiModel;
-import io.swagger.annotations.ApiModelProperty;
+
+import io.swagger.v3.oas.annotations.media.Schema;
 import lombok.Data;
 
 /**
@@ -16,10 +16,10 @@ import lombok.Data;
 @Data
 @JsonInclude(value = JsonInclude.Include.NON_EMPTY, content = JsonInclude.Include.NON_NULL)
 @JsonIgnoreProperties(ignoreUnknown = true)
-@ApiModel(description = "Represents a resource zone group.")
+@Schema(description = "Represents a resource zone group.")
 public class ZoneGroupInfo {
 
-    @ApiModelProperty(name = "Zone Identifier", required = true, notes = "References of identifiers of \"ZoneInfo\" structures, each of which provides information about a resource zone that belongs to this group.")
+    @Schema(name = "Zone Identifier", required = true, description = "References of identifiers of \"ZoneInfo\" structures, each of which provides information about a resource zone that belongs to this group.")
     private List<String> zoneId;
 
 }

@@ -4,19 +4,18 @@ import com.fasterxml.jackson.annotation.JsonCreator;
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import com.fasterxml.jackson.annotation.JsonInclude;
 import com.fasterxml.jackson.annotation.JsonValue;
+import io.swagger.v3.oas.annotations.media.Schema;
 
-import io.swagger.annotations.ApiModel;
-import io.swagger.annotations.ApiModelProperty;
 
 @JsonInclude(value = JsonInclude.Include.NON_EMPTY, content = JsonInclude.Include.NON_NULL)
 @JsonIgnoreProperties(ignoreUnknown = true)
-@ApiModel(description = "Details regarding a failure in VIM infrastructure responses")
+@Schema(description = "Details regarding a failure in VIM infrastructure responses")
 public class FailureDetails {
 
-    @ApiModelProperty(position = 1, example = "RESOURCE_NOT_FOUND", value = "If the request has failed, this can be set to provide a code for the failure")
+    @Schema(example = "RESOURCE_NOT_FOUND", description = "If the request has failed, this can be set to provide a code for the failure")
     private FailureCode failureCode;
 
-    @ApiModelProperty(position = 2, example = "Could not connect", value = "Optional string to give descriptive information as to the current state of this request, e.g. to indicate what error has occurred in failure scenarios")
+    @Schema(example = "Could not connect", description = "Optional string to give descriptive information as to the current state of this request, e.g. to indicate what error has occurred in failure scenarios")
     private String description;
 
     public FailureDetails() {}

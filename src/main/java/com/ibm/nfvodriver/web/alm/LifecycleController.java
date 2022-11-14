@@ -4,7 +4,7 @@ import com.ibm.nfvodriver.model.alm.ExecutionAcceptedResponse;
 import com.ibm.nfvodriver.model.alm.ExecutionRequest;
 import com.ibm.nfvodriver.service.LifecycleManagementService;
 import com.ibm.nfvodriver.service.MessageConversionException;
-import io.swagger.annotations.ApiOperation;
+import io.swagger.v3.oas.annotations.Operation;
 import org.etsi.sol005.model.FindReferenceRequest;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -34,7 +34,7 @@ public class LifecycleController {
     }
 
     @PostMapping("/lifecycle/execute")
-    @ApiOperation(value = "Execute a lifecycle against a NFVO", notes = "Initiates a lifecycle against a NS, managed by a NFVO")
+    @Operation(summary = "Execute a lifecycle against a NFVO", description = "Initiates a lifecycle against a NS, managed by a NFVO")
     public ResponseEntity<ExecutionAcceptedResponse> executeLifecycle(@RequestBody ExecutionRequest executionRequest, HttpServletRequest servletRequest) throws MessageConversionException {
         try (BufferedReader messageReader = servletRequest.getReader()) {
             String rawMessage = messageReader.lines().collect(Collectors.joining("\n"));
@@ -49,7 +49,7 @@ public class LifecycleController {
 
 
     @PostMapping("/references/find")
-    @ApiOperation(value = "Execute a lifecycle against a NFVO", notes = "Initiates a lifecycle against a NS, managed by a NFVO")
+    @Operation(summary = "Execute a lifecycle against a NFVO", description = "Initiates a lifecycle against a NS, managed by a NFVO")
     public ResponseEntity<ExecutionAcceptedResponse> findReference(@RequestBody FindReferenceRequest findReferenceRequest, HttpServletRequest servletRequest) throws MessageConversionException, NotImplementedException {
         throw new NotImplementedException("Find References API is not implemented");
     }

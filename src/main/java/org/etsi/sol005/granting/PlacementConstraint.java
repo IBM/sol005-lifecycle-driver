@@ -6,8 +6,8 @@ import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import com.fasterxml.jackson.annotation.JsonInclude;
 import com.fasterxml.jackson.annotation.JsonProperty;
 
-import io.swagger.annotations.ApiModel;
-import io.swagger.annotations.ApiModelProperty;
+
+import io.swagger.v3.oas.annotations.media.Schema;
 import lombok.Data;
 
 /**
@@ -17,14 +17,14 @@ import lombok.Data;
 @Data
 @JsonInclude(value = JsonInclude.Include.NON_EMPTY, content = JsonInclude.Include.NON_NULL)
 @JsonIgnoreProperties(ignoreUnknown = true)
-@ApiModel(description = "Represents a resource placement constraint.")
+@Schema(description = "Represents a resource placement constraint.")
 public class PlacementConstraint {
 
-    @ApiModelProperty(name = "Type", required = true, notes = "The type of the constraint.")
+    @Schema(name = "Type", required = true, description = "The type of the constraint.")
     private AffinityOrAntiAffinity affinityOrAntiAffinity;
-    @ApiModelProperty(name = "Scope", required = true, notes = "The scope of the placement constraint indicating the category of the \"place\" where the constraint applies.")
+    @Schema(name = "Scope", required = true, description = "The scope of the placement constraint indicating the category of the \"place\" where the constraint applies.")
     private Scope scope;
-    @ApiModelProperty(name = "Resource Reference", required = true, notes = "References to resources in the constraint rule.")
+    @Schema(name = "Resource Reference", required = true, description = "References to resources in the constraint rule.")
     @JsonProperty("resource")
     private List<ConstraintResourceRef> resources;
 
