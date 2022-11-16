@@ -5,8 +5,7 @@ import java.util.List;
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import com.fasterxml.jackson.annotation.JsonInclude;
 
-import io.swagger.annotations.ApiModel;
-import io.swagger.annotations.ApiModelProperty;
+import io.swagger.v3.oas.annotations.media.Schema;
 import lombok.Data;
 
 /**
@@ -15,12 +14,12 @@ import lombok.Data;
 @Data
 @JsonInclude(value = JsonInclude.Include.NON_EMPTY, content = JsonInclude.Include.NON_NULL)
 @JsonIgnoreProperties(ignoreUnknown = true)
-@ApiModel(description = "Represents subscription filter criteria to match VNF providers.")
+@Schema(description = "Represents subscription filter criteria to match VNF providers.")
 public class VnfProductsFromProviderFilter {
 
-    @ApiModelProperty(name = "VNF Provider", required = true, notes = "Name of the VNF provider to match.")
+    @Schema(name = "VNF Provider", required = true, description = "Name of the VNF provider to match.")
     private String vnfProvider;
-    @ApiModelProperty(name = "VNF Products Filter", notes = "If present, match VNF instances that belong to VNF products with certain product names, from one particular provider.")
+    @Schema(name = "VNF Products Filter", description = "If present, match VNF instances that belong to VNF products with certain product names, from one particular provider.")
     private List<VnfProductFilter> vnfProducts;
 
 }
