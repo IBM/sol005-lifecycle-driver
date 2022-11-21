@@ -34,7 +34,7 @@ oc get secret sol005-lifecycle-driver-tls -o 'go-template={{index .data "tls.crt
 The following command will onboard the NFVO Driver into CP4NA environment called 'dev01':
 
 ```bash
-lmctl resourcedriver add --type sol005 --url http://sol005-lifecycle-driver:8296 dev01 --certificate sol005-lifecycle-tls.pem
+lmctl resourcedriver add --type sol005 --url https://sol005-lifecycle-driver:8296 dev01 --certificate sol005-lifecycle-tls.pem
 ```
 
 

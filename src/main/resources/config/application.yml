@@ -72,3 +72,8 @@ zuul:
       url: /api/etsi/vnfpkgm/v2/vnf_packages
       serviceId: package-management
       stripPrefix: true
+
+springdoc:
+  pathsToMatch:
+    - /api/**
+    - /nslcm/**

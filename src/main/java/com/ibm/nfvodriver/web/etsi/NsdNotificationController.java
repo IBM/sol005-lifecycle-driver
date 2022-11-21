@@ -2,7 +2,7 @@ package com.ibm.nfvodriver.web.etsi;
 
 
 import com.ibm.nfvodriver.service.ExternalMessagingService;
-import io.swagger.annotations.ApiOperation;
+import io.swagger.v3.oas.annotations.Operation;
 import org.etsi.sol005.nsd.NsdNotification;
 import org.etsi.sol005.nsd.NsdOnboardingNotification;
 import org.etsi.sol005.nsd.PnfdOnboardingNotification;
@@ -29,7 +29,7 @@ public class NsdNotificationController {
     }
 
     @PostMapping
-    @ApiOperation(value = "Receives a NSD or PNFD notification from a NFVO", code = 204)
+    @Operation(summary = "Receives a NSD or PNFD notification from a NFVO")
     public ResponseEntity<Void> receiveNotification(@RequestBody NsdNotification notification) {
         // TODO This should be reduced to DEBUG level, but it assists in development testing to see all notification messages being received
         logger.info("Received notification:\n{}", notification);

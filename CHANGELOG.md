@@ -1,3 +1,13 @@
+## [0.2.2](https://github.com/IBM/sol005-lifecycle-driver/tree/0.2.2) (2022-11-21)
+
+[Full Changelog](https://github.com/IBM/sol005-lifecycle-driver/compare/0.2.1...0.2.2)
+
+**Implemented enhancements:**
+
+- Springboot Upgrade from 2.5.x to 2.7.x
+- Code Optimization- Construction of httprequest entity
+- App version update in helm chart
+
 ## [0.2.1](https://github.com/IBM/sol005-lifecycle-driver/tree/0.2.1) (2022-09-30)
 
 [Full Changelog](https://github.com/IBM/sol005-lifecycle-driver/compare/0.2.0...0.2.1)

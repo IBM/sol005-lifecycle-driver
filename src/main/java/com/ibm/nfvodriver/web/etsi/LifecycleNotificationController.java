@@ -5,7 +5,7 @@ import com.ibm.nfvodriver.model.alm.ExecutionAsyncResponse;
 import com.ibm.nfvodriver.model.alm.ExecutionStatus;
 import com.ibm.nfvodriver.model.alm.FailureDetails;
 import com.ibm.nfvodriver.service.ExternalMessagingService;
-import io.swagger.annotations.ApiOperation;
+import io.swagger.v3.oas.annotations.Operation;
 import org.etsi.sol005.lifecyclemanagement.LcmOperationStateType;
 import org.etsi.sol005.lifecyclemanagement.LifecycleManagementNotification;
 import org.etsi.sol005.lifecyclemanagement.NsLcmOperationOccurrenceNotification;
@@ -35,7 +35,7 @@ public class LifecycleNotificationController {
     }
 
     @PostMapping
-    @ApiOperation(value = "Receives a lifecycle operation occurrence notification from a VNFM", code = 204)
+    @Operation(summary = "Receives a lifecycle operation occurrence notification from a VNFM")
     public ResponseEntity<Void> receiveNotification(@RequestBody LifecycleManagementNotification notification) {
         // TODO This should be reduced to DEBUG level, but it assists in development testing to see all notification messages being received
         logger.info("Received notification:\n{}", notification);
