@@ -1,3 +1,12 @@
+## [0.2.3](https://github.com/IBM/sol005-lifecycle-driver/tree/0.2.3) (2022-12-07)
+
+[Full Changelog](https://github.com/IBM/sol005-lifecycle-driver/compare/0.2.2...0.2.3)
+
+**Implemented enhancements:**
+
+- Disable spring security DEBUG logs by default
+- Security Vulnerability Fixes
+
 ## [0.2.2](https://github.com/IBM/sol005-lifecycle-driver/tree/0.2.2) (2022-11-21)
 
 [Full Changelog](https://github.com/IBM/sol005-lifecycle-driver/compare/0.2.1...0.2.2)
