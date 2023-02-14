@@ -522,7 +522,7 @@ public class NSLifecycleManagementDriverTest {
                 .andExpect(header(HttpHeaders.CONTENT_TYPE, MediaType.APPLICATION_JSON_VALUE))
                 .andRespond(withSuccess().body(TestConstants.loadFileIntoString(
                         "examples/NsLcmOpOcc.json")).contentType(MediaType.APPLICATION_JSON));
-        final String response = driver.queryAllLifecycleOperationOccurrences(TestConstants.TEST_DL_NO_AUTH);
+        final String response = driver.queryAllLifecycleOperationOccurrences(TestConstants.TEST_DL_NO_AUTH, TestConstants.TEST_NS_DRIVER_INSTANCE_ID);
         assertThat(response);
     }
 
@@ -535,7 +535,7 @@ public class NSLifecycleManagementDriverTest {
                 .andExpect(header(HttpHeaders.CONTENT_TYPE, MediaType.APPLICATION_JSON_VALUE))
                 .andRespond(withSuccess().body(TestConstants.loadFileIntoString(
                         "examples/LccnSubscription.json")).contentType(MediaType.APPLICATION_JSON));
-        final VnfLcmOpOcc response = driver.queryLifecycleOperationOccurrence(TestConstants.TEST_DL_NO_AUTH, "nsLcmOpOccId");
+        final VnfLcmOpOcc response = driver.queryLifecycleOperationOccurrence(TestConstants.TEST_DL_NO_AUTH, "nsLcmOpOccId", TestConstants.TEST_NS_DRIVER_INSTANCE_ID);
         assertThat(response);
         server.verify();
     }
@@ -549,7 +549,7 @@ public class NSLifecycleManagementDriverTest {
                 .andExpect(method(HttpMethod.POST))
                 .andExpect(header(HttpHeaders.CONTENT_TYPE, MediaType.APPLICATION_JSON_VALUE))
                 .andRespond(withSuccess().contentType(MediaType.APPLICATION_JSON));
-        driver.nsLcmOperationsOccurrencesRetry(TestConstants.TEST_DL_NO_AUTH, "nsLcmOpOccId");
+        driver.nsLcmOperationsOccurrencesRetry(TestConstants.TEST_DL_NO_AUTH, "nsLcmOpOccId", TestConstants.TEST_NS_DRIVER_INSTANCE_ID);
         server.verify();
     }
 
@@ -562,7 +562,7 @@ public class NSLifecycleManagementDriverTest {
                 .andExpect(method(HttpMethod.POST))
                 .andExpect(header(HttpHeaders.CONTENT_TYPE, MediaType.APPLICATION_JSON_VALUE))
                 .andRespond(withSuccess().contentType(MediaType.APPLICATION_JSON));
-        driver.nsLcmOperationsOccurrencesRollback(TestConstants.TEST_DL_NO_AUTH, "nsLcmOpOccId");
+        driver.nsLcmOperationsOccurrencesRollback(TestConstants.TEST_DL_NO_AUTH, "nsLcmOpOccId", TestConstants.TEST_NS_DRIVER_INSTANCE_ID);
 
         assertThat(HttpStatus.ACCEPTED);
         server.verify();
@@ -576,7 +576,7 @@ public class NSLifecycleManagementDriverTest {
                 .andExpect(method(HttpMethod.POST))
                 .andExpect(header(HttpHeaders.CONTENT_TYPE, MediaType.APPLICATION_JSON_VALUE))
                 .andRespond(withSuccess().contentType(MediaType.APPLICATION_JSON));
-        driver.nsLcmOperationsOccurrencesContinue(TestConstants.TEST_DL_NO_AUTH, "nsLcmOpOccId");
+        driver.nsLcmOperationsOccurrencesContinue(TestConstants.TEST_DL_NO_AUTH, "nsLcmOpOccId", TestConstants.TEST_NS_DRIVER_INSTANCE_ID);
 
         assertThat(HttpStatus.ACCEPTED);
         server.verify();
@@ -591,7 +591,7 @@ public class NSLifecycleManagementDriverTest {
                 .andExpect(header(HttpHeaders.CONTENT_TYPE, MediaType.APPLICATION_JSON_VALUE))
                 .andRespond(withSuccess().body(TestConstants.loadFileIntoString(
                         "examples/NsLcmOpOcc.json")).contentType(MediaType.APPLICATION_JSON));
-        final String response = driver.nsLcmOperationsOccurrencesFail(TestConstants.TEST_DL_NO_AUTH, "nsLcmOpOccId");
+        final String response = driver.nsLcmOperationsOccurrencesFail(TestConstants.TEST_DL_NO_AUTH, "nsLcmOpOccId", TestConstants.TEST_NS_DRIVER_INSTANCE_ID);
 
         assertThat(response);
         server.verify();
@@ -614,7 +614,7 @@ public class NSLifecycleManagementDriverTest {
         final String cancelMode =
                 TestConstants.loadFileIntoString("examples/CancelMode.json");
 
-        driver.nsLcmOperationsOccurrencesCancel(TestConstants.TEST_DL_NO_AUTH, TestConstants.TEST_NS_LCM_OP_OCC_ID, cancelMode);
+        driver.nsLcmOperationsOccurrencesCancel(TestConstants.TEST_DL_NO_AUTH, TestConstants.TEST_NS_LCM_OP_OCC_ID, cancelMode, TestConstants.TEST_NS_DRIVER_INSTANCE_ID);
 
         server.verify();
     }
