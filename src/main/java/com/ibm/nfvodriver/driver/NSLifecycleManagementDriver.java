@@ -104,7 +104,15 @@ public class NSLifecycleManagementDriver {
         UUID uuid = UUID.randomUUID();
         LoggingUtils.logEnabledMDC(createNsRequest, MessageType.REQUEST, MessageDirection.SENT, uuid.toString(), MediaType.APPLICATION_JSON_VALUE, "http",
                 RequestResponseLogUtils.getRequestSentProtocolMetaData(url, HttpMethod.POST.name(), headers), driverrequestid);
-        final ResponseEntity<String> responseEntity = authenticatedRestTemplateService.getRestTemplate(deploymentLocation).exchange(url, HttpMethod.POST, requestEntity, String.class);
+        final ResponseEntity<String> responseEntity;
+        try {
+            responseEntity = authenticatedRestTemplateService.getRestTemplate(deploymentLocation).exchange(url, HttpMethod.POST, requestEntity, String.class);
+        } catch (Throwable e){
+            // To log all unknown errors while making external call
+            LoggingUtils.logEnabledMDC(RequestResponseLogUtils.convertToJson(e.getMessage()), MessageType.RESPONSE, MessageDirection.RECEIVED, uuid.toString(), MediaType.APPLICATION_JSON_VALUE, "http",
+                    RequestResponseLogUtils.getResponseReceivedProtocolMetaData(HttpStatus.INTERNAL_SERVER_ERROR.value(), HttpStatus.INTERNAL_SERVER_ERROR.getReasonPhrase(), null), driverrequestid);
+            throw e;
+        }
         LoggingUtils.logEnabledMDC(responseEntity.getBody(), MessageType.RESPONSE, MessageDirection.RECEIVED, uuid.toString(), MediaType.APPLICATION_JSON_VALUE, "http",
                 RequestResponseLogUtils.getResponseReceivedProtocolMetaData(responseEntity.getStatusCodeValue(), responseEntity.getStatusCode().getReasonPhrase(), responseEntity.getHeaders()), driverrequestid);
         // "Location" header also includes URI of the created instance
@@ -137,7 +145,15 @@ public class NSLifecycleManagementDriver {
         UUID uuid = UUID.randomUUID();
         LoggingUtils.logEnabledMDC(null, MessageType.REQUEST, MessageDirection.SENT, uuid.toString(), null, "http",
                 RequestResponseLogUtils.getRequestSentProtocolMetaData(baseUrl+"/"+nsInstanceId, HttpMethod.DELETE.name(), headers), driverrequestid);
-        final ResponseEntity<Void> responseEntity = authenticatedRestTemplateService.getRestTemplate(deploymentLocation).exchange(url, HttpMethod.DELETE, requestEntity, Void.class, uriVariables);
+        final ResponseEntity<Void> responseEntity;
+        try {
+            responseEntity = authenticatedRestTemplateService.getRestTemplate(deploymentLocation).exchange(url, HttpMethod.DELETE, requestEntity, Void.class, uriVariables);
+        } catch(Throwable e){
+            // To log all unknown errors while making external call
+            LoggingUtils.logEnabledMDC(RequestResponseLogUtils.convertToJson(e.getMessage()), MessageType.RESPONSE, MessageDirection.RECEIVED, uuid.toString(), MediaType.APPLICATION_JSON_VALUE, "http",
+                    RequestResponseLogUtils.getResponseReceivedProtocolMetaData(HttpStatus.INTERNAL_SERVER_ERROR.value(), HttpStatus.INTERNAL_SERVER_ERROR.getReasonPhrase(), null), driverrequestid);
+            throw e;
+        }
         LoggingUtils.logEnabledMDC(null, MessageType.RESPONSE, MessageDirection.RECEIVED, uuid.toString(), null, "http",
                 RequestResponseLogUtils.getResponseReceivedProtocolMetaData(responseEntity.getStatusCodeValue(), responseEntity.getStatusCode().getReasonPhrase(), responseEntity.getHeaders()), driverrequestid);
         checkResponseEntityMatches(responseEntity, HttpStatus.NO_CONTENT, false);
@@ -266,8 +282,15 @@ public class NSLifecycleManagementDriver {
         UUID uuid = UUID.randomUUID();
         LoggingUtils.logEnabledMDC(operationRequest, MessageType.REQUEST, MessageDirection.SENT, uuid.toString(), MediaType.APPLICATION_JSON_VALUE, "http",
                 RequestResponseLogUtils.getRequestSentProtocolMetaData(url, HttpMethod.POST.name(), headers) , null);
-        final ResponseEntity<String> responseEntity = authenticatedRestTemplateService.getRestTemplate(deploymentLocation).exchange(url, HttpMethod.POST, requestEntity, String.class);
-
+        final ResponseEntity<String> responseEntity;
+        try {
+            responseEntity = authenticatedRestTemplateService.getRestTemplate(deploymentLocation).exchange(url, HttpMethod.POST, requestEntity, String.class);
+        } catch(Throwable e) {
+            // To log all unknown errors while making external call
+            LoggingUtils.logEnabledMDC(RequestResponseLogUtils.convertToJson(e.getMessage()), MessageType.RESPONSE, MessageDirection.RECEIVED, uuid.toString(), MediaType.APPLICATION_JSON_VALUE, "http",
+                    RequestResponseLogUtils.getResponseReceivedProtocolMetaData(HttpStatus.INTERNAL_SERVER_ERROR.value(), HttpStatus.INTERNAL_SERVER_ERROR.getReasonPhrase(), null), null);
+            throw e;
+        }
         checkResponseEntityMatches(responseEntity, HttpStatus.ACCEPTED, false);
         // "Location" header contains URI of the created NsLcmOpOcc record
         final URI location = responseEntity.getHeaders().getLocation();
@@ -310,7 +333,15 @@ public class NSLifecycleManagementDriver {
         UUID uuid = UUID.randomUUID();
         LoggingUtils.logEnabledMDC(null, MessageType.REQUEST, MessageDirection.SENT, uuid.toString(), null, "http",
                 RequestResponseLogUtils.getRequestSentProtocolMetaData(url, HttpMethod.GET.name(), headers) , driverRequestId);
-        final ResponseEntity<String> responseEntity = authenticatedRestTemplateService.getRestTemplate(deploymentLocation).exchange(url, HttpMethod.GET, requestEntity, String.class);
+        final ResponseEntity<String> responseEntity;
+        try {
+            responseEntity = authenticatedRestTemplateService.getRestTemplate(deploymentLocation).exchange(url, HttpMethod.GET, requestEntity, String.class);
+        } catch(Throwable e) {
+            // To log all unknown errors while making external call
+            LoggingUtils.logEnabledMDC(RequestResponseLogUtils.convertToJson(e.getMessage()), MessageType.RESPONSE, MessageDirection.RECEIVED, uuid.toString(), MediaType.APPLICATION_JSON_VALUE, "http",
+                    RequestResponseLogUtils.getResponseReceivedProtocolMetaData(HttpStatus.INTERNAL_SERVER_ERROR.value(), HttpStatus.INTERNAL_SERVER_ERROR.getReasonPhrase(), null), driverRequestId);
+            throw e;
+        }
         LoggingUtils.logEnabledMDC(responseEntity.getBody(), MessageType.RESPONSE, MessageDirection.RECEIVED, uuid.toString(), MediaType.APPLICATION_JSON_VALUE, "http",
                 RequestResponseLogUtils.getResponseReceivedProtocolMetaData(responseEntity.getStatusCodeValue(), responseEntity.getStatusCode().getReasonPhrase(), responseEntity.getHeaders()), driverRequestId);
         checkResponseEntityMatches(responseEntity, HttpStatus.OK, true);
@@ -341,7 +372,15 @@ public class NSLifecycleManagementDriver {
         uriVariables.put("nsLcmOpOccId", nsLcmOpOccId);
         LoggingUtils.logEnabledMDC(null, MessageType.REQUEST, MessageDirection.SENT, uuid.toString(), null, "http",
                 RequestResponseLogUtils.getRequestSentProtocolMetaData(baseUrl+"/"+nsLcmOpOccId, HttpMethod.GET.name(), headers), driverRequestId);
-        final ResponseEntity<VnfLcmOpOcc> responseEntity = authenticatedRestTemplateService.getRestTemplate(deploymentLocation).exchange(url, HttpMethod.GET, requestEntity, VnfLcmOpOcc.class, uriVariables);
+        final ResponseEntity<VnfLcmOpOcc> responseEntity;
+        try {
+            responseEntity = authenticatedRestTemplateService.getRestTemplate(deploymentLocation).exchange(url, HttpMethod.GET, requestEntity, VnfLcmOpOcc.class, uriVariables);
+        } catch(Throwable e) {
+            // To log all unknown errors while making external call
+            LoggingUtils.logEnabledMDC(RequestResponseLogUtils.convertToJson(e.getMessage()), MessageType.RESPONSE, MessageDirection.RECEIVED, uuid.toString(), MediaType.APPLICATION_JSON_VALUE, "http",
+                RequestResponseLogUtils.getResponseReceivedProtocolMetaData(HttpStatus.INTERNAL_SERVER_ERROR.value(), HttpStatus.INTERNAL_SERVER_ERROR.getReasonPhrase(), null), driverRequestId);
+            throw e;
+        }
         LoggingUtils.logEnabledMDC(RequestResponseLogUtils.convertToJson(responseEntity.getBody()), MessageType.RESPONSE, MessageDirection.RECEIVED, uuid.toString(), MediaType.APPLICATION_JSON_VALUE, "http",
                 RequestResponseLogUtils.getResponseReceivedProtocolMetaData(responseEntity.getStatusCodeValue(), responseEntity.getStatusCode().getReasonPhrase(), responseEntity.getHeaders()), driverRequestId);
         checkResponseEntityMatches(responseEntity, HttpStatus.OK, true);
@@ -371,7 +410,15 @@ public class NSLifecycleManagementDriver {
         UUID uuid = UUID.randomUUID();
         LoggingUtils.logEnabledMDC(null, MessageType.REQUEST, MessageDirection.SENT, uuid.toString(), null, "http",
                 RequestResponseLogUtils.getRequestSentProtocolMetaData(baseUrl+"/"+nsLcmOpOccId+"/retry", HttpMethod.POST.name(), headers), driverRequestId);
-        final ResponseEntity<String> responseEntity = authenticatedRestTemplateService.getRestTemplate(deploymentLocation).exchange(url, HttpMethod.POST, requestEntity, String.class, uriVariables);
+        final ResponseEntity<String> responseEntity;
+        try {
+            responseEntity = authenticatedRestTemplateService.getRestTemplate(deploymentLocation).exchange(url, HttpMethod.POST, requestEntity, String.class, uriVariables);
+        } catch(Throwable e) {
+            // To log all unknown errors while making external call
+            LoggingUtils.logEnabledMDC(RequestResponseLogUtils.convertToJson(e.getMessage()), MessageType.RESPONSE, MessageDirection.RECEIVED, uuid.toString(), MediaType.APPLICATION_JSON_VALUE, "http",
+                    RequestResponseLogUtils.getResponseReceivedProtocolMetaData(HttpStatus.INTERNAL_SERVER_ERROR.value(), HttpStatus.INTERNAL_SERVER_ERROR.getReasonPhrase(), null), driverRequestId);
+            throw e;
+        }
         LoggingUtils.logEnabledMDC(null, MessageType.RESPONSE, MessageDirection.RECEIVED, uuid.toString(), null, "http",
                 RequestResponseLogUtils.getResponseReceivedProtocolMetaData(responseEntity.getStatusCodeValue(), responseEntity.getStatusCode().getReasonPhrase(), responseEntity.getHeaders()), driverRequestId);
         checkResponseEntityMatches(responseEntity, HttpStatus.ACCEPTED, false);
@@ -400,7 +447,15 @@ public class NSLifecycleManagementDriver {
         UUID uuid = UUID.randomUUID();
         LoggingUtils.logEnabledMDC(null, MessageType.REQUEST, MessageDirection.SENT, uuid.toString(), null, "http",
                 RequestResponseLogUtils.getRequestSentProtocolMetaData(baseUrl+"/"+nsLcmOpOccId+"/rollback", HttpMethod.POST.name(), headers), driverRequestId);
-        final ResponseEntity<String> responseEntity = authenticatedRestTemplateService.getRestTemplate(deploymentLocation).exchange(url, HttpMethod.POST, requestEntity, String.class, uriVariables);
+        final ResponseEntity<String> responseEntity;
+        try {
+            responseEntity = authenticatedRestTemplateService.getRestTemplate(deploymentLocation).exchange(url, HttpMethod.POST, requestEntity, String.class, uriVariables);
+        } catch(Throwable e) {
+            // To log all unknown errors while making external call
+            LoggingUtils.logEnabledMDC(RequestResponseLogUtils.convertToJson(e.getMessage()), MessageType.RESPONSE, MessageDirection.RECEIVED, uuid.toString(), MediaType.APPLICATION_JSON_VALUE, "http",
+                    RequestResponseLogUtils.getResponseReceivedProtocolMetaData(HttpStatus.INTERNAL_SERVER_ERROR.value(), HttpStatus.INTERNAL_SERVER_ERROR.getReasonPhrase(), null), driverRequestId);
+            throw e;
+        }
         LoggingUtils.logEnabledMDC(null, MessageType.RESPONSE, MessageDirection.RECEIVED, uuid.toString(), null, "http",
                 RequestResponseLogUtils.getResponseReceivedProtocolMetaData(responseEntity.getStatusCodeValue(), responseEntity.getStatusCode().getReasonPhrase(), responseEntity.getHeaders()), driverRequestId);
         checkResponseEntityMatches(responseEntity, HttpStatus.ACCEPTED, false);
@@ -429,7 +484,15 @@ public class NSLifecycleManagementDriver {
         UUID uuid = UUID.randomUUID();
         LoggingUtils.logEnabledMDC(null, MessageType.REQUEST, MessageDirection.SENT, uuid.toString(), null, "http",
                 RequestResponseLogUtils.getRequestSentProtocolMetaData(baseUrl+"/"+nsLcmOpOccId+"/continue", HttpMethod.POST.name(), headers), driverRequestId);
-        final ResponseEntity<String> responseEntity = authenticatedRestTemplateService.getRestTemplate(deploymentLocation).exchange(url, HttpMethod.POST, requestEntity, String.class, uriVariables);
+        final ResponseEntity<String> responseEntity;
+        try {
+            responseEntity = authenticatedRestTemplateService.getRestTemplate(deploymentLocation).exchange(url, HttpMethod.POST, requestEntity, String.class, uriVariables);
+        } catch(Throwable e) {
+            // To log all unknown errors while making external call
+            LoggingUtils.logEnabledMDC(RequestResponseLogUtils.convertToJson(e.getMessage()), MessageType.RESPONSE, MessageDirection.RECEIVED, uuid.toString(), MediaType.APPLICATION_JSON_VALUE, "http",
+                    RequestResponseLogUtils.getResponseReceivedProtocolMetaData(HttpStatus.INTERNAL_SERVER_ERROR.value(), HttpStatus.INTERNAL_SERVER_ERROR.getReasonPhrase(), null), driverRequestId);
+            throw e;
+        }
         LoggingUtils.logEnabledMDC(null, MessageType.RESPONSE, MessageDirection.RECEIVED, uuid.toString(), null, "http",
                 RequestResponseLogUtils.getResponseReceivedProtocolMetaData(responseEntity.getStatusCodeValue(), responseEntity.getStatusCode().getReasonPhrase(), responseEntity.getHeaders()), driverRequestId);
         checkResponseEntityMatches(responseEntity, HttpStatus.ACCEPTED, false);
@@ -458,7 +521,15 @@ public class NSLifecycleManagementDriver {
         UUID uuid = UUID.randomUUID();
         LoggingUtils.logEnabledMDC(null, MessageType.REQUEST, MessageDirection.SENT, uuid.toString(), null, "http",
                 RequestResponseLogUtils.getRequestSentProtocolMetaData(baseUrl+"/"+nsLcmOpOccId+"/fail", HttpMethod.POST.name(), headers), driverRequestId);
-        final ResponseEntity<NsLcmOpOcc> responseEntity = authenticatedRestTemplateService.getRestTemplate(deploymentLocation).exchange(url, HttpMethod.POST, requestEntity, NsLcmOpOcc.class, uriVariables);
+        final ResponseEntity<NsLcmOpOcc> responseEntity;
+        try {
+            responseEntity = authenticatedRestTemplateService.getRestTemplate(deploymentLocation).exchange(url, HttpMethod.POST, requestEntity, NsLcmOpOcc.class, uriVariables);
+        } catch(Throwable e) {
+            // To log all unknown errors while making external call
+            LoggingUtils.logEnabledMDC(RequestResponseLogUtils.convertToJson(e.getMessage()), MessageType.RESPONSE, MessageDirection.RECEIVED, uuid.toString(), MediaType.APPLICATION_JSON_VALUE, "http",
+                    RequestResponseLogUtils.getResponseReceivedProtocolMetaData(HttpStatus.INTERNAL_SERVER_ERROR.value(), HttpStatus.INTERNAL_SERVER_ERROR.getReasonPhrase(), null), driverRequestId);
+            throw e;
+        }
         final String responseString = RequestResponseLogUtils.convertToJson(responseEntity.getBody());
         LoggingUtils.logEnabledMDC(responseString, MessageType.RESPONSE, MessageDirection.RECEIVED, uuid.toString(), MediaType.APPLICATION_JSON_VALUE, "http",
                 RequestResponseLogUtils.getResponseReceivedProtocolMetaData(responseEntity.getStatusCodeValue(), responseEntity.getStatusCode().getReasonPhrase(), responseEntity.getHeaders()), driverRequestId);
@@ -489,7 +560,15 @@ public class NSLifecycleManagementDriver {
         UUID uuid = UUID.randomUUID();
         LoggingUtils.logEnabledMDC(cancelMode, MessageType.REQUEST, MessageDirection.SENT, uuid.toString(), MediaType.APPLICATION_JSON_VALUE, "http",
                 RequestResponseLogUtils.getRequestSentProtocolMetaData(baseUrl+"/"+nsLcmOpOccId+"/cancel", HttpMethod.POST.name(), headers), driverRequestId);
-        final ResponseEntity<String> responseEntity = authenticatedRestTemplateService.getRestTemplate(deploymentLocation).exchange(url, HttpMethod.POST, requestEntity, String.class, uriVariables);
+        final ResponseEntity<String> responseEntity;
+        try {
+            responseEntity = authenticatedRestTemplateService.getRestTemplate(deploymentLocation).exchange(url, HttpMethod.POST, requestEntity, String.class, uriVariables);
+        } catch(Throwable e) {
+            // To log all unknown errors while making external call
+            LoggingUtils.logEnabledMDC(RequestResponseLogUtils.convertToJson(e.getMessage()), MessageType.RESPONSE, MessageDirection.RECEIVED, uuid.toString(), MediaType.APPLICATION_JSON_VALUE, "http",
+                    RequestResponseLogUtils.getResponseReceivedProtocolMetaData(HttpStatus.INTERNAL_SERVER_ERROR.value(), HttpStatus.INTERNAL_SERVER_ERROR.getReasonPhrase(), null), driverRequestId);
+            throw e;
+        }
         LoggingUtils.logEnabledMDC(null, MessageType.RESPONSE, MessageDirection.RECEIVED, uuid.toString(), null, "http",
                 RequestResponseLogUtils.getResponseReceivedProtocolMetaData(responseEntity.getStatusCodeValue(), responseEntity.getStatusCode().getReasonPhrase(), responseEntity.getHeaders()), driverRequestId);
         checkResponseEntityMatches(responseEntity, HttpStatus.ACCEPTED, false);
@@ -517,8 +596,15 @@ public class NSLifecycleManagementDriver {
         UUID uuid = UUID.randomUUID();
         LoggingUtils.logEnabledMDC(RequestResponseLogUtils.convertToJson(lccnSubscriptionRequest), MessageType.REQUEST, MessageDirection.SENT, uuid.toString(), MediaType.APPLICATION_JSON_VALUE, "http",
                 RequestResponseLogUtils.getRequestSentProtocolMetaData(url, HttpMethod.POST.name(), headers) , null);
-        final ResponseEntity<LccnSubscription> responseEntity = authenticatedRestTemplateService.getRestTemplate(deploymentLocation)
-                .exchange(url, HttpMethod.POST, requestEntity, LccnSubscription.class);
+        final ResponseEntity<LccnSubscription> responseEntity;
+        try {
+            responseEntity = authenticatedRestTemplateService.getRestTemplate(deploymentLocation).exchange(url, HttpMethod.POST, requestEntity, LccnSubscription.class);
+        } catch(Throwable e) {
+            // To log all unknown errors while making external call
+            LoggingUtils.logEnabledMDC(RequestResponseLogUtils.convertToJson(e.getMessage()), MessageType.RESPONSE, MessageDirection.RECEIVED, uuid.toString(), MediaType.APPLICATION_JSON_VALUE, "http",
+                    RequestResponseLogUtils.getResponseReceivedProtocolMetaData(HttpStatus.INTERNAL_SERVER_ERROR.value(), HttpStatus.INTERNAL_SERVER_ERROR.getReasonPhrase(), null), null);
+            throw e;
+        }
         LoggingUtils.logEnabledMDC(RequestResponseLogUtils.convertToJson(responseEntity.getBody()), MessageType.RESPONSE, MessageDirection.RECEIVED, uuid.toString(), MediaType.APPLICATION_JSON_VALUE, "http",
                 RequestResponseLogUtils.getResponseReceivedProtocolMetaData(responseEntity.getStatusCodeValue(), responseEntity.getStatusCode().getReasonPhrase(), responseEntity.getHeaders()), null);
         // "Location" header also includes URI of the created instance
@@ -545,8 +631,15 @@ public class NSLifecycleManagementDriver {
         UUID uuid = UUID.randomUUID();
         LoggingUtils.logEnabledMDC(lccnSubscriptionRequest, MessageType.REQUEST, MessageDirection.SENT, uuid.toString(), MediaType.APPLICATION_JSON_VALUE, "http",
                 RequestResponseLogUtils.getRequestSentProtocolMetaData(url, HttpMethod.GET.name(), headers) , null);
-        final ResponseEntity<String> responseEntity = authenticatedRestTemplateService.getRestTemplate(deploymentLocation)
-                .exchange(url, HttpMethod.GET, requestEntity, String.class);
+        final ResponseEntity<String> responseEntity;
+        try {
+            responseEntity = authenticatedRestTemplateService.getRestTemplate(deploymentLocation).exchange(url, HttpMethod.GET, requestEntity, String.class);
+        } catch(Throwable e) {
+            // To log all unknown errors while making external call
+            LoggingUtils.logEnabledMDC(RequestResponseLogUtils.convertToJson(e.getMessage()), MessageType.RESPONSE, MessageDirection.RECEIVED, uuid.toString(), MediaType.APPLICATION_JSON_VALUE, "http",
+                    RequestResponseLogUtils.getResponseReceivedProtocolMetaData(HttpStatus.INTERNAL_SERVER_ERROR.value(), HttpStatus.INTERNAL_SERVER_ERROR.getReasonPhrase(), null), null);
+            throw e;
+        }
         LoggingUtils.logEnabledMDC(responseEntity.getBody(), MessageType.RESPONSE, MessageDirection.RECEIVED, uuid.toString(), MediaType.APPLICATION_JSON_VALUE, "http",
                 RequestResponseLogUtils.getResponseReceivedProtocolMetaData(responseEntity.getStatusCodeValue(), responseEntity.getStatusCode().getReasonPhrase(), responseEntity.getHeaders()), null);
         // "Shall be returned when the list of subscriptions has been queried successfully."
@@ -577,7 +670,15 @@ public class NSLifecycleManagementDriver {
         UUID uuid = UUID.randomUUID();
         LoggingUtils.logEnabledMDC(null, MessageType.REQUEST, MessageDirection.SENT, uuid.toString(), null, "http",
                 RequestResponseLogUtils.getRequestSentProtocolMetaData(baseUrl+"/"+subscriptionId, HttpMethod.GET.name(), headers) , null);
-        final ResponseEntity<String> responseEntity = authenticatedRestTemplateService.getRestTemplate(deploymentLocation).exchange(url, HttpMethod.GET, requestEntity, String.class, uriVariables);
+        final ResponseEntity<String> responseEntity;
+        try {
+            responseEntity = authenticatedRestTemplateService.getRestTemplate(deploymentLocation).exchange(url, HttpMethod.GET, requestEntity, String.class, uriVariables);
+        } catch(Throwable e) {
+            // To log all unknown errors while making external call
+            LoggingUtils.logEnabledMDC(RequestResponseLogUtils.convertToJson(e.getMessage()), MessageType.RESPONSE, MessageDirection.RECEIVED, uuid.toString(), MediaType.APPLICATION_JSON_VALUE, "http",
+                    RequestResponseLogUtils.getResponseReceivedProtocolMetaData(HttpStatus.INTERNAL_SERVER_ERROR.value(), HttpStatus.INTERNAL_SERVER_ERROR.getReasonPhrase(), null), null);
+            throw e;
+        }
         LoggingUtils.logEnabledMDC(responseEntity.getBody(), MessageType.RESPONSE, MessageDirection.RECEIVED, uuid.toString(), MediaType.APPLICATION_JSON_VALUE, "http",
                 RequestResponseLogUtils.getResponseReceivedProtocolMetaData(responseEntity.getStatusCodeValue(), responseEntity.getStatusCode().getReasonPhrase(), responseEntity.getHeaders()), null);
         checkResponseEntityMatches(responseEntity, HttpStatus.OK, true);
@@ -607,7 +708,15 @@ public class NSLifecycleManagementDriver {
         UUID uuid = UUID.randomUUID();
         LoggingUtils.logEnabledMDC(null, MessageType.REQUEST, MessageDirection.SENT, uuid.toString(), null, "http",
                 RequestResponseLogUtils.getRequestSentProtocolMetaData(baseUrl+"/"+subscriptionId, HttpMethod.DELETE.name(), headers) , null);
-        final ResponseEntity<Void> responseEntity = authenticatedRestTemplateService.getRestTemplate(deploymentLocation).exchange(url, HttpMethod.DELETE, requestEntity, Void.class, uriVariables);
+        final ResponseEntity<Void> responseEntity;
+        try {
+            responseEntity = authenticatedRestTemplateService.getRestTemplate(deploymentLocation).exchange(url, HttpMethod.DELETE, requestEntity, Void.class, uriVariables);
+        } catch(Throwable e) {
+            // To log all unknown errors while making external call
+            LoggingUtils.logEnabledMDC(RequestResponseLogUtils.convertToJson(e.getMessage()), MessageType.RESPONSE, MessageDirection.RECEIVED, uuid.toString(), MediaType.APPLICATION_JSON_VALUE, "http",
+                    RequestResponseLogUtils.getResponseReceivedProtocolMetaData(HttpStatus.INTERNAL_SERVER_ERROR.value(), HttpStatus.INTERNAL_SERVER_ERROR.getReasonPhrase(), null), null);
+            throw e;
+        }
         LoggingUtils.logEnabledMDC(null, MessageType.RESPONSE, MessageDirection.RECEIVED, uuid.toString(), null, "http",
                 RequestResponseLogUtils.getResponseReceivedProtocolMetaData(responseEntity.getStatusCodeValue(), responseEntity.getStatusCode().getReasonPhrase(), responseEntity.getHeaders()), null);
         checkResponseEntityMatches(responseEntity, HttpStatus.NO_CONTENT, false);
@@ -634,7 +743,15 @@ public class NSLifecycleManagementDriver {
         UUID uuid = UUID.randomUUID();
         LoggingUtils.logEnabledMDC(null, MessageType.REQUEST, MessageDirection.SENT, uuid.toString(), null, "http",
                 RequestResponseLogUtils.getRequestSentProtocolMetaData(url, HttpMethod.GET.name(), headers) , null);
-        final ResponseEntity<String> responseEntity = authenticatedRestTemplateService.getRestTemplate(deploymentLocation).exchange(url, HttpMethod.GET, requestEntity, String.class);
+        final ResponseEntity<String> responseEntity;
+        try {
+            responseEntity = authenticatedRestTemplateService.getRestTemplate(deploymentLocation).exchange(url, HttpMethod.GET, requestEntity, String.class);
+        } catch(Throwable e) {
+            // To log all unknown errors while making external call
+            LoggingUtils.logEnabledMDC(RequestResponseLogUtils.convertToJson(e.getMessage()), MessageType.RESPONSE, MessageDirection.RECEIVED, uuid.toString(), MediaType.APPLICATION_JSON_VALUE, "http",
+                    RequestResponseLogUtils.getResponseReceivedProtocolMetaData(HttpStatus.INTERNAL_SERVER_ERROR.value(), HttpStatus.INTERNAL_SERVER_ERROR.getReasonPhrase(), null), null);
+            throw e;
+        }
         LoggingUtils.logEnabledMDC(responseEntity.getBody(), MessageType.RESPONSE, MessageDirection.RECEIVED, uuid.toString(), MediaType.APPLICATION_JSON_VALUE, "http",
                 RequestResponseLogUtils.getResponseReceivedProtocolMetaData(responseEntity.getStatusCodeValue(), responseEntity.getStatusCode().getReasonPhrase(), responseEntity.getHeaders()), null);
         // "Shall be returned when information about zero or more NS instances has been queried successfully."
@@ -668,7 +785,15 @@ public class NSLifecycleManagementDriver {
         UUID uuid = UUID.randomUUID();
         LoggingUtils.logEnabledMDC(null, MessageType.REQUEST, MessageDirection.SENT, uuid.toString(), null, "http",
                 RequestResponseLogUtils.getRequestSentProtocolMetaData(baseUrl+"/"+nsInstanceId, HttpMethod.GET.name(), headers) , null);
-        final ResponseEntity<String> responseEntity = authenticatedRestTemplateService.getRestTemplate(deploymentLocation).exchange(url, HttpMethod.GET, requestEntity, String.class, uriVariables);
+        final ResponseEntity<String> responseEntity;
+        try {
+            responseEntity = authenticatedRestTemplateService.getRestTemplate(deploymentLocation).exchange(url, HttpMethod.GET, requestEntity, String.class, uriVariables);
+        } catch(Throwable e) {
+            // To log all unknown errors while making external call
+            LoggingUtils.logEnabledMDC(RequestResponseLogUtils.convertToJson(e.getMessage()), MessageType.RESPONSE, MessageDirection.RECEIVED, uuid.toString(), MediaType.APPLICATION_JSON_VALUE, "http",
+                    RequestResponseLogUtils.getResponseReceivedProtocolMetaData(HttpStatus.INTERNAL_SERVER_ERROR.value(), HttpStatus.INTERNAL_SERVER_ERROR.getReasonPhrase(), null), null);
+            throw e;
+        }
         LoggingUtils.logEnabledMDC(responseEntity.getBody(), MessageType.RESPONSE, MessageDirection.RECEIVED, uuid.toString(), MediaType.APPLICATION_JSON_VALUE, "http",
                 RequestResponseLogUtils.getResponseReceivedProtocolMetaData(responseEntity.getStatusCodeValue(), responseEntity.getStatusCode().getReasonPhrase(), responseEntity.getHeaders()), null);
         checkResponseEntityMatches(responseEntity, HttpStatus.OK, true);
