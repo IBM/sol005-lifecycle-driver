@@ -1,3 +1,16 @@
+## [0.3.0](https://github.com/IBM/sol005-lifecycle-driver/tree/0.3.0) (2023-03-21)
+
+[Full Changelog](https://github.com/IBM/sol005-lifecycle-driver/compare/0.2.3...0.3.0)
+
+**Implemented enhancements:**
+
+- Fix logging issues and documentation change for notifications from v1 to v2.
+- Update to Java 17 for sol005-lifecycle-driver
+- Mask password in the log message of ExecutionRequest
+- Released images should use prod profile instead of dev profile
+- Security Vulnerability Fixes
+
+
 ## [0.2.3](https://github.com/IBM/sol005-lifecycle-driver/tree/0.2.3) (2022-12-07)
 
 [Full Changelog](https://github.com/IBM/sol005-lifecycle-driver/compare/0.2.2...0.2.3)
