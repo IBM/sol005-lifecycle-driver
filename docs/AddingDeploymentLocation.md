@@ -61,28 +61,13 @@ In order for the driver to receive lifecycle notifications from the NFVO, the fo
 
 ```bash
 curl -X POST \
-  https://nfvo-address:port/nslcm/v1/subscriptions \
+  https://nfvo-address:port/nslcm/v2/subscriptions \
   -H 'Content-Type: application/json' \
   -d '{
-    "callbackUri" : "http://sol005-lifecycle-driver:8296/nslcm/v1/notifications",
+    "callbackUri" : "http://sol005-lifecycle-driver:8296/nslcm/v2/notifications",
     "filter" : {
       "notificationTypes" : [ "NsLcmOperationOccurrenceNotification" ],
       "operationStates" : [ "COMPLETED", "FAILED", "FAILED_TEMP", "ROLLED_BACK" ]
     }
-}'
-```
-
-- For authentication based request we can use the following command, with specific username and password.
-
-```bash
-curl -X POST \
-  https://nfvo-address:port/nslcm/v1/subscriptions \
-  -H 'Content-Type: application/json' \
-  -d '{
-    "callbackUri" : "http://sol005-lifecycle-driver:8296/nslcm/v1/notifications",
-    "filter" : {
-      "notificationTypes" : [ "NsLcmOperationOccurrenceNotification" ],
-      "operationStates" : [ "COMPLETED", "FAILED", "FAILED_TEMP", "ROLLED_BACK" ]
-    },"authentication" : { "authType" : "BASIC", "paramsBasic" : { "username" : "XXXX", "password" : "XXXX" }}}' -u "user:password"
 }'
 ```

@@ -4,6 +4,7 @@ import static com.ibm.nfvodriver.config.NFVODriverConstants.COMPLETED_OPERATIONA
 
 import java.io.IOException;
 import java.util.Collections;
+import java.util.UUID;
 import javax.annotation.PreDestroy;
 
 import com.ibm.nfvodriver.service.ExternalMessagingService;
@@ -47,8 +48,8 @@ public class LcmOpOccPollingService {
         try {
             // Deserialize message into LcmOpOccPollingRequest
             LcmOpOccPollingRequest lcmOpOccPollingRequest = objectMapper.readValue(message, LcmOpOccPollingRequest.class);
-
-            VnfLcmOpOcc vnfLcmOpOcc = driver.queryLifecycleOperationOccurrence(lcmOpOccPollingRequest.getDeploymentLocation(), lcmOpOccPollingRequest.getNsLcmOpOccId());
+            UUID uuid = UUID.randomUUID();
+            VnfLcmOpOcc vnfLcmOpOcc = driver.queryLifecycleOperationOccurrence(lcmOpOccPollingRequest.getDeploymentLocation(), lcmOpOccPollingRequest.getNsLcmOpOccId(), uuid.toString());
             if (COMPLETED_OPERATIONAL_STATES.contains(vnfLcmOpOcc.getOperationState())) {
                 // Send back Async response to Brent
                 final ExecutionAsyncResponse executionResponse;
