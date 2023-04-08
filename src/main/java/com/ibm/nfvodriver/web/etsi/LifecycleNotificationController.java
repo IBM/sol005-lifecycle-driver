@@ -61,7 +61,7 @@ public class LifecycleNotificationController {
                 }
                 externalMessagingService.sendExecutionAsyncResponse(asyncResponse);
             }
-            LoggingUtils.logEnabledMDC(null, MessageType.RESPONSE, MessageDirection.SENT, uuid.toString(), null, "http",
+            LoggingUtils.logEnabledMDC("", MessageType.RESPONSE, MessageDirection.SENT, uuid.toString(), "", "http",
                     RequestResponseLogUtils.getResponseSentProtocolMetaData(HttpStatus.NO_CONTENT.value(), HttpStatus.NO_CONTENT.getReasonPhrase(), null), nsLcmOpOccNotification.getNsLcmOpOccId());
         }
 
