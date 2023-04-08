@@ -143,7 +143,7 @@ public class NSLifecycleManagementDriver {
         final Map<String, String> uriVariables = new HashMap<>();
         uriVariables.put("nsInstanceId", nsInstanceId);
         UUID uuid = UUID.randomUUID();
-        LoggingUtils.logEnabledMDC(null, MessageType.REQUEST, MessageDirection.SENT, uuid.toString(), null, "http",
+        LoggingUtils.logEnabledMDC("", MessageType.REQUEST, MessageDirection.SENT, uuid.toString(), "", "http",
                 RequestResponseLogUtils.getRequestSentProtocolMetaData(baseUrl+"/"+nsInstanceId, HttpMethod.DELETE.name(), headers), driverrequestid);
         final ResponseEntity<Void> responseEntity;
         try {
@@ -154,7 +154,7 @@ public class NSLifecycleManagementDriver {
                     RequestResponseLogUtils.getResponseReceivedProtocolMetaData(HttpStatus.INTERNAL_SERVER_ERROR.value(), HttpStatus.INTERNAL_SERVER_ERROR.getReasonPhrase(), null), driverrequestid);
             throw e;
         }
-        LoggingUtils.logEnabledMDC(null, MessageType.RESPONSE, MessageDirection.RECEIVED, uuid.toString(), null, "http",
+        LoggingUtils.logEnabledMDC("", MessageType.RESPONSE, MessageDirection.RECEIVED, uuid.toString(), "", "http",
                 RequestResponseLogUtils.getResponseReceivedProtocolMetaData(responseEntity.getStatusCodeValue(), responseEntity.getStatusCode().getReasonPhrase(), responseEntity.getHeaders()), driverrequestid);
         checkResponseEntityMatches(responseEntity, HttpStatus.NO_CONTENT, false);
     }
@@ -299,7 +299,7 @@ public class NSLifecycleManagementDriver {
         }
         // Return the NsLcmOpOccId, which is the last part of the path
         final String requestId = location.getPath().substring(location.getPath().lastIndexOf("/") + 1);
-        LoggingUtils.logEnabledMDC(null, MessageType.RESPONSE, MessageDirection.RECEIVED, uuid.toString(), null, "http",
+        LoggingUtils.logEnabledMDC("", MessageType.RESPONSE, MessageDirection.RECEIVED, uuid.toString(), "", "http",
                 RequestResponseLogUtils.getResponseReceivedProtocolMetaData(responseEntity.getStatusCodeValue(), responseEntity.getStatusCode().getReasonPhrase(), responseEntity.getHeaders()), requestId);
         return requestId;
     }
@@ -331,7 +331,7 @@ public class NSLifecycleManagementDriver {
         final HttpHeaders headers = getHttpHeaders(deploymentLocation);
         final HttpEntity<String> requestEntity = new HttpEntity<>(headers);
         UUID uuid = UUID.randomUUID();
-        LoggingUtils.logEnabledMDC(null, MessageType.REQUEST, MessageDirection.SENT, uuid.toString(), null, "http",
+        LoggingUtils.logEnabledMDC("", MessageType.REQUEST, MessageDirection.SENT, uuid.toString(), "", "http",
                 RequestResponseLogUtils.getRequestSentProtocolMetaData(url, HttpMethod.GET.name(), headers) , driverRequestId);
         final ResponseEntity<String> responseEntity;
         try {
@@ -370,7 +370,7 @@ public class NSLifecycleManagementDriver {
         UUID uuid = UUID.randomUUID();
         final Map<String, String> uriVariables = new HashMap<>();
         uriVariables.put("nsLcmOpOccId", nsLcmOpOccId);
-        LoggingUtils.logEnabledMDC(null, MessageType.REQUEST, MessageDirection.SENT, uuid.toString(), null, "http",
+        LoggingUtils.logEnabledMDC("", MessageType.REQUEST, MessageDirection.SENT, uuid.toString(), "", "http",
                 RequestResponseLogUtils.getRequestSentProtocolMetaData(baseUrl+"/"+nsLcmOpOccId, HttpMethod.GET.name(), headers), driverRequestId);
         final ResponseEntity<VnfLcmOpOcc> responseEntity;
         try {
@@ -408,7 +408,7 @@ public class NSLifecycleManagementDriver {
         final Map<String, String> uriVariables = new HashMap<>();
         uriVariables.put("nsLcmOpOccId", nsLcmOpOccId);
         UUID uuid = UUID.randomUUID();
-        LoggingUtils.logEnabledMDC(null, MessageType.REQUEST, MessageDirection.SENT, uuid.toString(), null, "http",
+        LoggingUtils.logEnabledMDC("", MessageType.REQUEST, MessageDirection.SENT, uuid.toString(), "", "http",
                 RequestResponseLogUtils.getRequestSentProtocolMetaData(baseUrl+"/"+nsLcmOpOccId+"/retry", HttpMethod.POST.name(), headers), driverRequestId);
         final ResponseEntity<String> responseEntity;
         try {
@@ -419,7 +419,7 @@ public class NSLifecycleManagementDriver {
                     RequestResponseLogUtils.getResponseReceivedProtocolMetaData(HttpStatus.INTERNAL_SERVER_ERROR.value(), HttpStatus.INTERNAL_SERVER_ERROR.getReasonPhrase(), null), driverRequestId);
             throw e;
         }
-        LoggingUtils.logEnabledMDC(null, MessageType.RESPONSE, MessageDirection.RECEIVED, uuid.toString(), null, "http",
+        LoggingUtils.logEnabledMDC("", MessageType.RESPONSE, MessageDirection.RECEIVED, uuid.toString(), "", "http",
                 RequestResponseLogUtils.getResponseReceivedProtocolMetaData(responseEntity.getStatusCodeValue(), responseEntity.getStatusCode().getReasonPhrase(), responseEntity.getHeaders()), driverRequestId);
         checkResponseEntityMatches(responseEntity, HttpStatus.ACCEPTED, false);
     }
@@ -445,7 +445,7 @@ public class NSLifecycleManagementDriver {
         final Map<String, String> uriVariables = new HashMap<>();
         uriVariables.put("nsLcmOpOccId", nsLcmOpOccId);
         UUID uuid = UUID.randomUUID();
-        LoggingUtils.logEnabledMDC(null, MessageType.REQUEST, MessageDirection.SENT, uuid.toString(), null, "http",
+        LoggingUtils.logEnabledMDC("", MessageType.REQUEST, MessageDirection.SENT, uuid.toString(), "", "http",
                 RequestResponseLogUtils.getRequestSentProtocolMetaData(baseUrl+"/"+nsLcmOpOccId+"/rollback", HttpMethod.POST.name(), headers), driverRequestId);
         final ResponseEntity<String> responseEntity;
         try {
@@ -456,7 +456,7 @@ public class NSLifecycleManagementDriver {
                     RequestResponseLogUtils.getResponseReceivedProtocolMetaData(HttpStatus.INTERNAL_SERVER_ERROR.value(), HttpStatus.INTERNAL_SERVER_ERROR.getReasonPhrase(), null), driverRequestId);
             throw e;
         }
-        LoggingUtils.logEnabledMDC(null, MessageType.RESPONSE, MessageDirection.RECEIVED, uuid.toString(), null, "http",
+        LoggingUtils.logEnabledMDC("", MessageType.RESPONSE, MessageDirection.RECEIVED, uuid.toString(), "", "http",
                 RequestResponseLogUtils.getResponseReceivedProtocolMetaData(responseEntity.getStatusCodeValue(), responseEntity.getStatusCode().getReasonPhrase(), responseEntity.getHeaders()), driverRequestId);
         checkResponseEntityMatches(responseEntity, HttpStatus.ACCEPTED, false);
     }
@@ -482,7 +482,7 @@ public class NSLifecycleManagementDriver {
         final Map<String, String> uriVariables = new HashMap<>();
         uriVariables.put("nsLcmOpOccId", nsLcmOpOccId);
         UUID uuid = UUID.randomUUID();
-        LoggingUtils.logEnabledMDC(null, MessageType.REQUEST, MessageDirection.SENT, uuid.toString(), null, "http",
+        LoggingUtils.logEnabledMDC("", MessageType.REQUEST, MessageDirection.SENT, uuid.toString(), "", "http",
                 RequestResponseLogUtils.getRequestSentProtocolMetaData(baseUrl+"/"+nsLcmOpOccId+"/continue", HttpMethod.POST.name(), headers), driverRequestId);
         final ResponseEntity<String> responseEntity;
         try {
@@ -493,7 +493,7 @@ public class NSLifecycleManagementDriver {
                     RequestResponseLogUtils.getResponseReceivedProtocolMetaData(HttpStatus.INTERNAL_SERVER_ERROR.value(), HttpStatus.INTERNAL_SERVER_ERROR.getReasonPhrase(), null), driverRequestId);
             throw e;
         }
-        LoggingUtils.logEnabledMDC(null, MessageType.RESPONSE, MessageDirection.RECEIVED, uuid.toString(), null, "http",
+        LoggingUtils.logEnabledMDC("", MessageType.RESPONSE, MessageDirection.RECEIVED, uuid.toString(), "", "http",
                 RequestResponseLogUtils.getResponseReceivedProtocolMetaData(responseEntity.getStatusCodeValue(), responseEntity.getStatusCode().getReasonPhrase(), responseEntity.getHeaders()), driverRequestId);
         checkResponseEntityMatches(responseEntity, HttpStatus.ACCEPTED, false);
     }
@@ -519,7 +519,7 @@ public class NSLifecycleManagementDriver {
         final Map<String, String> uriVariables = new HashMap<>();
         uriVariables.put("nsLcmOpOccId", nsLcmOpOccId);
         UUID uuid = UUID.randomUUID();
-        LoggingUtils.logEnabledMDC(null, MessageType.REQUEST, MessageDirection.SENT, uuid.toString(), null, "http",
+        LoggingUtils.logEnabledMDC("", MessageType.REQUEST, MessageDirection.SENT, uuid.toString(), "", "http",
                 RequestResponseLogUtils.getRequestSentProtocolMetaData(baseUrl+"/"+nsLcmOpOccId+"/fail", HttpMethod.POST.name(), headers), driverRequestId);
         final ResponseEntity<NsLcmOpOcc> responseEntity;
         try {
@@ -569,7 +569,7 @@ public class NSLifecycleManagementDriver {
                     RequestResponseLogUtils.getResponseReceivedProtocolMetaData(HttpStatus.INTERNAL_SERVER_ERROR.value(), HttpStatus.INTERNAL_SERVER_ERROR.getReasonPhrase(), null), driverRequestId);
             throw e;
         }
-        LoggingUtils.logEnabledMDC(null, MessageType.RESPONSE, MessageDirection.RECEIVED, uuid.toString(), null, "http",
+        LoggingUtils.logEnabledMDC("", MessageType.RESPONSE, MessageDirection.RECEIVED, uuid.toString(), "", "http",
                 RequestResponseLogUtils.getResponseReceivedProtocolMetaData(responseEntity.getStatusCodeValue(), responseEntity.getStatusCode().getReasonPhrase(), responseEntity.getHeaders()), driverRequestId);
         checkResponseEntityMatches(responseEntity, HttpStatus.ACCEPTED, false);
     }
@@ -668,7 +668,7 @@ public class NSLifecycleManagementDriver {
         final Map<String, String> uriVariables = new HashMap<>();
         uriVariables.put("subscriptionId", subscriptionId);
         UUID uuid = UUID.randomUUID();
-        LoggingUtils.logEnabledMDC(null, MessageType.REQUEST, MessageDirection.SENT, uuid.toString(), null, "http",
+        LoggingUtils.logEnabledMDC("", MessageType.REQUEST, MessageDirection.SENT, uuid.toString(), "", "http",
                 RequestResponseLogUtils.getRequestSentProtocolMetaData(baseUrl+"/"+subscriptionId, HttpMethod.GET.name(), headers) , null);
         final ResponseEntity<String> responseEntity;
         try {
@@ -706,7 +706,7 @@ public class NSLifecycleManagementDriver {
         final Map<String, String> uriVariables = new HashMap<>();
         uriVariables.put("subscriptionId", subscriptionId);
         UUID uuid = UUID.randomUUID();
-        LoggingUtils.logEnabledMDC(null, MessageType.REQUEST, MessageDirection.SENT, uuid.toString(), null, "http",
+        LoggingUtils.logEnabledMDC("", MessageType.REQUEST, MessageDirection.SENT, uuid.toString(), "", "http",
                 RequestResponseLogUtils.getRequestSentProtocolMetaData(baseUrl+"/"+subscriptionId, HttpMethod.DELETE.name(), headers) , null);
         final ResponseEntity<Void> responseEntity;
         try {
@@ -717,7 +717,7 @@ public class NSLifecycleManagementDriver {
                     RequestResponseLogUtils.getResponseReceivedProtocolMetaData(HttpStatus.INTERNAL_SERVER_ERROR.value(), HttpStatus.INTERNAL_SERVER_ERROR.getReasonPhrase(), null), null);
             throw e;
         }
-        LoggingUtils.logEnabledMDC(null, MessageType.RESPONSE, MessageDirection.RECEIVED, uuid.toString(), null, "http",
+        LoggingUtils.logEnabledMDC("", MessageType.RESPONSE, MessageDirection.RECEIVED, uuid.toString(), "", "http",
                 RequestResponseLogUtils.getResponseReceivedProtocolMetaData(responseEntity.getStatusCodeValue(), responseEntity.getStatusCode().getReasonPhrase(), responseEntity.getHeaders()), null);
         checkResponseEntityMatches(responseEntity, HttpStatus.NO_CONTENT, false);
     }
@@ -741,7 +741,7 @@ public class NSLifecycleManagementDriver {
         final HttpHeaders headers = getHttpHeaders(deploymentLocation);
         final HttpEntity<LccnSubscriptionRequest> requestEntity = new HttpEntity<>(headers);
         UUID uuid = UUID.randomUUID();
-        LoggingUtils.logEnabledMDC(null, MessageType.REQUEST, MessageDirection.SENT, uuid.toString(), null, "http",
+        LoggingUtils.logEnabledMDC("", MessageType.REQUEST, MessageDirection.SENT, uuid.toString(), "", "http",
                 RequestResponseLogUtils.getRequestSentProtocolMetaData(url, HttpMethod.GET.name(), headers) , null);
         final ResponseEntity<String> responseEntity;
         try {
@@ -783,7 +783,7 @@ public class NSLifecycleManagementDriver {
         final HttpEntity<LccnSubscriptionRequest> requestEntity = new HttpEntity<>(headers);
         uriVariables.put("nsInstanceId", nsInstanceId);
         UUID uuid = UUID.randomUUID();
-        LoggingUtils.logEnabledMDC(null, MessageType.REQUEST, MessageDirection.SENT, uuid.toString(), null, "http",
+        LoggingUtils.logEnabledMDC("", MessageType.REQUEST, MessageDirection.SENT, uuid.toString(), "", "http",
                 RequestResponseLogUtils.getRequestSentProtocolMetaData(baseUrl+"/"+nsInstanceId, HttpMethod.GET.name(), headers) , null);
         final ResponseEntity<String> responseEntity;
         try {

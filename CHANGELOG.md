@@ -1,3 +1,12 @@
+## [0.3.1](https://github.com/IBM/sol005-lifecycle-driver/tree/0.3.1) (2023-04-08)
+
+[Full Changelog](https://github.com/IBM/sol005-lifecycle-driver/compare/0.3.0...0.3.1)
+
+**Implemented enhancements:**
+
+- Message and content-type fields in logs must not be removed when there are no content to be displayed
+- Security Vulnerability Fixes
+
 ## [0.3.0](https://github.com/IBM/sol005-lifecycle-driver/tree/0.3.0) (2023-03-21)
 
 [Full Changelog](https://github.com/IBM/sol005-lifecycle-driver/compare/0.2.3...0.3.0)
