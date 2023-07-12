@@ -13,7 +13,7 @@
     <!-- Must be duplicated for versions:set plugin to work in builds -->
     <groupId>com.ibm</groupId>
     <artifactId>sol005-lifecycle-driver</artifactId>
-    <version>0.3.3-SNAPSHOT</version>
+    <version>0.3.3-RC1</version>
     <packaging>jar</packaging>
 
     <name>SOL005 NFVO Driver</name>
