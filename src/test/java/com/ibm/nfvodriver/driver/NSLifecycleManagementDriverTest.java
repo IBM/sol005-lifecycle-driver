@@ -1,6 +1,7 @@
 package com.ibm.nfvodriver.driver;
 
 
+import com.ibm.common.utils.LoggingUtils;
 import com.ibm.nfvodriver.service.AuthenticatedRestTemplateService;
 import com.ibm.nfvodriver.test.TestConstants;
 import org.etsi.sol005.lifecyclemanagement.LccnSubscription;
@@ -200,8 +201,8 @@ public class NSLifecycleManagementDriverTest {
         assertThat(exception.getProblemDetails()).isNotNull();
         assertThat(exception.getProblemDetails().getStatus()).isEqualTo(HttpStatus.
                 INTERNAL_SERVER_ERROR.value());
-        assertThat(exception.getProblemDetails().getDetail()).isEqualTo(HttpStatus.
-                INTERNAL_SERVER_ERROR.getReasonPhrase() + ": " + TestConstants.TEST_EXCEPTION_MESSAGE);
+        assertThat(exception.getProblemDetails().getDetail()).isEqualTo(LoggingUtils.getReasonPhrase(HttpStatus.
+                INTERNAL_SERVER_ERROR.value()) + ": " + TestConstants.TEST_EXCEPTION_MESSAGE);
     }
 
 
@@ -300,8 +301,8 @@ public class NSLifecycleManagementDriverTest {
         assertThat(exception.getProblemDetails()).isNotNull();
         assertThat(exception.getProblemDetails().getStatus()).isEqualTo(HttpStatus.
                 NOT_FOUND.value());
-        assertThat(exception.getProblemDetails().getDetail()).isEqualTo(HttpStatus.
-                NOT_FOUND.getReasonPhrase());
+        assertThat(exception.getProblemDetails().getDetail()).isEqualTo(LoggingUtils.getReasonPhrase(HttpStatus.
+                NOT_FOUND.value()));
     }
 
     @Test

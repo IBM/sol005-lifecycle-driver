@@ -4,7 +4,7 @@ import com.fasterxml.jackson.annotation.JsonProperty;
 import com.fasterxml.jackson.databind.annotation.JsonSerialize;
 import io.swagger.v3.oas.annotations.media.Schema;
 
-import javax.validation.Valid;
+import jakarta.validation.Valid;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Objects;
@@ -13,7 +13,7 @@ import java.util.Objects;
  * This type represents subscription filter criteria to match NS instances. NOTE 1: The attributes \&quot;nsdIds\&quot;, \&quot;vnfdIds\&quot; and \&quot;pnfdIds\&quot; are alternatives to reference to NS instances that are created based on certain NSDs, or contain VNF instances that are based on certain VNFDs, or contain PNFs that are based on certain PNFDs in a filter. They should not be used together in the same filter instance, but one alternative should be chosen. NOTE 2: The attributes \&quot;nsInstanceIds\&quot; and \&quot;nsInstanceNames\&quot; are alternatives to reference to particular NS Instances in a filter. They should not be used both in the same filter instance, but one alternative should be chosen. 
  */
 @Schema(description = "This type represents subscription filter criteria to match NS instances. NOTE 1: The attributes \"nsdIds\", \"vnfdIds\" and \"pnfdIds\" are alternatives to reference to NS instances that are created based on certain NSDs, or contain VNF instances that are based on certain VNFDs, or contain PNFs that are based on certain PNFDs in a filter. They should not be used together in the same filter instance, but one alternative should be chosen. NOTE 2: The attributes \"nsInstanceIds\" and \"nsInstanceNames\" are alternatives to reference to particular NS Instances in a filter. They should not be used both in the same filter instance, but one alternative should be chosen. ")
-@javax.annotation.Generated(value = "org.openapitools.codegen.languages.SpringCodegen", date = "2020-11-19T09:45:14.076Z[Europe/London]")
+@jakarta.annotation.Generated(value = "org.openapitools.codegen.languages.SpringCodegen", date = "2020-11-19T09:45:14.076Z[Europe/London]")
 @JsonSerialize(include = JsonSerialize.Inclusion.NON_NULL)
 
 public class NsInstanceSubscriptionFilter {

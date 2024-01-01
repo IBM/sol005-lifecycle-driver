@@ -4,15 +4,15 @@ import com.fasterxml.jackson.annotation.JsonInclude;
 import com.fasterxml.jackson.annotation.JsonProperty;
 import io.swagger.v3.oas.annotations.media.Schema;
 
-import javax.validation.Valid;
-import javax.validation.constraints.NotNull;
+import jakarta.validation.Valid;
+import jakarta.validation.constraints.NotNull;
 import java.util.Objects;
 
 /**
  * Links to resources related to this resource. 
  */
 @Schema(description = "Links to resources related to this resource. ")
-@javax.annotation.Generated(value = "org.openapitools.codegen.languages.SpringCodegen", date = "2021-03-30T10:40:53.292+01:00[Europe/Dublin]")
+@jakarta.annotation.Generated(value = "org.openapitools.codegen.languages.SpringCodegen", date = "2021-03-30T10:40:53.292+01:00[Europe/Dublin]")
 @JsonInclude(JsonInclude.Include.NON_NULL)
 public class NsdInfoLinks {
   @JsonProperty("self")
