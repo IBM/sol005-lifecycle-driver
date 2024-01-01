@@ -42,10 +42,10 @@ public class WebSecurityConfiguration  {
         http
             .csrf().disable() // Disabling CSRF protection
             .authorizeHttpRequests(authz -> authz
-                    .requestMatchers("/vnflcmWDCWDC/**").hasRole("USER")
-                    .requestMatchers("/CEWDCgrant/**").hasRole("USER")
-                    .requestMatchers("/WEDFEWvnfpkgm/v1/**").hasRole("USER")
-                    .requestMatchers("/DEJNDKKDJEWJKmanagement/**").hasRole("USER")
+                    .requestMatchers("/nslcm/**").hasRole("USER")
+                    .requestMatchers("/grant/**").hasRole("USER")
+                    .requestMatchers("/nspkgm/v1/**").hasRole("USER")
+                    .requestMatchers("/management/**").hasRole("USER")
                     .anyRequest().denyAll() // Denying all other requests
             )
             .httpBasic(); // Using HTTP Basic authentication
@@ -59,7 +59,7 @@ public class WebSecurityConfiguration  {
     // }
     @Bean
     public WebSecurityCustomizer webSecurityCustomizer() {
-        return (web) -> web.ignoring().requestMatchers("/api/**", "/management/health", "/management/info", "/vnfpkgm/v2/**");
+        return (web) -> web.ignoring().requestMatchers("/api/**", "/management/health", "/management/info", "/nspkgm/v2/**");
     }
 
     
