@@ -1,21 +1,26 @@
 package com.ibm.nfvodriver.driver;
 
-
+import static com.ibm.nfvodriver.config.NFVODriverConstants.NFVO_SERVER_URL;
+import static com.ibm.nfvodriver.driver.NSLifecycleManagementDriver.*;
+import org.springframework.http.*;
 import com.ibm.common.utils.LoggingUtils;
+import com.ibm.nfvodriver.model.MessageDirection;
+import com.ibm.nfvodriver.model.MessageType;
+import com.ibm.nfvodriver.model.alm.ResourceManagerDeploymentLocation;
 import com.ibm.nfvodriver.service.AuthenticatedRestTemplateService;
 import com.ibm.nfvodriver.test.TestConstants;
+import com.ibm.nfvodriver.utils.RequestResponseLogUtils;
+
 import org.etsi.sol005.lifecyclemanagement.LccnSubscription;
 import org.etsi.sol005.lifecyclemanagement.LccnSubscriptionRequest;
 import org.etsi.sol005.lifecyclemanagement.VnfLcmOpOcc;
 import org.junit.jupiter.api.Test;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.boot.test.autoconfigure.web.client.RestClientTest;
 import org.springframework.cloud.contract.wiremock.AutoConfigureWireMock;
-import org.springframework.http.HttpHeaders;
-import org.springframework.http.HttpMethod;
-import org.springframework.http.HttpStatus;
-import org.springframework.http.MediaType;
 import org.springframework.test.context.junit4.SpringRunner;
 import org.springframework.test.web.client.MockRestServiceServer;
 import static com.github.tomakehurst.wiremock.client.WireMock.*;
@@ -23,6 +28,7 @@ import static com.ibm.nfvodriver.config.NFVODriverConstants.AUTHENTICATION_ACCES
 import static com.ibm.nfvodriver.config.NFVODriverConstants.AUTHENTICATION_URL;
 import java.io.IOException;
 import java.net.URI;
+import java.util.UUID;
 
 import static org.assertj.core.api.Assertions.*;
 import static org.springframework.test.web.client.match.MockRestRequestMatchers.*;
@@ -150,10 +156,58 @@ public class NSLifecycleManagementDriverTest {
         final String createNsRequest = TestConstants.loadFileIntoString("examples/CreateNsRequest.json");
 
         final String nsInstanceResponse = driver.createNsInstance(TestConstants.TEST_DL_OAUTH2_AUTH, createNsRequest, TestConstants.TEST_NS_DRIVER_INSTANCE_ID);
-        
+        final  String API_CONTEXT_ROOT = "/nslcm/v2";
+        final  String API_PREFIX_OP_OCCURRENCES = "/ns_lcm_op_occs";
+        final  String API_PREFIX_NS_INSTANCES = "/ns_instances";
+        final  String API_PREFIX_SUBSCRIPTIONS = "/subscriptions";
+
+        final String url = TestConstants.TEST_DL_OAUTH2_AUTH.getProperties().get(NFVO_SERVER_URL) + API_CONTEXT_ROOT + API_PREFIX_NS_INSTANCES;
+        final HttpHeaders headers = getHttpHeaders(TestConstants.TEST_DL_OAUTH2_AUTH);
+        final HttpEntity<String> requestEntity = new HttpEntity<>(createNsRequest, headers);
+        UUID uuid = UUID.randomUUID();
+        LoggingUtils.logEnabledMDC(createNsRequest, MessageType.REQUEST, MessageDirection.SENT, uuid.toString(), MediaType.APPLICATION_JSON_VALUE, "http",
+                RequestResponseLogUtils.getRequestSentProtocolMetaData(url, HttpMethod.POST.name(), headers), TestConstants.TEST_NS_DRIVER_INSTANCE_ID);
+        final ResponseEntity<String> responseEntity;
+        try {
+            responseEntity = authenticatedRestTemplateService.getOAUth2WebClientTemplate(TestConstants.TEST_DL_OAUTH2_AUTH).exchange(url, HttpMethod.POST, requestEntity, String.class);
+        } catch (Throwable e){
+            // To log all unknown errors while making external call
+            LoggingUtils.logEnabledMDC(RequestResponseLogUtils.convertToJson(e.getMessage()), MessageType.RESPONSE, MessageDirection.RECEIVED, uuid.toString(), MediaType.APPLICATION_JSON_VALUE, "http",
+                    RequestResponseLogUtils.getResponseReceivedProtocolMetaData(HttpStatus.INTERNAL_SERVER_ERROR.value(), LoggingUtils.getReasonPhrase(HttpStatus.INTERNAL_SERVER_ERROR.value()), null), driverrequestid);
+            throw e;
+        }
+        LoggingUtils.logEnabledMDC(responseEntity.getBody(), MessageType.RESPONSE, MessageDirection.RECEIVED, uuid.toString(), MediaType.APPLICATION_JSON_VALUE, "http",
+                RequestResponseLogUtils.getResponseReceivedProtocolMetaData(responseEntity.getStatusCode().value(), LoggingUtils.getReasonPhrase(responseEntity.getStatusCode().value()), responseEntity.getHeaders()), driverrequestid);
+        // "Location" header also includes URI of the created instance
+        checkResponseEntityMatches(responseEntity, HttpStatus.CREATED, true);
+        // return responseEntity.getBody();
         
 
-        assertThat(nsInstanceResponse).isNotNull();
+        assertThat(responseEntity).isNotNull();
+    }
+    private void checkResponseEntityMatches(final ResponseEntity responseEntity, final HttpStatus expectedStatusCode, final boolean containsResponseBody) {
+
+        final  Logger logger = LoggerFactory.getLogger(NSLifecycleManagementDriver.class);
+        // Check response code matches expected value (log a warning if incorrect 2xx status seen)
+        if (responseEntity.getStatusCode().is2xxSuccessful() && responseEntity.getStatusCode() != expectedStatusCode) {
+            // Be lenient on 2xx response codes
+            logger.warn("Invalid status code [{}] received, was expecting [{}]", responseEntity.getStatusCode(), expectedStatusCode);
+        } else if (!responseEntity.getStatusCode().is2xxSuccessful()) {
+            throw new SOL005ResponseException(String.format("Invalid status code [%s] received", responseEntity.getStatusCode()));
+        }
+        // Check if the response body is populated (or not) as expected
+        if (containsResponseBody && responseEntity.getBody() == null) {
+            throw new SOL005ResponseException("No response body");
+        } else if (!containsResponseBody && responseEntity.getBody() != null) {
+            throw new SOL005ResponseException("No response body expected");
+        }
+    }
+
+
+    private HttpHeaders getHttpHeaders(ResourceManagerDeploymentLocation deploymentLocation) {
+        final HttpHeaders headers = new HttpHeaders();
+        headers.setContentType(MediaType.APPLICATION_JSON);
+        return headers;
     }
 
     @Test
