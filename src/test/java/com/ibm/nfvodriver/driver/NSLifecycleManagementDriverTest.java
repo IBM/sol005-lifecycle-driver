@@ -18,7 +18,9 @@ import org.springframework.http.HttpStatus;
 import org.springframework.http.MediaType;
 import org.springframework.test.context.junit4.SpringRunner;
 import org.springframework.test.web.client.MockRestServiceServer;
-
+import static com.github.tomakehurst.wiremock.client.WireMock.*;
+import static com.ibm.nfvodriver.config.NFVODriverConstants.AUTHENTICATION_ACCESS_TOKEN_URI;
+import static com.ibm.nfvodriver.config.NFVODriverConstants.AUTHENTICATION_URL;
 import java.io.IOException;
 import java.net.URI;
 
@@ -125,6 +127,60 @@ public class NSLifecycleManagementDriverTest {
 
         assertThat(nsInstanceResponse).isNotNull();
     }
+
+    @Test
+    public void testCreateNsInstanceWithOAuth2() throws Exception {
+        TestConstants.TEST_DL_OAUTH2_AUTH.getProperties().put(AUTHENTICATION_ACCESS_TOKEN_URI, String.format("http://localhost:%s/oauth/token", wiremockServerPort));
+
+        stubFor(post(urlEqualTo("/oauth/token"))
+                        .withBasicAuth("LmClient", "pass123")
+                        .withRequestBody(equalTo("grant_type=client_credentials"))
+                        .willReturn(aResponse().withBody(TestConstants.TEST_ACCESS_TOKEN_RESPONSE).withHeader(HttpHeaders.CONTENT_TYPE, MediaType.APPLICATION_JSON_VALUE)));
+
+        final MockRestServiceServer server = MockRestServiceServer.bindTo(authenticatedRestTemplateService.getRestTemplate(TestConstants.TEST_DL_OAUTH2_AUTH)).build();
+
+        server.expect(requestTo(TestConstants.SECURE_TEST_SERVER_BASE_URL + NS_INSTANCE_ENDPOINT))
+              .andExpect(method(HttpMethod.POST))
+              .andExpect(header(HttpHeaders.CONTENT_TYPE, MediaType.APPLICATION_JSON_VALUE))
+              .andExpect(header(HttpHeaders.AUTHORIZATION, "Bearer " + TestConstants.TEST_ACCESS_TOKEN))
+              .andRespond(withCreatedEntity(URI.create(TestConstants.SECURE_TEST_SERVER_BASE_URL + NS_INSTANCE_ENDPOINT + "/" + TestConstants.TEST_NS_INSTANCE_ID))
+                                  .body(TestConstants.loadFileIntoString("examples/NsInstance.json"))
+                                  .contentType(MediaType.APPLICATION_JSON));
+
+        final String createNsRequest = TestConstants.loadFileIntoString("examples/CreateNsRequest.json");
+
+        final String nsInstanceResponse = driver.createNsInstance(TestConstants.TEST_DL_OAUTH2_AUTH, createNsRequest, TestConstants.TEST_NS_DRIVER_INSTANCE_ID);
+        
+        
+
+        assertThat(nsInstanceResponse).isNotNull();
+    }
+
+    @Test
+    public void testCreateNsInstanceWithCookieAuth() throws Exception {
+        TestConstants.TEST_DL_SESSION_AUTH.getProperties().put(AUTHENTICATION_URL, String.format("http://localhost:%s/login", wiremockServerPort));
+
+        stubFor(post(urlEqualTo("/login"))
+                        .withRequestBody(equalTo("IDToken1=Administrator&IDToken2=TestPassw0rd"))
+                        .willReturn(aResponse().withHeader("Set-Cookie", TestConstants.TEST_SESSION_COOKIE)));
+
+        final MockRestServiceServer server = MockRestServiceServer.bindTo(authenticatedRestTemplateService.getRestTemplate(TestConstants.TEST_DL_SESSION_AUTH)).build();
+
+        server.expect(requestTo(TestConstants.SECURE_TEST_SERVER_BASE_URL + NS_INSTANCE_ENDPOINT))
+              .andExpect(method(HttpMethod.POST))
+              .andExpect(header(HttpHeaders.CONTENT_TYPE, MediaType.APPLICATION_JSON_VALUE))
+              .andExpect(header(HttpHeaders.COOKIE, TestConstants.TEST_SESSION_TOKEN))
+              .andRespond(withCreatedEntity(URI.create(TestConstants.SECURE_TEST_SERVER_BASE_URL + NS_INSTANCE_ENDPOINT + "/" + TestConstants.TEST_NS_INSTANCE_ID))
+                                  .body(TestConstants.loadFileIntoString("examples/NsInstance.json"))
+                                  .contentType(MediaType.APPLICATION_JSON));
+
+        final String createNsRequest = TestConstants.loadFileIntoString("examples/CreateNsRequest.json");
+
+        final String nsInstanceResponse = driver.createNsInstance(TestConstants.TEST_DL_SESSION_AUTH, createNsRequest, TestConstants.TEST_NS_DRIVER_INSTANCE_ID);
+
+        assertThat(nsInstanceResponse).isNotNull();
+    }
+
 
     @Test
     public void testCreateNsInstanceWithProblemDetails() throws Exception {
