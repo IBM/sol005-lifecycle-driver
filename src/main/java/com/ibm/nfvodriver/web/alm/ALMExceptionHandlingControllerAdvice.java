@@ -1,9 +1,7 @@
 package com.ibm.nfvodriver.web.alm;
 
 import java.util.HashMap;
-// import javax.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletRequest;
-
 import com.ibm.nfvodriver.driver.SOL005ResponseException;
 import com.ibm.nfvodriver.model.web.ErrorInfo;
 import org.slf4j.Logger;

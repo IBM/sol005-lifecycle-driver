@@ -4,7 +4,6 @@ import java.util.Enumeration;
 import java.util.HashMap;
 import java.util.Map;
 import java.util.UUID;
-// import javax.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletRequest;
 
 import com.ibm.nfvodriver.driver.SOL005ResponseException;
