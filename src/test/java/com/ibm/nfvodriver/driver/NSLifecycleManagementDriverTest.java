@@ -156,58 +156,8 @@ public class NSLifecycleManagementDriverTest {
         final String createNsRequest = TestConstants.loadFileIntoString("examples/CreateNsRequest.json");
 
         final String nsInstanceResponse = driver.createNsInstance(TestConstants.TEST_DL_OAUTH2_AUTH, createNsRequest, TestConstants.TEST_NS_DRIVER_INSTANCE_ID);
-        final  String API_CONTEXT_ROOT = "/nslcm/v2";
-        final  String API_PREFIX_OP_OCCURRENCES = "/ns_lcm_op_occs";
-        final  String API_PREFIX_NS_INSTANCES = "/ns_instances";
-        final  String API_PREFIX_SUBSCRIPTIONS = "/subscriptions";
-
-        final String url = TestConstants.TEST_DL_OAUTH2_AUTH.getProperties().get(NFVO_SERVER_URL) + API_CONTEXT_ROOT + API_PREFIX_NS_INSTANCES;
-        final HttpHeaders headers = getHttpHeaders(TestConstants.TEST_DL_OAUTH2_AUTH);
-        final HttpEntity<String> requestEntity = new HttpEntity<>(createNsRequest, headers);
-        UUID uuid = UUID.randomUUID();
-        LoggingUtils.logEnabledMDC(createNsRequest, MessageType.REQUEST, MessageDirection.SENT, uuid.toString(), MediaType.APPLICATION_JSON_VALUE, "http",
-                RequestResponseLogUtils.getRequestSentProtocolMetaData(url, HttpMethod.POST.name(), headers), TestConstants.TEST_NS_DRIVER_INSTANCE_ID);
-        final ResponseEntity<String> responseEntity;
-        try {
-            responseEntity = authenticatedRestTemplateService.getOAUth2WebClientTemplate(TestConstants.TEST_DL_OAUTH2_AUTH).exchange(url, HttpMethod.POST, requestEntity, String.class);
-        } catch (Throwable e){
-            // To log all unknown errors while making external call
-            LoggingUtils.logEnabledMDC(RequestResponseLogUtils.convertToJson(e.getMessage()), MessageType.RESPONSE, MessageDirection.RECEIVED, uuid.toString(), MediaType.APPLICATION_JSON_VALUE, "http",
-                    RequestResponseLogUtils.getResponseReceivedProtocolMetaData(HttpStatus.INTERNAL_SERVER_ERROR.value(), LoggingUtils.getReasonPhrase(HttpStatus.INTERNAL_SERVER_ERROR.value()), null), driverrequestid);
-            throw e;
-        }
-        LoggingUtils.logEnabledMDC(responseEntity.getBody(), MessageType.RESPONSE, MessageDirection.RECEIVED, uuid.toString(), MediaType.APPLICATION_JSON_VALUE, "http",
-                RequestResponseLogUtils.getResponseReceivedProtocolMetaData(responseEntity.getStatusCode().value(), LoggingUtils.getReasonPhrase(responseEntity.getStatusCode().value()), responseEntity.getHeaders()), driverrequestid);
-        // "Location" header also includes URI of the created instance
-        checkResponseEntityMatches(responseEntity, HttpStatus.CREATED, true);
-        // return responseEntity.getBody();
         
-
-        assertThat(responseEntity).isNotNull();
-    }
-    private void checkResponseEntityMatches(final ResponseEntity responseEntity, final HttpStatus expectedStatusCode, final boolean containsResponseBody) {
-
-        final  Logger logger = LoggerFactory.getLogger(NSLifecycleManagementDriver.class);
-        // Check response code matches expected value (log a warning if incorrect 2xx status seen)
-        if (responseEntity.getStatusCode().is2xxSuccessful() && responseEntity.getStatusCode() != expectedStatusCode) {
-            // Be lenient on 2xx response codes
-            logger.warn("Invalid status code [{}] received, was expecting [{}]", responseEntity.getStatusCode(), expectedStatusCode);
-        } else if (!responseEntity.getStatusCode().is2xxSuccessful()) {
-            throw new SOL005ResponseException(String.format("Invalid status code [%s] received", responseEntity.getStatusCode()));
-        }
-        // Check if the response body is populated (or not) as expected
-        if (containsResponseBody && responseEntity.getBody() == null) {
-            throw new SOL005ResponseException("No response body");
-        } else if (!containsResponseBody && responseEntity.getBody() != null) {
-            throw new SOL005ResponseException("No response body expected");
-        }
-    }
-
-
-    private HttpHeaders getHttpHeaders(ResourceManagerDeploymentLocation deploymentLocation) {
-        final HttpHeaders headers = new HttpHeaders();
-        headers.setContentType(MediaType.APPLICATION_JSON);
-        return headers;
+        assertThat(nsInstanceResponse).isNotNull();
     }
 
     @Test
