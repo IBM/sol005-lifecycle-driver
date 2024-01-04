@@ -13,7 +13,7 @@ import static com.ibm.nfvodriver.config.NFVODriverConstants.AUTHENTICATION_USERN
 import static com.ibm.nfvodriver.config.NFVODriverConstants.AUTHENTICATION_USERNAME_TOKEN_NAME;
 import static com.ibm.nfvodriver.config.NFVODriverConstants.NFVO_SERVER_URL;
 
-
+import java.util.Arrays;
 import java.util.Map;
 import java.util.Objects;
 import java.util.concurrent.ConcurrentHashMap;
@@ -156,22 +156,49 @@ public class AuthenticatedRestTemplateService {
                                                        authenticationProperties.get(AUTHENTICATION_PASSWORD))
                 .build();
     }
+
+    private static AuthorizationGrantType mapStringToGrantType(String grantTypeString, AuthorizationGrantType defaultGrantType) {
+        switch (grantTypeString) {
+            case "client_credentials":
+                return AuthorizationGrantType.CLIENT_CREDENTIALS;
+            case "authorization_code":
+                return AuthorizationGrantType.AUTHORIZATION_CODE;
+            case "password":
+                return AuthorizationGrantType.PASSWORD;
+            case "refresh_token":
+                return AuthorizationGrantType.REFRESH_TOKEN;
+            default:
+                return defaultGrantType;
+        }
+    }
+    private static AuthorizationGrantType getOrDefaultForGrantType(final Map<String, String> properties, String grantTypeKey, AuthorizationGrantType defaultGrantType) {
+
+        String grantTypeStr = properties.get(grantTypeKey);
+        if (grantTypeStr == null) {
+            return defaultGrantType;
+        }
+
+        return mapStringToGrantType(grantTypeStr, defaultGrantType);
+    }
     
-    public RestTemplate getOAuth2AuthenticatedRestTemplate(final Map<String, String> authenticationProperties) {
-        ClientRegistration clientRegistration = ClientRegistration.withRegistrationId(authenticationProperties.get(AUTHENTICATION_CLIENT_ID))
+    private RestTemplate getOAuth2AuthenticatedRestTemplate(final Map<String, String> authenticationProperties) {
+        ClientRegistration.Builder clientRegistrationBuilder = ClientRegistration.withRegistrationId(authenticationProperties.get(AUTHENTICATION_CLIENT_ID))
                 .clientId(authenticationProperties.get(AUTHENTICATION_CLIENT_ID))
                 .clientSecret(authenticationProperties.get(AUTHENTICATION_CLIENT_SECRET))
-                .authorizationGrantType(AuthorizationGrantType.CLIENT_CREDENTIALS)
-                .tokenUri(authenticationProperties.get(AUTHENTICATION_ACCESS_TOKEN_URI))
-                .build();
+                .authorizationGrantType(getOrDefaultForGrantType(authenticationProperties, AUTHENTICATION_GRANT_TYPE, AuthorizationGrantType.CLIENT_CREDENTIALS ))
+                .tokenUri(authenticationProperties.get(AUTHENTICATION_ACCESS_TOKEN_URI));
 
+        if (StringUtils.hasText(authenticationProperties.get(AUTHENTICATION_SCOPE))) {
+                    clientRegistrationBuilder.scope(Arrays.asList(authenticationProperties.get(AUTHENTICATION_SCOPE).split(",")));
+                }  
+        ClientRegistration clientRegistration = clientRegistrationBuilder.build();
         return restTemplateBuilder
                 .additionalInterceptors(new OAuthClientCredentialsRestTemplateInterceptor(authorizedClientManager(clientRegistration), clientRegistration))
                 .build();
 
         }
         
-    public OAuth2AuthorizedClientManager authorizedClientManager(ClientRegistration clientRegistration) {
+    private OAuth2AuthorizedClientManager authorizedClientManager(ClientRegistration clientRegistration) {
         var authorizedClientProvider = OAuth2AuthorizedClientProviderBuilder.builder()
                 .clientCredentials()
                 .build();
@@ -184,7 +211,7 @@ public class AuthenticatedRestTemplateService {
         return authorizedClientManager;
         }
       
-    public OAuth2AuthorizedClientService authorizedClientService(
+    private OAuth2AuthorizedClientService authorizedClientService(
             ClientRegistrationRepository clientRegistrationRepository) {
 
         return new InMemoryOAuth2AuthorizedClientService(clientRegistrationRepository);
