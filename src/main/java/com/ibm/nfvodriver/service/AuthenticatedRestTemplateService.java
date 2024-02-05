@@ -36,7 +36,6 @@ import org.springframework.security.oauth2.client.OAuth2AuthorizedClientService;
 import org.springframework.security.oauth2.client.registration.ClientRegistration;
 import org.springframework.security.oauth2.client.registration.ClientRegistrationRepository;
 import org.springframework.security.oauth2.client.registration.InMemoryClientRegistrationRepository;
-//import org.springframework.security.oauth2.client.web.reactive.function.client.ServletOAuth2AuthorizedClientExchangeFilterFunction;
 import org.springframework.stereotype.Service;
 import org.springframework.util.StringUtils;
 import org.springframework.web.client.RestTemplate;
@@ -46,12 +45,9 @@ import com.ibm.nfvodriver.config.OAuthClientCredentialsRestTemplateInterceptor;
 import com.ibm.nfvodriver.driver.NFVOResponseErrorHandler;
 import com.ibm.nfvodriver.model.AuthenticationType;
 import com.ibm.nfvodriver.utils.DynamicSslCertificateHttpRequestFactory;
-
 import lombok.RequiredArgsConstructor;
-
-// import com.ibm.nfvodriver.config.RestTemplateConfiguration;
 import org.springframework.security.oauth2.core.AuthorizationGrantType;
-// import org.springframework.web.reactive.function.client.WebClient;
+
 
 @Configuration
 @RequiredArgsConstructor
