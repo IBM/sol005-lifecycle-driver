@@ -40,8 +40,8 @@ public class OAuthClientCredentialsRestTemplateInterceptor implements ClientHttp
         OAuth2AuthorizedClient client = manager.authorize(oAuth2AuthorizeRequest);
         if (client == null) {
             throw new IllegalStateException("client credentials flow on " + clientRegistration.getRegistrationId() + " failed, client is null");
-        }
-
+        } 
+        
         request.getHeaders().add(HttpHeaders.AUTHORIZATION, "Bearer " + client.getAccessToken().getTokenValue());
         return execution.execute(request, body);
     }
