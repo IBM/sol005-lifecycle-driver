@@ -54,7 +54,6 @@ import org.springframework.security.oauth2.core.AuthorizationGrantType;
 public class AuthenticatedRestTemplateService {
 
     private final static Logger logger = LoggerFactory.getLogger(AuthenticatedRestTemplateService.class);
-    public static final String OAUTH_WEBCLIENT = "OAUTH_WEBCLIENT";
     private final RestTemplateBuilder restTemplateBuilder;
     private final Map<ResourceManagerDeploymentLocation, RestTemplate> cachedRestTemplatesByDLs = new ConcurrentHashMap<>();
     private final Map<String, RestTemplate> cachedRestTemplatesByServerUrl = new ConcurrentHashMap<>();
