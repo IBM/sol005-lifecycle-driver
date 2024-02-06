@@ -202,12 +202,10 @@ public class AuthenticatedRestTemplateService {
             builder.clientCredentials();
         } else if (AuthorizationGrantType.PASSWORD.equals(grantType)) {
             builder.password();
-        } 
-          else if (AuthorizationGrantType.REFRESH_TOKEN.equals(grantType)) {
+        } else if (AuthorizationGrantType.REFRESH_TOKEN.equals(grantType)) {
             builder.refreshToken();
         } 
         var authorizedClientProvider = builder.build();
-    
         ClientRegistrationRepository clientRegistrationRepository = clientRegistrationRepository(clientRegistration);
         OAuth2AuthorizedClientService oAuth2AuthorizedClientService = authorizedClientService(clientRegistrationRepository);
         var authorizedClientManager = new AuthorizedClientServiceOAuth2AuthorizedClientManager(clientRegistrationRepository, oAuth2AuthorizedClientService);
