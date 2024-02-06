@@ -193,10 +193,21 @@ public class AuthenticatedRestTemplateService {
         }
         
     private OAuth2AuthorizedClientManager authorizedClientManager(ClientRegistration clientRegistration) {
-        var authorizedClientProvider = OAuth2AuthorizedClientProviderBuilder.builder()
-                .clientCredentials()
-                .build();
-                
+        AuthorizationGrantType grantType = clientRegistration.getAuthorizationGrantType();
+        OAuth2AuthorizedClientProviderBuilder builder = OAuth2AuthorizedClientProviderBuilder.builder();
+    
+        if (AuthorizationGrantType.AUTHORIZATION_CODE.equals(grantType)) {
+            builder.authorizationCode();
+        } else if (AuthorizationGrantType.CLIENT_CREDENTIALS.equals(grantType)) {
+            builder.clientCredentials();
+        } else if (AuthorizationGrantType.PASSWORD.equals(grantType)) {
+            builder.password();
+        } 
+          else if (AuthorizationGrantType.REFRESH_TOKEN.equals(grantType)) {
+            builder.refreshToken();
+        } 
+        var authorizedClientProvider = builder.build();
+    
         ClientRegistrationRepository clientRegistrationRepository = clientRegistrationRepository(clientRegistration);
         OAuth2AuthorizedClientService oAuth2AuthorizedClientService = authorizedClientService(clientRegistrationRepository);
         var authorizedClientManager = new AuthorizedClientServiceOAuth2AuthorizedClientManager(clientRegistrationRepository, oAuth2AuthorizedClientService);
