@@ -11,7 +11,7 @@ import lombok.Data;
 import org.etsi.sol005.model.PnfdOnboardingStateType;
 import org.etsi.sol005.model.PnfdUsageStateType;
 
-import javax.validation.Valid;
+import jakarta.validation.Valid;
 import java.util.List;
 import java.util.Map;
 

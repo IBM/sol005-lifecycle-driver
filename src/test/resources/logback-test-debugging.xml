@@ -11,9 +11,9 @@
     <!-- Switch this to TRACE if you want to see the data sent to all remote services during testing in the IntentRequestControllerIntegrationTest -->
     <logger name="com.accantosystems.stratoss.test.LoggingResponseCreator" level="OFF"/>
 
-    <logger name="javax.activation" level="WARN"/>
-    <logger name="javax.mail" level="WARN"/>
-    <logger name="javax.xml.bind" level="WARN"/>
+    <logger name="jakarta.activation" level="WARN"/>
+    <logger name="jakarta.mail" level="WARN"/>
+    <logger name="jakarta.xml.bind" level="WARN"/>
     <logger name="ch.qos.logback" level="WARN"/>
     <logger name="com.codahale.metrics" level="WARN"/>
     <logger name="com.netflix" level="WARN"/>

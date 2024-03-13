@@ -3,15 +3,15 @@ package org.etsi.sol005.model;
 import com.fasterxml.jackson.annotation.JsonProperty;
 import io.swagger.v3.oas.annotations.media.Schema;
 
-import javax.validation.Valid;
-import javax.validation.constraints.NotNull;
+import jakarta.validation.Valid;
+import jakarta.validation.constraints.NotNull;
 import java.time.OffsetDateTime;
 import java.util.Objects;
 
 /**
  * NsIdentifierDeletionNotification
  */
-@javax.annotation.Generated(value = "org.openapitools.codegen.languages.SpringCodegen", date = "2021-01-28T13:34:51.383Z[Europe/London]")
+@jakarta.annotation.Generated(value = "org.openapitools.codegen.languages.SpringCodegen", date = "2021-01-28T13:34:51.383Z[Europe/London]")
 public class NsIdentifierDeletionNotification implements NotificationRequestBody {
     @JsonProperty("id")
     private String id;
