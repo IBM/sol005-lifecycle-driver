@@ -4,15 +4,15 @@ import com.fasterxml.jackson.annotation.JsonInclude;
 import com.fasterxml.jackson.annotation.JsonProperty;
 import io.swagger.v3.oas.annotations.media.Schema;
 
-import javax.validation.Valid;
-import javax.validation.constraints.NotNull;
+import jakarta.validation.Valid;
+import jakarta.validation.constraints.NotNull;
 import java.util.Objects;
 
 /**
  * This type represents an artifact contained in an NSD archive. It shall comply with provisions defined in Table 5.5.3.5-1. 
  */
 @Schema(description = "This type represents an artifact contained in an NSD archive. It shall comply with provisions defined in Table 5.5.3.5-1. ")
-@javax.annotation.Generated(value = "org.openapitools.codegen.languages.SpringCodegen", date = "2021-03-26T11:52:43.966Z[Europe/Dublin]")
+@jakarta.annotation.Generated(value = "org.openapitools.codegen.languages.SpringCodegen", date = "2021-03-26T11:52:43.966Z[Europe/Dublin]")
 @JsonInclude(JsonInclude.Include.NON_NULL)
 public class NsdArchiveArtifactInfo {
   @JsonProperty("artifactPath")

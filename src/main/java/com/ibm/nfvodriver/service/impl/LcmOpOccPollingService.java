@@ -5,7 +5,7 @@ import static com.ibm.nfvodriver.config.NFVODriverConstants.COMPLETED_OPERATIONA
 import java.io.IOException;
 import java.util.Collections;
 import java.util.UUID;
-import javax.annotation.PreDestroy;
+import jakarta.annotation.PreDestroy;
 
 import com.ibm.nfvodriver.service.ExternalMessagingService;
 import org.etsi.sol005.lifecyclemanagement.LcmOperationStateType;

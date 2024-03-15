@@ -3,7 +3,7 @@ package org.etsi.sol005.nsd;
 import com.fasterxml.jackson.annotation.JsonProperty;
 import io.swagger.v3.oas.annotations.media.Schema;
 
-import javax.validation.Valid;
+import jakarta.validation.Valid;
 import java.util.HashMap;
 import java.util.Map;
 import java.util.Objects;
@@ -12,7 +12,7 @@ import java.util.Objects;
  * This type represents attribute modifications for an individual NS descriptor resource based on the NsdInfo data type. The attributes of NsdInfo that can be modified are included in the NsdInfoModifications data type.NOTE: At least one of the attributes - nsdOperationalState and userDefinedData - shall be present. 
  */
 @Schema(description = "This type represents attribute modifications for an individual NS descriptor resource based on the NsdInfo data type. The attributes of NsdInfo that can be modified are included in the NsdInfoModifications data type.NOTE: At least one of the attributes - nsdOperationalState and userDefinedData - shall be present. ")
-@javax.annotation.Generated(value = "org.openapitools.codegen.languages.SpringCodegen", date = "2021-03-26T11:52:43.966Z[Europe/Dublin]")
+@jakarta.annotation.Generated(value = "org.openapitools.codegen.languages.SpringCodegen", date = "2021-03-26T11:52:43.966Z[Europe/Dublin]")
 public class NsdInfoModifications {
   @JsonProperty("nsdOperationalState")
   private NsdOperationalStateType nsdOperationalState;

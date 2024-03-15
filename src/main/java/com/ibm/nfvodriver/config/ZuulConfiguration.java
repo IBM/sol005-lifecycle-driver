@@ -32,7 +32,7 @@ public class ZuulConfiguration {
      * @return the new bean post-processor.
      */
     @Bean
-    public ZuulPostProcessor zuulPostProcessor(@Autowired RouteLocator routeLocator, @Autowired ZuulController zuulController,
+    public ZuulPostProcessor zuulPostProcessor(@Autowired(required = false) RouteLocator routeLocator, @Autowired(required = false) ZuulController zuulController,
                                                @Autowired(required = false) ErrorController errorController) {
         return new ZuulPostProcessor(routeLocator, zuulController, errorController);
     }
