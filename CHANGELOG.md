@@ -1,3 +1,11 @@
+## [0.4.0](https://github.com/IBM/sol005-lifecycle-driver/tree/0.4.0) (2024-03-15)
+
+[Full Changelog](https://github.com/IBM/sol005-lifecycle-driver/compare/0.3.5...0.4.0)
+
+**Implemented enhancements:**
+
+- Uplift sol005-lifycle-driver to Sprint Boot3 [\#147](https://github.com/IBM/sol005-lifecycle-driver/issues/147)
+
 ## [0.3.5](https://github.com/IBM/sol005-lifecycle-driver/tree/0.3.5) (2024-01-18)
 
 [Full Changelog](https://github.com/IBM/sol005-lifecycle-driver/compare/0.3.4...0.3.5)
