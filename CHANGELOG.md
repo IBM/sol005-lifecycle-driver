@@ -1,3 +1,12 @@
+## [0.4.1](https://github.com/IBM/sol005-lifecycle-driver/tree/0.4.1) (2024-05-29)
+
+[Full Changelog](https://github.com/IBM/sol005-lifecycle-driver/compare/0.4.0...0.4.1)
+
+**Implemented enhancements:**
+
+- Fixed security vulnerabilities in base os image [\#159](https://github.com/IBM/sol005-lifecycle-driver/issues/159)
+- remove duplicate dependencies for snappy library [\#150](https://github.com/IBM/sol005-lifecycle-driver/issues/150)
+
 ## [0.4.0](https://github.com/IBM/sol005-lifecycle-driver/tree/0.4.0) (2024-03-15)
 
 [Full Changelog](https://github.com/IBM/sol005-lifecycle-driver/compare/0.3.5...0.4.0)
