@@ -1,3 +1,11 @@
+## [0.4.2](https://github.com/IBM/sol005-lifecycle-driver/tree/0.4.2) (2024-06-18)
+
+[Full Changelog](https://github.com/IBM/sol005-lifecycle-driver/compare/0.4.1...0.4.2)
+
+**Implemented enhancements:**
+
+- Uplifted SpringBoot to 3.1.12 and cloud-starter to 3.1.8 to fix security vulnerabilities
+
 ## [0.4.1](https://github.com/IBM/sol005-lifecycle-driver/tree/0.4.1) (2024-05-29)
 
 [Full Changelog](https://github.com/IBM/sol005-lifecycle-driver/compare/0.4.0...0.4.1)
