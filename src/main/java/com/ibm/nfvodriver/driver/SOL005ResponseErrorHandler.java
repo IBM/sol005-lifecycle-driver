@@ -47,7 +47,7 @@ public abstract class SOL005ResponseErrorHandler extends DefaultResponseErrorHan
                 detailsMessage += ": " + responseBody;
             }
             throw new SOL005ResponseException(String.format("Caught REST client exception when communicating with %s", endpointDescription()),
-                                              new ProblemDetails(e.getRawStatusCode(), detailsMessage));
+                                              new ProblemDetails(e.getStatusCode().value(), detailsMessage));
         } catch (Exception e) {
             throw new SOL005ResponseException(String.format("Caught general exception when communicating with %s", endpointDescription()), e);
         }
