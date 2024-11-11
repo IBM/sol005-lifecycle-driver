@@ -1,3 +1,11 @@
+## [0.4.4](https://github.com/IBM/sol005-lifecycle-driver/tree/0.4.4) (2024-11-11)
+
+[Full Changelog](https://github.com/IBM/sol005-lifecycle-driver/compare/0.4.3...0.4.4)
+
+**Implemented enhancements:**
+
+- Rebuild to pick up security patches for CVE-2024-45490 CVE-2024-45491 CVE-2024-45492 RHSA-2024:6989
+
 ## [0.4.3](https://github.com/IBM/sol005-lifecycle-driver/tree/0.4.3) (2024-07-17)
 
 [Full Changelog](https://github.com/IBM/sol005-lifecycle-driver/compare/0.4.2...0.4.3)
